@@ -1,5 +1,5 @@
 {
-	"name": "use-draggable",
+	"name": "flow-chat-bot-editor",
 	"private": true,
 	"type": "module",
 	"engines": {
@@ -11,7 +11,6 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@vueuse/core": "^10.0.2",
 		"vue": "^3.2.47",
 		"vue-router": "^4.1.6"
 	},

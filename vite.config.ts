@@ -13,7 +13,7 @@ export default defineConfig(({ command, mode }) => {
 	console.log('🦕 vite.config.ts/defineConfig', command, mode)
 
 	return {
-		base: mode === 'development' ? './' : '/use-draggable/',
+		base: mode === 'development' ? './' : '/flow-chat-bot-editor/',
 
 		resolve: {
 			alias: {
