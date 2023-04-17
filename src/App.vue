@@ -7,7 +7,7 @@
 			<aside class="shrink-0 w-[300px] h-[calc(100vh-56px)] bg-[#1b1b1b] p-[16px]">
 				LEFT ASIDE
 			</aside>
-			<section class="w-full h-[calc(100vh-56px)]">
+			<section class="w-full h-[calc(100vh-56px)] flex flex-col">
 				<RouterView />
 			</section>
 		</main>
