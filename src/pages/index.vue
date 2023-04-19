@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // @ts-ignore
-import { EditorComponent } from '~/components/ChatBotEditor/renderer-vue/src/index'
+import { EditorComponent } from '~/components/ChatBotEditor/main'
 </script>
 
 <template>
