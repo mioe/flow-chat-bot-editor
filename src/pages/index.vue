@@ -67,9 +67,9 @@ console.log('🦕 END (between)', e)
 		<template #toolbar>
 			<div />
 		</template>
-		<template #palette>
+		<!-- <template #palette>
 			<div />
-		</template>
+		</template> -->
 	</EditorComponent>
 </template>
 
