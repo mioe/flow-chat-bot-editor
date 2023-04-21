@@ -7,4 +7,7 @@ export const TestNode = defineNode({
 	title: 'Тестовый блок',
 	inputs: {},
 	outputs: {},
+	onCreate() {
+		this.width = 369
+	},
 })

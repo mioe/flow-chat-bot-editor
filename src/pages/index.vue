@@ -74,38 +74,8 @@ console.log('🦕 END (between)', e)
 </template>
 
 
-<!-- <style>
-.ps-chat-bot-editor .baklava-node[data-node-type=TestNode].--selected {
-	box-shadow: none;
-}
-
-.ps-chat-bot-editor .baklava-node[data-node-type=TestNode]:hover {
-	box-shadow: none;
-}
-
-.ps-chat-bot-editor .baklava-node[data-node-type=TestNode] > .__content {
-	padding: 16px;
-}
-
-.ps-chat-bot-editor .baklava-node[data-node-type=TestNode] {
-	border-radius: 16px;
-	background-color: white;
-	font-family: 'Inter';
-	font-style: normal;
-	width: 369px !important;
-}
-
+<style>
 .ps-chat-bot-editor .baklava-node[data-node-type=TestNode] > .__title > .__menu {
 	display: none;
 }
-
-.ps-chat-bot-editor .baklava-node[data-node-type=TestNode] > .__title {
-	font-weight: 600;
-	font-size: 16px;
-	line-height: 24px;
-	background-color: #ddf8df;
-	color: #51B77A;
-	border-radius: 16px 16px 0px 0px;
-	padding: 16px;
-}
-</style> -->
+</style>
