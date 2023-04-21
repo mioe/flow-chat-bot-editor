@@ -8,6 +8,7 @@ export const TestNode = defineNode({
 	inputs: {},
 	outputs: {},
 	onCreate() {
+		// @ts-ignore
 		this.width = 369
 	},
 })
