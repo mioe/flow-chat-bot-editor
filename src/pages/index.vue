@@ -5,7 +5,7 @@ import {
 	DependencyEngine,
 	applyResult,
 } from 'baklavajs'
-import '@baklavajs/themes/dist/syrup-dark.css'
+import '~/components/SenderTheme.css'
 
 import { DisplayNode } from '~/components/DisplayNode'
 import { MathNode } from '~/components/MathNode'
