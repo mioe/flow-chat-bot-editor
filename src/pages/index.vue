@@ -74,7 +74,7 @@ console.log('🦕 END (between)', e)
 </template>
 
 
-<style>
+<!-- <style>
 .ps-chat-bot-editor .baklava-node[data-node-type=TestNode].--selected {
 	box-shadow: none;
 }
@@ -108,4 +108,4 @@ console.log('🦕 END (between)', e)
 	border-radius: 16px 16px 0px 0px;
 	padding: 16px;
 }
-</style>
+</style> -->

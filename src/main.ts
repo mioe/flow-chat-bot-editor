@@ -7,6 +7,7 @@ import router from './router'
  * Styles
  */
 import 'uno.css'
+import './components/root.css'
 import './style.css'
 
 /**

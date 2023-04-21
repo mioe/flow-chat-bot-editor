@@ -4,8 +4,8 @@
 	line-height: 1.5;
 	font-weight: 400;
 	color-scheme: dark;
-	color: #dedede;
-	background-color: #242424;
+	color: var(--common-black);
+	background-color: var(--common-fog);
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
