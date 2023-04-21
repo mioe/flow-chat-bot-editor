@@ -11,7 +11,7 @@
 	--baklava-port-color-border: var(--common-rain);
 	--baklava-sidebar-color-background: #1b202c;
 	--baklava-sidebar-color-foreground: white;
-	--baklava-node-color-background: var(--common-white);
+	--baklava-node-color-background: rgba(255, 255, 255, 0.9);
 	--baklava-node-color-foreground: var(--common-black);
 	--baklava-node-color-selected: var(--baklava-control-color-primary);
 	--baklava-node-title-color-background: var(--additional-paleGreen);
@@ -491,7 +491,7 @@
 	border-radius: 50%;
 	top: calc(50% - 5px);
 	cursor: crosshair;
-	border: 2px solid var(--baklava-port-color-border);
+	box-shadow: inset 0 0 0 2px var(--baklava-port-color-border);
 }
 .baklava-node-interface.--input {
 	text-align: left;
