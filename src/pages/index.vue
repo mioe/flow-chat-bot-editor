@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import {
 	EditorComponent,
 	useBaklava,
 	DependencyEngine,
 	applyResult,
 } from 'baklavajs'
-import '~/components/SenderTheme.css'
+import '~/assets/styles/SenderTheme.css'
+import ChatBotsHistoryAndZoomPicker from '~/components/ChatBotsUI/ChatBotsHistoryAndZoomPicker.vue'
 
 import { DisplayNode } from '~/components/DisplayNode'
 import { MathNode } from '~/components/MathNode'
@@ -57,20 +59,26 @@ console.log('🦕 END (between)', e)
 </script>
 
 <template>
-	<EditorComponent
-		:view-model="baklava"
-		class="ps-chat-bot-editor"
-	>
-		<template #background>
-			<div />
-		</template>
-		<template #toolbar>
-			<div />
-		</template>
+	<div class="relative flex w-full h-full">
+		<EditorComponent
+			:view-model="baklava"
+			class="ps-chat-bot-editor"
+		>
+			<template #toolbar>
+				<div />
+			</template>
 		<!-- <template #palette>
 			<div />
 		</template> -->
-	</EditorComponent>
+		</EditorComponent>
+
+		<div class="fixed bottom-[80px] right-[40px] z-999 bg-red-300">
+			{{ scale }}
+		</div>
+		<ChatBotsHistoryAndZoomPicker
+			v-model:scale="baklava.displayedGraph.scaling"
+		/>
+	</div>
 </template>
 
 

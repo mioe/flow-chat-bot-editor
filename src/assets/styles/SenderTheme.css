@@ -3,8 +3,8 @@
 	--baklava-control-color-error: #d00000;
 	--baklava-control-color-background: #2c3748;
 	--baklava-control-color-foreground: white;
-	--baklava-control-color-hover: #455670;
-	--baklava-control-color-active: #556986;
+	--baklava-control-color-hover: transparent;
+	--baklava-control-color-active: transparent;
 	--baklava-control-color-disabled-foreground: #666c75;
 	--baklava-control-border-radius: 3px;
 	--baklava-port-color-background: var(--common-white);
@@ -13,7 +13,7 @@
 	--baklava-sidebar-color-foreground: white;
 	--baklava-node-color-background: rgba(255, 255, 255, 0.9);
 	--baklava-node-color-foreground: var(--common-black);
-	--baklava-node-color-selected: var(--baklava-control-color-primary);
+	--baklava-node-color-selected: transparent;
 	--baklava-node-title-color-background: var(--additional-paleGreen);
 	--baklava-node-title-color-foreground: var(--additional-green);
 	--baklava-group-node-title-color-background: #215636;
@@ -22,9 +22,9 @@
 	--baklava-color-connection-default: var(--common-dullSky);
 	--baklava-color-connection-allowed: #48bc79;
 	--baklava-color-connection-forbidden: #bc4848;
-	--baklava-editor-background-pattern-default: #202b3c;
-	--baklava-editor-background-pattern-line: #263140;
-	--baklava-editor-background-pattern-black: #263140;
+	--baklava-editor-background-pattern-default: transparent;
+	--baklava-editor-background-pattern-line: #fafbff;
+	--baklava-editor-background-pattern-black: #fafbff;
 	--baklava-context-menu-background: #1b202c;
 	--baklava-context-menu-shadow: 0 0 8px rgba(0, 0, 0, 0.65);
 	--baklava-toolbar-background: #1b202caa;

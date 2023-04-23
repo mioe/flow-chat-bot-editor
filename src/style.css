@@ -13,6 +13,10 @@
 	-webkit-text-size-adjust: 100%;
 }
 
+button {
+	color: inherit;
+}
+
 /* box sizing rules */
 *,
 *::before,
