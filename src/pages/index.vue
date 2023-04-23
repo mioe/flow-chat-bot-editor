@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import {
 	EditorComponent,
 	useBaklava,
@@ -72,9 +71,6 @@ console.log('🦕 END (between)', e)
 		</template> -->
 		</EditorComponent>
 
-		<div class="fixed bottom-[80px] right-[40px] z-999 bg-red-300">
-			{{ scale }}
-		</div>
 		<ChatBotsHistoryAndZoomPicker
 			v-model:scale="baklava.displayedGraph.scaling"
 		/>

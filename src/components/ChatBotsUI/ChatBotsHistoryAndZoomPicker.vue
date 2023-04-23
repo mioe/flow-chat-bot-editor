@@ -9,11 +9,11 @@ const props = defineProps({
 	},
 	step: {
 		type: Number,
-		default: 0.25,
+		default: 0.1,
 	},
 	min: {
 		type: Number,
-		default: 0.25,
+		default: 0.1,
 	},
 	max: {
 		type: Number,
@@ -46,28 +46,28 @@ const zoomPercent = computed(() => (zoom.value * 100).toFixed(0))
 <template>
 	<footer class="absolute flex gap-[8px] right-[32px] bottom-[32px]">
 		<button
-			class="w-[32px] h-[32px] bg-white flex items-center justify-center rounded-[8px] border border-solid border-$common-rain"
+			class="w-[32px] h-[32px] bg-white flex items-center justify-center cursor-pointer rounded-[8px] border border-solid border-$common-rain"
 		>
-			R
+			<div class="i-mi:circle-arrow-redo" />
 		</button>
 		<button
-			class="w-[32px] h-[32px] bg-white flex items-center justify-center rounded-[8px] border border-solid border-$common-rain"
+			class="w-[32px] h-[32px] bg-white flex items-center justify-center cursor-pointer rounded-[8px] border border-solid border-$common-rain"
 		>
-			U
+			<div class="i-mi:circle-arrow-undo" />
 		</button>
 		<div class="flex gap-[4px] items-center bg-white rounded-[8px] border border-solid border-$common-rain">
 			<button
-				class="w-[32px] h-[32px] flex items-center justify-center border-0 bg-transparent"
+				class="w-[32px] h-[32px] flex items-center justify-center cursor-pointer border-0 bg-transparent"
 				@click="handleZoomDown"
 			>
-				-
+				<div class="i-mi:minus" />
 			</button>
 			<span class="text-[16px]">{{ zoomPercent }}%</span>
 			<button
-				class="w-[32px] h-[32px] flex items-center justify-center border-0 bg-transparent"
+				class="w-[32px] h-[32px] flex items-center justify-center cursor-pointer border-0 bg-transparent"
 				@click="handleZoomUp"
 			>
-				+
+				<div class="i-mi:plus" />
 			</button>
 		</div>
 	</footer>
