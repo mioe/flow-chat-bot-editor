@@ -12,7 +12,7 @@ import { DisplayNode } from '~/components/DisplayNode'
 import { MathNode } from '~/components/MathNode'
 import { TestNode } from '~/components/TestNode'
 
-const baklava = useBaklava()
+const baklava = useBaklava() as any
 const engine = new DependencyEngine(baklava.editor)
 
 baklava.editor.registerNodeType(MathNode)
