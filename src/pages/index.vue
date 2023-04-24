@@ -8,9 +8,12 @@ import {
 import '~/assets/styles/SenderTheme.css'
 import ChatBotsHistoryAndZoomPicker from '~/components/ChatBotsUI/ChatBotsHistoryAndZoomPicker.vue'
 
+import CustomNodeRenderer from '~/components/CustomNodeRenderer'
+
 import { DisplayNode } from '~/components/DisplayNode'
 import { MathNode } from '~/components/MathNode'
 import { TestNode } from '~/components/TestNode'
+import { MyNode } from '~/components/MyNode'
 
 const baklava = useBaklava() as any
 const engine = new DependencyEngine(baklava.editor)
@@ -18,6 +21,7 @@ const engine = new DependencyEngine(baklava.editor)
 baklava.editor.registerNodeType(MathNode)
 baklava.editor.registerNodeType(DisplayNode)
 baklava.editor.registerNodeType(TestNode)
+baklava.editor.registerNodeType(MyNode)
 
 const token = Symbol()
 engine.events.afterRun.subscribe(token, (result) => {
@@ -49,10 +53,6 @@ baklava.displayedGraph.addConnection(
 	node2.inputs.value,
 )
 
-const emit = defineEmits([
-	'done',
-])
-
 const e = Date.now() - s
 console.log('🦕 END (between)', e)
 </script>
@@ -65,6 +65,13 @@ console.log('🦕 END (between)', e)
 		>
 			<template #toolbar>
 				<div />
+			</template>
+
+			<template #node="nodeProps">
+				<CustomNodeRenderer
+					:key="nodeProps.node.id"
+					v-bind="nodeProps"
+				/>
 			</template>
 		<!-- <template #palette>
 			<div />
