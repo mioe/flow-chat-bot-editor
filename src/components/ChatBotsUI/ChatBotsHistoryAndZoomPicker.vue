@@ -48,12 +48,12 @@ const zoomPercent = computed(() => (zoom.value * 100).toFixed(0))
 		<button
 			class="w-[32px] h-[32px] bg-white flex items-center justify-center cursor-pointer rounded-[8px] border border-solid border-$common-rain"
 		>
-			<div class="i-mi:circle-arrow-redo" />
+			<div class="i-mi:circle-arrow-undo" />
 		</button>
 		<button
 			class="w-[32px] h-[32px] bg-white flex items-center justify-center cursor-pointer rounded-[8px] border border-solid border-$common-rain"
 		>
-			<div class="i-mi:circle-arrow-undo" />
+			<div class="i-mi:circle-arrow-redo" />
 		</button>
 		<div class="flex gap-[4px] items-center bg-white rounded-[8px] border border-solid border-$common-rain">
 			<button

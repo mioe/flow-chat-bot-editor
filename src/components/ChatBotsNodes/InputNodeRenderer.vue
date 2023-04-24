@@ -14,7 +14,7 @@
 		>
 			<template v-if="!renaming">
 				<div class="__title-label">
-					{{ node.title }}
+					06 {{ node.title }}
 				</div>
 				<div class="__menu">
 					MENU

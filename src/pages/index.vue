@@ -9,11 +9,20 @@ import '~/assets/styles/SenderTheme.css'
 import ChatBotsHistoryAndZoomPicker from '~/components/ChatBotsUI/ChatBotsHistoryAndZoomPicker.vue'
 
 import CustomNodeRenderer from '~/components/CustomNodeRenderer'
+import {
+	StartNode,
+	ActionNode,
+	IdleNode,
+	IfNode,
+	MessageNode,
+	InputNode,
+	RedirectNode,
+	TemplateWabaNode,
+} from '~/components/ChatBotsNodes'
 
 import { DisplayNode } from '~/components/DisplayNode'
 import { MathNode } from '~/components/MathNode'
 import { TestNode } from '~/components/TestNode'
-import { MyNode } from '~/components/MyNode'
 
 const baklava = useBaklava() as any
 const engine = new DependencyEngine(baklava.editor)
@@ -21,7 +30,15 @@ const engine = new DependencyEngine(baklava.editor)
 baklava.editor.registerNodeType(MathNode)
 baklava.editor.registerNodeType(DisplayNode)
 baklava.editor.registerNodeType(TestNode)
-baklava.editor.registerNodeType(MyNode)
+
+baklava.editor.registerNodeType(StartNode)
+baklava.editor.registerNodeType(ActionNode)
+baklava.editor.registerNodeType(IdleNode)
+baklava.editor.registerNodeType(IfNode)
+baklava.editor.registerNodeType(MessageNode)
+baklava.editor.registerNodeType(InputNode)
+baklava.editor.registerNodeType(RedirectNode)
+baklava.editor.registerNodeType(TemplateWabaNode)
 
 const token = Symbol()
 engine.events.afterRun.subscribe(token, (result) => {
