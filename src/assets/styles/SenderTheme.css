@@ -571,7 +571,7 @@
 }
 .baklava-node > .__title {
 	display: flex;
-	background: var(--baklava-node-title-color-background);
+	background-color: var(--baklava-node-title-color-background);
 	font-weight: 600;
 	color: var(--baklava-node-title-color-foreground);
 	padding: 12px 16px;
@@ -579,9 +579,30 @@
 	cursor: grab;
 }
 
-.baklava-node > .__title.ps-palegreen-topbar {
-	background-color: var(--additional-paleGreen);
-	color: var(--additional-green);
+.baklava-node[data-node-type="ActionNode"] > .__title {
+	background-color: var(--additional-palePurple);
+	color: var(--additional-purple);
+}
+
+.baklava-node[data-node-type="IdleNode"] > .__title {
+	background-color: var(--additional-palePink);
+	color: var(--additional-pink);
+}
+
+.baklava-node[data-node-type="IfNode"] > .__title {
+	background-color: var(--additional-paleOrange);
+	color: var(--additional-orange);
+}
+
+.baklava-node[data-node-type="MessageNode"] > .__title,
+.baklava-node[data-node-type="InputNode"] > .__title {
+	background-color: var(--additional-paleBlue);
+	color: var(--additional-blue);
+}
+
+.baklava-node[data-node-type="RedirectNode"] > .__title {
+	background-color: var(--common-smog);
+	color: var(--common-darkWater);
 }
 
 .baklava-node > .__title > *:first-child {

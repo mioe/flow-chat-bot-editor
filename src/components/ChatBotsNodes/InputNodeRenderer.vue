@@ -24,7 +24,7 @@ const emit = defineEmits<{
 		@select="emit('select')"
 	>
 		<template #title>
-			06 TITLE
+			06 Вложение
 		</template>
 	</BaseNode>
 </template>

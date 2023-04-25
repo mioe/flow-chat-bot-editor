@@ -24,7 +24,7 @@ const emit = defineEmits<{
 		@select="emit('select')"
 	>
 		<template #title>
-			08 TITLE
+			08 Шаблон WABA
 		</template>
 	</BaseNode>
 </template>

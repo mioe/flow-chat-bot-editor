@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, toRef, nextTick, onUpdated, onMounted } from 'vue'
-import { AbstractNode, GRAPH_NODE_TYPE_PREFIX, IGraphNode } from '@baklavajs/core'
+import { ref, computed, toRef, onUpdated, onMounted } from 'vue'
+import { AbstractNode } from '@baklavajs/core'
 import { useDragMove, useGraph, useViewModel } from 'baklavajs'
 
 const props = withDefaults(
@@ -18,34 +18,15 @@ const emit = defineEmits<{
 }>()
 
 const { viewModel } = useViewModel()
-const { graph, switchGraph } = useGraph()
+const { graph } = useGraph()
 // @ts-ignore
 const dragMove = useDragMove(toRef(props.node, 'position'))
 
 const el = ref<HTMLElement | null>(null)
-const renaming = ref(false)
-const tempName = ref('')
-const renameInputEl = ref<HTMLInputElement | null>(null)
-
-const showContextMenu = ref(false)
-const contextMenuItems = computed(() => {
-	const items = [
-		{ value: 'rename', label: 'Rename' },
-		{ value: 'delete', label: 'Delete' },
-	]
-
-	if (props.node.type.startsWith(GRAPH_NODE_TYPE_PREFIX)) {
-		items.push({ value: 'editSubgraph', label: 'Edit Subgraph' })
-	}
-
-	return items
-})
 
 const classes = computed(() => ({
 	'--selected': props.selected,
 	'--dragging': dragMove.dragging.value,
-	// @ts-ignore
-	'--two-column': !!props.node.twoColumn,
 }))
 
 const styles = computed(() => ({
@@ -56,6 +37,10 @@ const styles = computed(() => ({
 	// @ts-ignore
 	width: `${props.node.width ?? 200}px`,
 }))
+
+const onRemoveNode = () => {
+	graph.value.removeNode(props.node)
+}
 
 const displayedInputs = computed(() => Object.values(props.node.inputs).filter((ni) => !ni.hidden))
 const displayedOutputs = computed(() => Object.values(props.node.outputs).filter((ni) => !ni.hidden))
@@ -75,33 +60,6 @@ const stopDrag = () => {
 	dragMove.onPointerUp()
 	document.removeEventListener('pointermove', dragMove.onPointerMove)
 	document.removeEventListener('pointerup', stopDrag)
-}
-
-const openContextMenu = () => {
-	showContextMenu.value = true
-}
-
-const onContextMenuClick = async(action: string) => {
-	switch (action) {
-	case 'delete':
-		graph.value.removeNode(props.node)
-		break
-	case 'rename':
-		tempName.value = props.node.title
-		renaming.value = true
-		await nextTick()
-		renameInputEl.value?.focus()
-		break
-	case 'editSubgraph':
-		switchGraph((props.node as AbstractNode & IGraphNode).template)
-		break
-	}
-}
-
-const doneRenaming = () => {
-	// eslint-disable-next-line vue/no-mutating-props
-	props.node.title = tempName.value
-	renaming.value = false
 }
 
 const onRender = () => {
@@ -128,24 +86,14 @@ onUpdated(onRender)
 			class="__title"
 			@pointerdown.self.stop="startDrag"
 		>
-			<template v-if="!renaming">
-				<div class="__title-label">
-					<slot name="title" />
-				</div>
-				<div class="__menu">
-					MENU
-				</div>
-			</template>
-			<input
-				v-else
-				ref="renameInputEl"
-				v-model="tempName"
-				type="text"
-				class="baklava-input"
-				placeholder="Node Name"
-				@blur="doneRenaming"
-				@keydown.enter="doneRenaming"
-			>
+			<div class="__title-label">
+				<slot name="title" />
+			</div>
+			<div class="__menu">
+				<button @click="onRemoveNode">
+					D
+				</button>
+			</div>
 		</div>
 
 		<div class="__content">
