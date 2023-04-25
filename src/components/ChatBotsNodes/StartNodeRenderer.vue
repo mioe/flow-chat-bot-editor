@@ -9,12 +9,12 @@
 		@pointerdown="select"
 	>
 		<div
-			class="__title"
+			class="__title ps-palegreen-topbar"
 			@pointerdown.self.stop="startDrag"
 		>
 			<template v-if="!renaming">
 				<div class="__title-label">
-					01 {{ node.title }}
+					01 Старт
 				</div>
 				<div class="__menu">
 					MENU

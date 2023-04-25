@@ -1,61 +1,3 @@
-<template>
-	<div
-		:id="node.id"
-		ref="el"
-		class="baklava-node"
-		:class="classes"
-		:style="styles"
-		:data-node-type="node.type"
-		@pointerdown="select"
-	>
-		<div
-			class="__title"
-			@pointerdown.self.stop="startDrag"
-		>
-			<template v-if="!renaming">
-				<div class="__title-label">
-					02 {{ node.title }}
-				</div>
-				<div class="__menu">
-					MENU
-				</div>
-			</template>
-			<input
-				v-else
-				ref="renameInputEl"
-				v-model="tempName"
-				type="text"
-				class="baklava-input"
-				placeholder="Node Name"
-				@blur="doneRenaming"
-				@keydown.enter="doneRenaming"
-			>
-		</div>
-
-		<div class="__content">
-			<!-- Outputs -->
-			<div class="__outputs">
-				<!-- <NodeInterface
-					v-for="output in displayedOutputs"
-					:key="output.id"
-					:node="node"
-					:intf="output"
-				/> -->
-			</div>
-
-			<!-- Inputs -->
-			<div class="__inputs">
-				<!-- <NodeInterface
-					v-for="input in displayedInputs"
-					:key="input.id"
-					:node="node"
-					:intf="input"
-				/> -->
-			</div>
-		</div>
-	</div>
-</template>
-
 <script setup lang="ts">
 import { ref, computed, toRef, nextTick, onUpdated, onMounted } from 'vue'
 import { AbstractNode, GRAPH_NODE_TYPE_PREFIX, IGraphNode } from '@baklavajs/core'
@@ -63,10 +5,12 @@ import { useDragMove, useGraph, useViewModel } from 'baklavajs'
 
 const props = withDefaults(
 	defineProps<{
-			node: AbstractNode;
-			selected?: boolean;
+		node: AbstractNode;
+		selected?: boolean;
 	}>(),
-	{ selected: false },
+	{
+		selected: false,
+	},
 )
 
 const emit = defineEmits<{
@@ -169,3 +113,61 @@ const onRender = () => {
 onMounted(onRender)
 onUpdated(onRender)
 </script>
+
+<template>
+	<div
+		:id="node.id"
+		ref="el"
+		class="baklava-node"
+		:class="classes"
+		:style="styles"
+		:data-node-type="node.type"
+		@pointerdown="select"
+	>
+		<div
+			class="__title"
+			@pointerdown.self.stop="startDrag"
+		>
+			<template v-if="!renaming">
+				<div class="__title-label">
+					02 {{ node.title }}
+				</div>
+				<div class="__menu">
+					MENU
+				</div>
+			</template>
+			<input
+				v-else
+				ref="renameInputEl"
+				v-model="tempName"
+				type="text"
+				class="baklava-input"
+				placeholder="Node Name"
+				@blur="doneRenaming"
+				@keydown.enter="doneRenaming"
+			>
+		</div>
+
+		<div class="__content">
+			<!-- Outputs -->
+			<div class="__outputs">
+				<!-- <NodeInterface
+					v-for="output in displayedOutputs"
+					:key="output.id"
+					:node="node"
+					:intf="output"
+				/> -->
+			</div>
+
+			<!-- Inputs -->
+			<div class="__inputs">
+				<!-- <NodeInterface
+					v-for="input in displayedInputs"
+					:key="input.id"
+					:node="node"
+					:intf="input"
+				/> -->
+			</div>
+		</div>
+	</div>
+</template>
