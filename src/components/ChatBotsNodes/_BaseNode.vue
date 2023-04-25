@@ -2,6 +2,7 @@
 import { ref, computed, toRef, onUpdated, onMounted } from 'vue'
 import { AbstractNode } from '@baklavajs/core'
 import { useDragMove, useGraph, useViewModel } from 'baklavajs'
+import NodeInterface from './_BaseNodeInterface.vue'
 
 const props = withDefaults(
 	defineProps<{
@@ -124,22 +125,22 @@ onUpdated(onRender)
 		<div class="__content">
 			<!-- Outputs -->
 			<div class="__outputs">
-				<!-- <NodeInterface
+				<NodeInterface
 					v-for="output in displayedOutputs"
 					:key="output.id"
 					:node="node"
 					:intf="output"
-				/> -->
+				/>
 			</div>
 
 			<!-- Inputs -->
 			<div class="__inputs">
-				<!-- <NodeInterface
+				<NodeInterface
 					v-for="input in displayedInputs"
 					:key="input.id"
 					:node="node"
 					:intf="input"
-				/> -->
+				/>
 			</div>
 		</div>
 	</div>

@@ -7,7 +7,7 @@ import {
 } from 'baklavajs'
 import '~/assets/styles/SenderTheme.css'
 import ChatBotsHistoryAndZoomPicker from '~/components/ChatBotsUI/ChatBotsHistoryAndZoomPicker.vue'
-
+import CustomConnectionWrapper from '~/components/ChatBotsConnections/ConnectionWrapper.vue'
 import CustomNodeRenderer from '~/components/CustomNodeRenderer'
 import {
 	StartNode,
@@ -97,6 +97,10 @@ console.log('🦕 END (between)', e)
 		>
 			<template #toolbar>
 				<div />
+			</template>
+
+			<template #connection="connectionProps">
+				<CustomConnectionWrapper :connection="connectionProps.connection" />
 			</template>
 
 			<template #node="nodeProps">

@@ -1,4 +1,7 @@
-import { defineNode } from '@baklavajs/core'
+import {
+	defineNode,
+	NodeInterface,
+} from 'baklavajs'
 
 const DEFAULT_NODE_WIDTH = 369
 
@@ -8,6 +11,9 @@ export const StartNode = defineNode({
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
 	},
+	outputs: {
+		result: () => new NodeInterface('Result', 0),
+	},
 })
 
 export const ActionNode = defineNode({
@@ -16,6 +22,12 @@ export const ActionNode = defineNode({
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
 	},
+	outputs: {
+		result: () => new NodeInterface('Result', 0),
+	},
+	inputs: {
+		value: () => new NodeInterface('Value', ''),
+	},
 })
 
 export const IdleNode = defineNode({
@@ -23,6 +35,9 @@ export const IdleNode = defineNode({
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
+	},
+	inputs: {
+		value: () => new NodeInterface('Value', ''),
 	},
 })
 
