@@ -60,10 +60,25 @@ function addNodeWithCoordinates(nodeType: any, x: any, y: any) {
 const s = Date.now()
 console.log('🦕 START', s)
 
-const node1 = addNodeWithCoordinates(MathNode, 300, 140)
-const node2 = addNodeWithCoordinates(DisplayNode, 550, 140)
+const node1 = addNodeWithCoordinates(MathNode, 300, 900)
+const node2 = addNodeWithCoordinates(DisplayNode, 550, 900)
 
-addNodeWithCoordinates(TestNode, 200, -20)
+addNodeWithCoordinates(TestNode, 200, -120)
+
+const SHOW_ALL_NODES = [
+	StartNode,
+	ActionNode,
+	IdleNode,
+	IfNode,
+	MessageNode,
+	InputNode,
+	RedirectNode,
+	TemplateWabaNode,
+]
+SHOW_ALL_NODES.forEach((node, idx) => {
+	const y = idx * 100 + 16
+	addNodeWithCoordinates(node, 20, y)
+})
 
 baklava.displayedGraph.addConnection(
 	node1.outputs.result,
