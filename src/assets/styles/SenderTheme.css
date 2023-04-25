@@ -14,8 +14,8 @@
 	--baklava-node-color-background: rgba(255, 255, 255, 0.9);
 	--baklava-node-color-foreground: var(--common-black);
 	--baklava-node-color-selected: transparent;
-	--baklava-node-title-color-background: var(--common-white);
-	--baklava-node-title-color-foreground: var(--common-black);
+	--baklava-node-title-color-background: var(--additional-paleGreen);
+	--baklava-node-title-color-foreground: var(--additional-green);
 	--baklava-group-node-title-color-background: #215636;
 	--baklava-group-node-title-color-foreground: white;
 	--baklava-node-border-radius: 16px;

@@ -1,171 +1,30 @@
-<template>
-	<div
-		:id="node.id"
-		ref="el"
-		class="baklava-node"
-		:class="classes"
-		:style="styles"
-		:data-node-type="node.type"
-		@pointerdown="select"
-	>
-		<div
-			class="__title"
-			@pointerdown.self.stop="startDrag"
-		>
-			<template v-if="!renaming">
-				<div class="__title-label">
-					04 {{ node.title }}
-				</div>
-				<div class="__menu">
-					MENU
-				</div>
-			</template>
-			<input
-				v-else
-				ref="renameInputEl"
-				v-model="tempName"
-				type="text"
-				class="baklava-input"
-				placeholder="Node Name"
-				@blur="doneRenaming"
-				@keydown.enter="doneRenaming"
-			>
-		</div>
-
-		<div class="__content">
-			<!-- Outputs -->
-			<div class="__outputs">
-				<!-- <NodeInterface
-					v-for="output in displayedOutputs"
-					:key="output.id"
-					:node="node"
-					:intf="output"
-				/> -->
-			</div>
-
-			<!-- Inputs -->
-			<div class="__inputs">
-				<!-- <NodeInterface
-					v-for="input in displayedInputs"
-					:key="input.id"
-					:node="node"
-					:intf="input"
-				/> -->
-			</div>
-		</div>
-	</div>
-</template>
-
 <script setup lang="ts">
-import { ref, computed, toRef, nextTick, onUpdated, onMounted } from 'vue'
-import { AbstractNode, GRAPH_NODE_TYPE_PREFIX, IGraphNode } from '@baklavajs/core'
-import { useDragMove, useGraph, useViewModel } from 'baklavajs'
+import BaseNode from './_BaseNode.vue'
+import { AbstractNode } from '@baklavajs/core'
 
-const props = withDefaults(
+withDefaults(
 	defineProps<{
-			node: AbstractNode;
-			selected?: boolean;
+		node: AbstractNode;
+		selected?: boolean;
 	}>(),
-	{ selected: false },
+	{
+		selected: false,
+	},
 )
 
 const emit = defineEmits<{
 	(e: 'select'): void;
 }>()
-
-const { viewModel } = useViewModel()
-const { graph, switchGraph } = useGraph()
-// @ts-ignore
-const dragMove = useDragMove(toRef(props.node, 'position'))
-
-const el = ref<HTMLElement | null>(null)
-const renaming = ref(false)
-const tempName = ref('')
-const renameInputEl = ref<HTMLInputElement | null>(null)
-
-const showContextMenu = ref(false)
-const contextMenuItems = computed(() => {
-	const items = [
-		{ value: 'rename', label: 'Rename' },
-		{ value: 'delete', label: 'Delete' },
-	]
-
-	if (props.node.type.startsWith(GRAPH_NODE_TYPE_PREFIX)) {
-		items.push({ value: 'editSubgraph', label: 'Edit Subgraph' })
-	}
-
-	return items
-})
-
-const classes = computed(() => ({
-	'--selected': props.selected,
-	'--dragging': dragMove.dragging.value,
-	// @ts-ignore
-	'--two-column': !!props.node.twoColumn,
-}))
-
-const styles = computed(() => ({
-	// @ts-ignore
-	top: `${props.node.position?.y ?? 0}px`,
-	// @ts-ignore
-	left: `${props.node.position?.x ?? 0}px`,
-	// @ts-ignore
-	width: `${props.node.width ?? 200}px`,
-}))
-
-const displayedInputs = computed(() => Object.values(props.node.inputs).filter((ni) => !ni.hidden))
-const displayedOutputs = computed(() => Object.values(props.node.outputs).filter((ni) => !ni.hidden))
-
-const select = () => {
-	emit('select')
-}
-
-const startDrag = (ev: PointerEvent) => {
-	dragMove.onPointerDown(ev)
-	document.addEventListener('pointermove', dragMove.onPointerMove)
-	document.addEventListener('pointerup', stopDrag)
-	select()
-}
-
-const stopDrag = () => {
-	dragMove.onPointerUp()
-	document.removeEventListener('pointermove', dragMove.onPointerMove)
-	document.removeEventListener('pointerup', stopDrag)
-}
-
-const openContextMenu = () => {
-	showContextMenu.value = true
-}
-
-const onContextMenuClick = async(action: string) => {
-	switch (action) {
-	case 'delete':
-		graph.value.removeNode(props.node)
-		break
-	case 'rename':
-		tempName.value = props.node.title
-		renaming.value = true
-		await nextTick()
-		renameInputEl.value?.focus()
-		break
-	case 'editSubgraph':
-		switchGraph((props.node as AbstractNode & IGraphNode).template)
-		break
-	}
-}
-
-const doneRenaming = () => {
-	// eslint-disable-next-line vue/no-mutating-props
-	props.node.title = tempName.value
-	renaming.value = false
-}
-
-const onRender = () => {
-	if (el.value) {
-		viewModel.value.hooks.renderNode.execute({ node: props.node, el: el.value })
-	}
-}
-
-onMounted(onRender)
-onUpdated(onRender)
 </script>
+
+<template>
+	<BaseNode
+		:node="node"
+		:selected="selected"
+		@select="emit('select')"
+	>
+		<template #title>
+			04 TITLE
+		</template>
+	</BaseNode>
+</template>
