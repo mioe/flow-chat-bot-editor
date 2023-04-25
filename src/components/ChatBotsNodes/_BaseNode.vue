@@ -6,10 +6,14 @@ import { useDragMove, useGraph, useViewModel } from 'baklavajs'
 const props = withDefaults(
 	defineProps<{
 		node: AbstractNode;
+		idx?: number;
 		selected?: boolean;
+		hideActionButtons?: boolean;
 	}>(),
 	{
+		idx: 0,
 		selected: false,
+		hideActionButtons: false,
 	},
 )
 
@@ -40,6 +44,10 @@ const styles = computed(() => ({
 
 const onRemoveNode = () => {
 	graph.value.removeNode(props.node)
+}
+
+const onCopyNode = () => {
+	alert('TODO COPY')
 }
 
 const displayedInputs = computed(() => Object.values(props.node.inputs).filter((ni) => !ni.hidden))
@@ -87,13 +95,30 @@ onUpdated(onRender)
 			@pointerdown.self.stop="startDrag"
 		>
 			<div class="__title-label">
-				<slot name="title" />
+				<div>
+					{{ idx }}
+				</div>
+
+				<div class="w-[5px] h-[5px] bg-current rounded-full" />
+
+				<div>
+					<slot name="title" />
+				</div>
 			</div>
-			<div class="__menu">
-				<button @click="onRemoveNode">
-					D
-				</button>
-			</div>
+			<button
+				v-if="!hideActionButtons"
+				class="border-none bg-transparent p-0 m-0 w-[20px] h-[20px] shrink-0 flex items-center justify-center cursor-pointer"
+				@click="onRemoveNode"
+			>
+				<div class="i-mi:trash-s" />
+			</button>
+			<button
+				v-if="!hideActionButtons"
+				class="border-none bg-transparent p-0 m-0 w-[20px] h-[20px] shrink-0 flex items-center justify-center cursor-pointer"
+				@click="onCopyNode"
+			>
+				<div class="i-mi:copy-s" />
+			</button>
 		</div>
 
 		<div class="__content">

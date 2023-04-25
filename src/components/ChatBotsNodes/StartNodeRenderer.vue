@@ -21,10 +21,11 @@ const emit = defineEmits<{
 	<BaseNode
 		:node="node"
 		:selected="selected"
+		hide-action-buttons
 		@select="emit('select')"
 	>
 		<template #title>
-			01 Старт
+			Старт
 		</template>
 	</BaseNode>
 </template>

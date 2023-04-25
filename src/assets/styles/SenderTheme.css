@@ -571,6 +571,8 @@
 }
 .baklava-node > .__title {
 	display: flex;
+	align-items: center;
+	gap: 12px;
 	background-color: var(--baklava-node-title-color-background);
 	font-weight: 600;
 	color: var(--baklava-node-title-color-foreground);
@@ -610,10 +612,21 @@
 }
 .baklava-node > .__title > .__title-label {
 	pointer-events: none;
+	display: flex;
+	gap: 10px;
+	align-items: center;
 }
+
+.baklava-node > .__title > .__title-label > * {
+	pointer-events: none;
+}
+
 .baklava-node > .__title > .__menu {
 	position: relative;
 	cursor: initial;
+	display: flex;
+	flex-shrink: 0;
+	align-items: center;
 }
 .baklava-node[data-node-type^=__baklava_] > .__title {
 	background: var(--baklava-group-node-title-color-background);

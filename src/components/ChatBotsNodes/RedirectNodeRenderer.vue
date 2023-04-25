@@ -24,7 +24,7 @@ const emit = defineEmits<{
 		@select="emit('select')"
 	>
 		<template #title>
-			07 Другой бот
+			Другой бот
 		</template>
 	</BaseNode>
 </template>
