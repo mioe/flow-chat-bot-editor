@@ -11,8 +11,11 @@ export const StartNode = defineNode({
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
 	},
-	outputs: {
-		result: () => new NodeInterface('Result', 0),
+	inputs: {
+		input1: () => new NodeInterface('Да (input1)', 0),
+		input2: () => new NodeInterface('Кабачок (input2)', 0),
+		input3: () => new NodeInterface('Другой ответ (input3)', 0),
+		input4: () => new NodeInterface('Нет ответа 3 часа (input4)', 0),
 	},
 })
 
@@ -23,10 +26,7 @@ export const ActionNode = defineNode({
 		this.width = DEFAULT_NODE_WIDTH
 	},
 	outputs: {
-		result: () => new NodeInterface('Result', 0),
-	},
-	inputs: {
-		value: () => new NodeInterface('Value', ''),
+		output: () => new NodeInterface('Socket (output)', ''),
 	},
 })
 
@@ -36,8 +36,11 @@ export const IdleNode = defineNode({
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
 	},
+	outputs: {
+		output: () => new NodeInterface('Socket (output)', ''),
+	},
 	inputs: {
-		value: () => new NodeInterface('Value', ''),
+		input: () => new NodeInterface('Следующий шаг (input)', 0),
 	},
 })
 
@@ -54,6 +57,12 @@ export const MessageNode = defineNode({
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
+	},
+	outputs: {
+		output: () => new NodeInterface('Socket (output)', ''),
+	},
+	inputs: {
+		input: () => new NodeInterface('Следующий шаг (input)', 0),
 	},
 })
 
@@ -78,5 +87,11 @@ export const TemplateWabaNode = defineNode({
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
+	},
+	outputs: {
+		output: () => new NodeInterface('Socket (output)', ''),
+	},
+	inputs: {
+		input: () => new NodeInterface('Следующий шаг (input)', 0),
 	},
 })

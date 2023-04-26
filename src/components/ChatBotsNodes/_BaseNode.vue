@@ -77,6 +77,13 @@ const onRender = () => {
 	}
 }
 
+// @ts-ignore
+// eslint-disable-next-line no-unsafe-optional-chaining
+const X = computed(() => (props.node.position?.x).toFixed())
+// @ts-ignore
+// eslint-disable-next-line no-unsafe-optional-chaining
+const Y = computed(() => (props.node.position?.y).toFixed())
+
 onMounted(onRender)
 onUpdated(onRender)
 </script>
@@ -97,7 +104,7 @@ onUpdated(onRender)
 		>
 			<div class="__title-label">
 				<div>
-					{{ idx }}
+					{{ X }}:{{ Y }}
 				</div>
 
 				<div class="w-[5px] h-[5px] bg-current rounded-full" />

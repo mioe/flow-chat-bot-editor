@@ -29,9 +29,9 @@ import { TestNode } from '~/components/TestNode'
 const baklava = useBaklava() as any
 const engine = new DependencyEngine(baklava.editor)
 
-baklava.editor.registerNodeType(MathNode)
-baklava.editor.registerNodeType(DisplayNode)
-baklava.editor.registerNodeType(TestNode)
+// baklava.editor.registerNodeType(MathNode)
+// baklava.editor.registerNodeType(DisplayNode)
+// baklava.editor.registerNodeType(TestNode)
 
 baklava.editor.registerNodeType(StartNode)
 baklava.editor.registerNodeType(ActionNode)
@@ -62,10 +62,13 @@ function addNodeWithCoordinates(nodeType: any, x: any, y: any) {
 const s = Date.now()
 console.log('🦕 START', s)
 
-const node1 = addNodeWithCoordinates(MathNode, 300, 900)
-const node2 = addNodeWithCoordinates(DisplayNode, 550, 900)
+// const node1 = addNodeWithCoordinates(MathNode, 300, 900)
+// const node2 = addNodeWithCoordinates(DisplayNode, 550, 900)
 
-addNodeWithCoordinates(TestNode, 200, -120)
+// baklava.displayedGraph.addConnection(
+// 	node1.outputs.result,
+// 	node2.inputs.value,
+// )
 
 const SHOW_ALL_NODES = [
 	StartNode,
@@ -79,20 +82,60 @@ const SHOW_ALL_NODES = [
 ]
 SHOW_ALL_NODES.forEach((node, idx) => {
 	const y = idx * 100 + 16
-	addNodeWithCoordinates(node, 20, y)
+	addNodeWithCoordinates(node, -420, y)
 })
 
+const DEMO_START = addNodeWithCoordinates(StartNode, 32, 32)
+const DEMO_MESSAGE1 = addNodeWithCoordinates(MessageNode, 466, 32)
+const DEMO_MESSAGE2 = addNodeWithCoordinates(MessageNode, 520, 216)
+const DEMO_ACTION1 = addNodeWithCoordinates(ActionNode, 480, 400)
+const DEMO_ACTION2 = addNodeWithCoordinates(ActionNode, 400, 680)
+const DEMO_IDLE = addNodeWithCoordinates(IdleNode, 866, 74)
+const DEMO_TEMPLATE_WABA = addNodeWithCoordinates(TemplateWabaNode, 1010, 407)
+
 baklava.displayedGraph.addConnection(
-	node1.outputs.result,
-	node2.inputs.value,
+	DEMO_START.inputs.input1,
+	DEMO_MESSAGE1.outputs.output,
+)
+baklava.displayedGraph.addConnection(
+	DEMO_START.inputs.input2,
+	DEMO_MESSAGE2.outputs.output,
+)
+baklava.displayedGraph.addConnection(
+	DEMO_START.inputs.input3,
+	DEMO_ACTION1.outputs.output,
+)
+baklava.displayedGraph.addConnection(
+	DEMO_START.inputs.input4,
+	DEMO_ACTION2.outputs.output,
 )
 
-const e = Date.now() - s
-console.log('🦕 END (between)', e)
+baklava.displayedGraph.addConnection(
+	DEMO_MESSAGE1.inputs.input,
+	DEMO_IDLE.outputs.output,
+)
+
+baklava.displayedGraph.addConnection(
+	DEMO_MESSAGE2.inputs.input,
+	DEMO_ACTION2.outputs.output,
+)
+
+baklava.displayedGraph.addConnection(
+	DEMO_IDLE.inputs.input,
+	DEMO_TEMPLATE_WABA.outputs.output,
+)
+
+baklava.displayedGraph.addConnection(
+	DEMO_TEMPLATE_WABA.inputs.input,
+	DEMO_ACTION2.outputs.output,
+)
 
 const PS_CONNECTION_ARROW_OFFSET = computed(() => {
 	return 6 * baklava.editor.graph.scaling
 })
+
+const e = Date.now() - s
+console.log('🦕 END (between)', e)
 </script>
 
 <template>
