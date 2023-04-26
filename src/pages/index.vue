@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import {
 	EditorComponent,
 	useBaklava,
@@ -88,6 +89,10 @@ baklava.displayedGraph.addConnection(
 
 const e = Date.now() - s
 console.log('🦕 END (between)', e)
+
+const PS_CONNECTION_ARROW_OFFSET = computed(() => {
+	return 6 * baklava.editor.graph.scaling
+})
 </script>
 
 <template>
@@ -113,7 +118,7 @@ console.log('🦕 END (between)', e)
 						viewBox="-10 -10 20 20"
 						markerUnits="strokeWidth"
 						orient="auto-start-reverse"
-						refX="6"
+						:refX="PS_CONNECTION_ARROW_OFFSET"
 						refY="0"
 					>
 						<polyline

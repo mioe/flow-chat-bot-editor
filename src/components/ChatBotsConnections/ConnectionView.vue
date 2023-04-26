@@ -90,6 +90,14 @@ export default defineComponent({
 			return [tx, ty]
 		}
 
+		const transformConstants = (size: number) => {
+			// @ts-ignore
+			return size * graph.value.scaling
+		}
+
+		const DEFAULT_RADIUS = transformConstants(5)
+		const DEFAULT_OFFSET = transformConstants(30)
+
 		const handleDirections = {
 			[Position.Left]: { x: -1, y: 0 },
 			[Position.Right]: { x: 1, y: 0 },
@@ -249,10 +257,10 @@ export default defineComponent({
 			targetX,
 			targetY,
 			targetPosition = Position.Top,
-			borderRadius = 5,
+			borderRadius = DEFAULT_RADIUS,
 			centerX,
 			centerY,
-			offset = 30,
+			offset = DEFAULT_OFFSET,
 		}: GetSmoothStepPathParams): [path: string, labelX: number, labelY: number, offsetX: number, offsetY: number] {
 			const [points, labelX, labelY, offsetX, offsetY] = getPoints({
 				source: { x: sourceX, y: sourceY },
