@@ -1,21 +1,11 @@
 <template>
-	<marker
-		id="pointer"
-		markerWidth="20"
-		markerHeight="16"
-		refX="9.5"
-		refY="5.1"
-		orient="auto"
-		markerUnits="userSpaceOnUse"
-	>
-		<polyline points="1 1, 9 5, 1 7" />
-	</marker>
 	<connection-view
 		:x1="d.x1"
 		:y1="d.y1"
 		:x2="d.x2"
 		:y2="d.y2"
 		:state="state"
+		with-arrow
 	/>
 </template>
 
@@ -104,9 +94,3 @@ export default defineComponent({
 	},
 })
 </script>
-
-<style scoped>
-polyline {
-	vector-effect: non-scaling-stroke;
-}
-</style>

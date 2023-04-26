@@ -8,6 +8,7 @@ import {
 import '~/assets/styles/SenderTheme.css'
 import ChatBotsHistoryAndZoomPicker from '~/components/ChatBotsUI/ChatBotsHistoryAndZoomPicker.vue'
 import CustomConnectionWrapper from '~/components/ChatBotsConnections/ConnectionWrapper.vue'
+import CustomTemporaryConnection from '~/components/ChatBotsConnections/TemporaryConnection.vue'
 import CustomNodeRenderer from '~/components/CustomNodeRenderer'
 import {
 	StartNode,
@@ -101,6 +102,35 @@ console.log('🦕 END (between)', e)
 
 			<template #connection="connectionProps">
 				<CustomConnectionWrapper :connection="connectionProps.connection" />
+			</template>
+
+			<template #temporaryConnection="{ temporaryConnection }">
+				<defs>
+					<marker
+						id="ps-connection-arrow"
+						markerWidth="12.5"
+						markerHeight="12.5"
+						viewBox="-10 -10 20 20"
+						markerUnits="strokeWidth"
+						orient="auto-start-reverse"
+						refX="6"
+						refY="0"
+					>
+						<polyline
+							stroke="#b6c7d6"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="1"
+							fill="#b6c7d6"
+							points="-6,-3 0,0 -6,3 -6,-3"
+						/>
+					</marker>
+				</defs>
+
+				<CustomTemporaryConnection
+					v-if="temporaryConnection"
+					:connection="temporaryConnection"
+				/>
 			</template>
 
 			<template #node="nodeProps">
