@@ -1,35 +1,3 @@
-<template>
-	<div
-		:id="intf.id"
-		ref="el"
-		class="baklava-node-interface"
-		:class="classes"
-	>
-		<div
-			v-if="intf.port"
-			class="__port"
-			@pointerover="startHover"
-			@pointerout="endHover"
-		/>
-		<!-- eslint-disable vue/no-mutating-props -->
-		<component
-			:is="intf.component"
-			v-if="showComponent"
-			v-model="intf.value"
-			:node="node"
-			:intf="intf"
-			@open-sidebar="openSidebar"
-		/>
-		<!-- eslint-enabled vue/no-mutating-props -->
-		<span
-			v-else
-			class="align-middle"
-		>
-			{{ intf.name }}
-		</span>
-	</div>
-</template>
-
 <script lang="ts">
 import { computed, defineComponent, inject, onMounted, onUpdated, Ref, ref } from 'vue'
 import { AbstractNode, NodeInterface } from '@baklavajs/core'
@@ -76,18 +44,45 @@ export default defineComponent({
 			}
 		}
 
-		const openSidebar = () => {
-			// @ts-ignore
-			const sidebar = viewModel.value.displayedGraph.sidebar
-			sidebar.nodeId = props.node.id
-			sidebar.optionName = props.intf.name
-			sidebar.visible = true
-		}
-
 		onMounted(onRender)
 		onUpdated(onRender)
 
-		return { el, isConnected, classes, showComponent, startHover, endHover, openSidebar }
+		return { el, isConnected, classes, showComponent, startHover, endHover }
 	},
 })
 </script>
+
+<template>
+	<div
+		:id="intf.id"
+		ref="el"
+		class="baklava-input-node-interface"
+		:class="classes"
+	>
+		<div
+			v-if="intf.port"
+			class="__port"
+			@pointerover="startHover"
+			@pointerout="endHover"
+		/>
+	</div>
+</template>
+
+<style>
+.baklava-input-node-interface {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	width: 100%;
+	height: 100%;
+	background-color: transparent;
+	border-radius: var(--baklava-node-border-radius);
+}
+
+.baklava-input-node-interface > .__port {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+</style>

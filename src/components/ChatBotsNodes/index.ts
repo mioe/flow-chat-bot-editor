@@ -2,6 +2,7 @@ import {
 	defineNode,
 	NodeInterface,
 } from 'baklavajs'
+import { allowMultipleConnections } from '@baklavajs/engine'
 
 const DEFAULT_NODE_WIDTH = 369
 
@@ -28,7 +29,7 @@ export const ActionNode = defineNode({
 		this.width = DEFAULT_NODE_WIDTH
 	},
 	inputs: {
-		input: () => new NodeInterface('Socket (input)', ''),
+		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
 })
 
@@ -40,7 +41,7 @@ export const IdleNode = defineNode({
 		this.width = DEFAULT_NODE_WIDTH
 	},
 	inputs: {
-		input: () => new NodeInterface('Socket (input)', ''),
+		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
 	outputs: {
 		output: () => new NodeInterface('Следующий шаг (output)', 0),
@@ -64,7 +65,7 @@ export const MessageNode = defineNode({
 		this.width = DEFAULT_NODE_WIDTH
 	},
 	inputs: {
-		input: () => new NodeInterface('Socket (input)', ''),
+		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
 	outputs: {
 		output: () => new NodeInterface('Следующий шаг (output)', 0),
@@ -97,7 +98,7 @@ export const TemplateWabaNode = defineNode({
 		this.width = DEFAULT_NODE_WIDTH
 	},
 	inputs: {
-		input: () => new NodeInterface('Socket (input)', ''),
+		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
 	outputs: {
 		output: () => new NodeInterface('Следующий шаг (output)', 0),

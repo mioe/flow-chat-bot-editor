@@ -13,9 +13,10 @@
 import { computed, defineComponent, ref, onBeforeUnmount, onMounted, nextTick, watch } from 'vue'
 import { Connection } from '@baklavajs/core'
 import ConnectionView from './ConnectionView.vue'
-import resolveDom, { IResolvedDomElements } from './domResolver'
+import resolveDom from './domResolver'
 import { TemporaryConnectionState } from './connection'
 import { useGraph } from 'baklavajs'
+import { getOutputPortCoordinates, getInputPortCoordinates } from './portCoordinates'
 
 export default defineComponent({
 	components: {
@@ -43,23 +44,6 @@ export default defineComponent({
 		// @ts-ignore
 		const toNodePosition = computed(() => graph.value.findNodeById(props.connection.to.nodeId)?.position)
 
-		const getPortCoordinates = (resolved: IResolvedDomElements): [number, number] => {
-			if (resolved.node && resolved.interface && resolved.port) {
-				return [
-					resolved.node.offsetLeft +
-						resolved.interface.offsetLeft +
-						resolved.port.offsetLeft +
-						resolved.port.clientWidth / 2,
-					resolved.node.offsetTop +
-						resolved.interface.offsetTop +
-						resolved.port.offsetTop +
-						resolved.port.clientHeight / 2,
-				]
-			} else {
-				return [0, 0]
-			}
-		}
-
 		const updateCoords = () => {
 			const from = resolveDom(props.connection.from)
 			const to = resolveDom(props.connection.to)
@@ -72,8 +56,8 @@ export default defineComponent({
 					resizeObserver.observe(to.node)
 				}
 			}
-			const [x1, y1] = getPortCoordinates(from)
-			const [x2, y2] = getPortCoordinates(to)
+			const [x1, y1] = getOutputPortCoordinates(from)
+			const [x2, y2] = getInputPortCoordinates(to)
 			d.value = { x1, y1, x2, y2 }
 		}
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref } from 'vue'
 import {
 	EditorComponent,
 	useBaklava,
@@ -22,16 +22,8 @@ import {
 	TemplateWabaNode,
 } from '~/components/ChatBotsNodes'
 
-import { DisplayNode } from '~/components/DisplayNode'
-import { MathNode } from '~/components/MathNode'
-import { TestNode } from '~/components/TestNode'
-
 const baklava = useBaklava() as any
 const engine = new DependencyEngine(baklava.editor)
-
-// baklava.editor.registerNodeType(MathNode)
-// baklava.editor.registerNodeType(DisplayNode)
-// baklava.editor.registerNodeType(TestNode)
 
 baklava.editor.registerNodeType(StartNode)
 baklava.editor.registerNodeType(ActionNode)
@@ -62,14 +54,6 @@ function addNodeWithCoordinates(nodeType: any, x: any, y: any) {
 const s = Date.now()
 console.log('🦕 START', s)
 
-// const node1 = addNodeWithCoordinates(MathNode, 300, 900)
-// const node2 = addNodeWithCoordinates(DisplayNode, 550, 900)
-
-// baklava.displayedGraph.addConnection(
-// 	node1.outputs.result,
-// 	node2.inputs.value,
-// )
-
 const SHOW_ALL_NODES = [
 	StartNode,
 	ActionNode,
@@ -93,9 +77,22 @@ const DEMO_MESSAGE1 = addNodeWithCoordinates(MessageNode, 466, 32)
 // const DEMO_IDLE = addNodeWithCoordinates(IdleNode, 866, 74)
 // const DEMO_TEMPLATE_WABA = addNodeWithCoordinates(TemplateWabaNode, 1010, 407)
 
-const PS_CONNECTION_ARROW_OFFSET = computed(() => {
-	return 6 * baklava.editor.graph.scaling
+baklava.editor.graphEvents.beforeAddConnection.subscribe(token, (conn: any, prevent: any) => {
+	// check, whether the user should be able to create this connection.
+	// if (/* user not allowed to create connection */) {
+	console.log('🦕 conn', conn, prevent)
+	// prevent()
+	// return
+	// }
 })
+
+const outputEnabled = ref(false)
+const handleEnabledOutputPorts = () => {
+	outputEnabled.value = true
+}
+const handleDisabledOutputPorts = () => {
+	outputEnabled.value = false
+}
 
 const e = Date.now() - s
 console.log('🦕 END (between)', e)
@@ -124,7 +121,7 @@ console.log('🦕 END (between)', e)
 						viewBox="-10 -10 20 20"
 						markerUnits="strokeWidth"
 						orient="auto-start-reverse"
-						:refX="PS_CONNECTION_ARROW_OFFSET"
+						refX="0"
 						refY="0"
 					>
 						<polyline
@@ -141,6 +138,8 @@ console.log('🦕 END (between)', e)
 				<CustomTemporaryConnection
 					v-if="temporaryConnection"
 					:connection="temporaryConnection"
+					@enabled-output-ports="handleEnabledOutputPorts"
+					@disabled-output-ports="handleDisabledOutputPorts"
 				/>
 			</template>
 
@@ -148,8 +147,10 @@ console.log('🦕 END (between)', e)
 				<CustomNodeRenderer
 					:key="nodeProps.node.id"
 					v-bind="nodeProps"
+					:output-enabled="outputEnabled"
 				/>
 			</template>
+
 		<!-- <template #palette>
 			<div />
 		</template> -->

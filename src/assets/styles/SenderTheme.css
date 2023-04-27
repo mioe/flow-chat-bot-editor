@@ -637,9 +637,6 @@
 	background-color: var(--baklava-node-color-background);
 	border-radius: 0 0 var(--baklava-node-border-radius) var(--baklava-node-border-radius);
 }
-.baklava-node > .__content > div > div {
-	margin: 0.5em 0;
-}
 .baklava-node.--two-column > .__content {
 	display: grid;
 	grid-template-columns: 1fr 1fr;

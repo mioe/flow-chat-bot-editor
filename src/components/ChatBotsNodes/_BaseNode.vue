@@ -2,19 +2,22 @@
 import { ref, computed, toRef, onUpdated, onMounted } from 'vue'
 import { AbstractNode } from '@baklavajs/core'
 import { useDragMove, useGraph, useViewModel } from 'baklavajs'
-import NodeInterface from './_BaseNodeInterface.vue'
+import OutputNodeInterface from './_BaseOutputNodeInterface.vue'
+import InputNodeInterface from './_BaseInputNodeInterface.vue'
 
 const props = withDefaults(
 	defineProps<{
-		node: AbstractNode;
-		idx?: number;
-		selected?: boolean;
-		hideActionButtons?: boolean;
+		node: AbstractNode
+		idx?: number
+		selected?: boolean
+		hideActionButtons?: boolean
+		outputEnabled?: boolean
 	}>(),
 	{
 		idx: 0,
 		selected: false,
 		hideActionButtons: false,
+		outputEnabled: false,
 	},
 )
 
@@ -132,7 +135,7 @@ onUpdated(onRender)
 		<div class="__content">
 			<!-- Outputs -->
 			<div class="__outputs">
-				<NodeInterface
+				<OutputNodeInterface
 					v-for="output in displayedOutputs"
 					:key="output.id"
 					:node="node"
@@ -141,8 +144,11 @@ onUpdated(onRender)
 			</div>
 
 			<!-- Inputs -->
-			<div class="__inputs">
-				<NodeInterface
+			<div
+				v-show="outputEnabled"
+				class="__inputs"
+			>
+				<InputNodeInterface
 					v-for="input in displayedInputs"
 					:key="input.id"
 					:node="node"
