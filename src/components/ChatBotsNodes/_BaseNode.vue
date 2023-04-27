@@ -110,7 +110,7 @@ onUpdated(onRender)
 				<div class="w-[5px] h-[5px] bg-current rounded-full" />
 
 				<div>
-					<slot name="title" />
+					{{ node.title }}
 				</div>
 			</div>
 			<button

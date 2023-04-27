@@ -23,9 +23,5 @@ const emit = defineEmits<{
 		:selected="selected"
 		hide-action-buttons
 		@select="emit('select')"
-	>
-		<template #title>
-			Старт
-		</template>
-	</BaseNode>
+	/>
 </template>

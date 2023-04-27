@@ -7,6 +7,7 @@ const DEFAULT_NODE_WIDTH = 369
 
 export const StartNode = defineNode({
 	type: 'StartNode',
+	title: 'Старт',
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
@@ -21,6 +22,7 @@ export const StartNode = defineNode({
 
 export const ActionNode = defineNode({
 	type: 'ActionNode',
+	title: 'Действие',
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
@@ -32,6 +34,7 @@ export const ActionNode = defineNode({
 
 export const IdleNode = defineNode({
 	type: 'IdleNode',
+	title: 'Задержка',
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
@@ -46,6 +49,7 @@ export const IdleNode = defineNode({
 
 export const IfNode = defineNode({
 	type: 'IfNode',
+	title: 'Условие',
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
@@ -54,6 +58,7 @@ export const IfNode = defineNode({
 
 export const MessageNode = defineNode({
 	type: 'MessageNode',
+	title: 'Сообщение',
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
@@ -68,6 +73,7 @@ export const MessageNode = defineNode({
 
 export const InputNode = defineNode({
 	type: 'InputNode',
+	title: 'Вложение',
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
@@ -76,6 +82,7 @@ export const InputNode = defineNode({
 
 export const RedirectNode = defineNode({
 	type: 'RedirectNode',
+	title: 'Другой бот',
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
@@ -84,6 +91,7 @@ export const RedirectNode = defineNode({
 
 export const TemplateWabaNode = defineNode({
 	type: 'TemplateWabaNode',
+	title: 'Шаблон WABA',
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH

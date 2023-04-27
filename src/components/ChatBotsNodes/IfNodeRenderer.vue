@@ -22,9 +22,5 @@ const emit = defineEmits<{
 		:node="node"
 		:selected="selected"
 		@select="emit('select')"
-	>
-		<template #title>
-			Условие
-		</template>
-	</BaseNode>
+	/>
 </template>
