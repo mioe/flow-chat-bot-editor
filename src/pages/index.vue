@@ -87,48 +87,11 @@ SHOW_ALL_NODES.forEach((node, idx) => {
 
 const DEMO_START = addNodeWithCoordinates(StartNode, 32, 32)
 const DEMO_MESSAGE1 = addNodeWithCoordinates(MessageNode, 466, 32)
-const DEMO_MESSAGE2 = addNodeWithCoordinates(MessageNode, 520, 216)
-const DEMO_ACTION1 = addNodeWithCoordinates(ActionNode, 480, 400)
-const DEMO_ACTION2 = addNodeWithCoordinates(ActionNode, 400, 680)
-const DEMO_IDLE = addNodeWithCoordinates(IdleNode, 866, 74)
-const DEMO_TEMPLATE_WABA = addNodeWithCoordinates(TemplateWabaNode, 1010, 407)
-
-baklava.displayedGraph.addConnection(
-	DEMO_START.inputs.input1,
-	DEMO_MESSAGE1.outputs.output,
-)
-baklava.displayedGraph.addConnection(
-	DEMO_START.inputs.input2,
-	DEMO_MESSAGE2.outputs.output,
-)
-baklava.displayedGraph.addConnection(
-	DEMO_START.inputs.input3,
-	DEMO_ACTION1.outputs.output,
-)
-baklava.displayedGraph.addConnection(
-	DEMO_START.inputs.input4,
-	DEMO_ACTION2.outputs.output,
-)
-
-baklava.displayedGraph.addConnection(
-	DEMO_MESSAGE1.inputs.input,
-	DEMO_IDLE.outputs.output,
-)
-
-baklava.displayedGraph.addConnection(
-	DEMO_MESSAGE2.inputs.input,
-	DEMO_ACTION2.outputs.output,
-)
-
-baklava.displayedGraph.addConnection(
-	DEMO_IDLE.inputs.input,
-	DEMO_TEMPLATE_WABA.outputs.output,
-)
-
-baklava.displayedGraph.addConnection(
-	DEMO_TEMPLATE_WABA.inputs.input,
-	DEMO_ACTION2.outputs.output,
-)
+// const DEMO_MESSAGE2 = addNodeWithCoordinates(MessageNode, 520, 216)
+// const DEMO_ACTION1 = addNodeWithCoordinates(ActionNode, 480, 400)
+// const DEMO_ACTION2 = addNodeWithCoordinates(ActionNode, 400, 680)
+// const DEMO_IDLE = addNodeWithCoordinates(IdleNode, 866, 74)
+// const DEMO_TEMPLATE_WABA = addNodeWithCoordinates(TemplateWabaNode, 1010, 407)
 
 const PS_CONNECTION_ARROW_OFFSET = computed(() => {
 	return 6 * baklava.editor.graph.scaling

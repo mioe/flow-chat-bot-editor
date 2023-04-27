@@ -11,11 +11,11 @@ export const StartNode = defineNode({
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
 	},
-	inputs: {
-		input1: () => new NodeInterface('Да (input1)', 0),
-		input2: () => new NodeInterface('Кабачок (input2)', 0),
-		input3: () => new NodeInterface('Другой ответ (input3)', 0),
-		input4: () => new NodeInterface('Нет ответа 3 часа (input4)', 0),
+	outputs: {
+		output1: () => new NodeInterface('Да (output1)', 0),
+		output2: () => new NodeInterface('Кабачок (output2)', 0),
+		output3: () => new NodeInterface('Другой ответ (output3)', 0),
+		output4: () => new NodeInterface('Нет ответа 3 часа (output4)', 0),
 	},
 })
 
@@ -25,8 +25,8 @@ export const ActionNode = defineNode({
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
 	},
-	outputs: {
-		output: () => new NodeInterface('Socket (output)', ''),
+	inputs: {
+		input: () => new NodeInterface('Socket (input)', ''),
 	},
 })
 
@@ -36,11 +36,11 @@ export const IdleNode = defineNode({
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
 	},
-	outputs: {
-		output: () => new NodeInterface('Socket (output)', ''),
-	},
 	inputs: {
-		input: () => new NodeInterface('Следующий шаг (input)', 0),
+		input: () => new NodeInterface('Socket (input)', ''),
+	},
+	outputs: {
+		output: () => new NodeInterface('Следующий шаг (output)', 0),
 	},
 })
 
@@ -58,11 +58,11 @@ export const MessageNode = defineNode({
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
 	},
-	outputs: {
-		output: () => new NodeInterface('Socket (output)', ''),
-	},
 	inputs: {
-		input: () => new NodeInterface('Следующий шаг (input)', 0),
+		input: () => new NodeInterface('Socket (input)', ''),
+	},
+	outputs: {
+		output: () => new NodeInterface('Следующий шаг (output)', 0),
 	},
 })
 
@@ -88,10 +88,10 @@ export const TemplateWabaNode = defineNode({
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
 	},
-	outputs: {
-		output: () => new NodeInterface('Socket (output)', ''),
-	},
 	inputs: {
-		input: () => new NodeInterface('Следующий шаг (input)', 0),
+		input: () => new NodeInterface('Socket (input)', ''),
+	},
+	outputs: {
+		output: () => new NodeInterface('Следующий шаг (output)', 0),
 	},
 })

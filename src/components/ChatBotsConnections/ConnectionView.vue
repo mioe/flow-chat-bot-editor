@@ -292,10 +292,10 @@ export default defineComponent({
 			const [path] = getSmoothStepPath({
 				sourceX: source.value.x,
 				sourceY: source.value.y,
-				sourcePosition: Position.Left,
+				sourcePosition: Position.Right,
 				targetX: target.value.x,
 				targetY: target.value.y,
-				targetPosition: Position.Right,
+				targetPosition: Position.Left,
 			})
 
 			return path
@@ -314,7 +314,7 @@ export default defineComponent({
 
 <template>
 	<path
-		:marker-start="withArrow ? 'url(#ps-connection-arrow)' : 'url(#)'"
+		:marker-end="withArrow ? 'url(#ps-connection-arrow)' : 'url(#)'"
 		class="baklava-connection"
 		:class="classes"
 		:d="d"
