@@ -80,8 +80,8 @@ const DEMO_MESSAGE1 = addNodeWithCoordinates(MessageNode, 466, 32)
 // const DEMO_TEMPLATE_WABA = addNodeWithCoordinates(TemplateWabaNode, 1010, 407)
 
 baklava.editor.graphEvents.beforeAddConnection.subscribe(token, (conn: any, prevent: any) => {
-	// может быть только один исход для одного варианта ответа
-	if (conn.from._connectionCount > 0) {
+	// может быть только один исход для одного варианта ответа #TODO
+	if (conn.from._connectionCount >= 1) {
 		const c = baklava.displayedGraph._connections
 		const idx = c.findIndex((c: any) => c.from.id === conn.from.id)
 		c.splice(idx, 1)
