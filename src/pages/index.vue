@@ -80,12 +80,12 @@ const DEMO_MESSAGE1 = addNodeWithCoordinates(MessageNode, 466, 32)
 // const DEMO_TEMPLATE_WABA = addNodeWithCoordinates(TemplateWabaNode, 1010, 407)
 
 baklava.editor.graphEvents.beforeAddConnection.subscribe(token, (conn: any, prevent: any) => {
-	// check, whether the user should be able to create this connection.
-	// if (/* user not allowed to create connection */) {
-	console.log('🦕 conn', conn, prevent)
-	// prevent()
-	// return
-	// }
+	// может быть только один исход для одного варианта ответа
+	if (conn.from._connectionCount > 0) {
+		const c = baklava.displayedGraph._connections
+		const idx = c.findIndex((c: any) => c.from.id === conn.from.id)
+		c.splice(idx, 1)
+	}
 })
 
 const outputEnabled = ref(false)
