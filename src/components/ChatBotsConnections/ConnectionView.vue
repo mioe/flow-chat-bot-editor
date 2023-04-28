@@ -95,9 +95,6 @@ export default defineComponent({
 			return size * graph.value.scaling
 		}
 
-		const DEFAULT_RADIUS = transformConstants(5)
-		const DEFAULT_OFFSET = transformConstants(30)
-
 		const handleDirections = {
 			[Position.Left]: { x: -1, y: 0 },
 			[Position.Right]: { x: 1, y: 0 },
@@ -151,8 +148,9 @@ export default defineComponent({
 		}): [XYPosition[], number, number, number, number] {
 			const sourceDir = handleDirections[sourcePosition]
 			const targetDir = handleDirections[targetPosition]
-			const sourceGapped: XYPosition = { x: source.x + sourceDir.x * offset, y: source.y + sourceDir.y * offset }
-			const targetGapped: XYPosition = { x: target.x + targetDir.x * offset, y: target.y + targetDir.y * offset }
+			const offsetWithTransform = transformConstants(offset)
+			const sourceGapped: XYPosition = { x: source.x + sourceDir.x * offsetWithTransform, y: source.y + sourceDir.y * offsetWithTransform }
+			const targetGapped: XYPosition = { x: target.x + targetDir.x * offsetWithTransform, y: target.y + targetDir.y * offsetWithTransform }
 			const dir = getDirection({
 				source: sourceGapped,
 				sourcePosition,
@@ -257,10 +255,10 @@ export default defineComponent({
 			targetX,
 			targetY,
 			targetPosition = Position.Top,
-			borderRadius = DEFAULT_RADIUS,
+			borderRadius = 10,
 			centerX,
 			centerY,
-			offset = DEFAULT_OFFSET,
+			offset = 30,
 		}: GetSmoothStepPathParams): [path: string, labelX: number, labelY: number, offsetX: number, offsetY: number] {
 			const [points, labelX, labelY, offsetX, offsetY] = getPoints({
 				source: { x: sourceX, y: sourceY },
@@ -275,7 +273,7 @@ export default defineComponent({
 				let segment = ''
 
 				if (i > 0 && i < points.length - 1) {
-					segment = getBend(points[i - 1], p, points[i + 1], borderRadius)
+					segment = getBend(points[i - 1], p, points[i + 1], transformConstants(borderRadius))
 				} else {
 					segment = `${i === 0 ? 'M' : 'L'}${p.x} ${p.y}`
 				}

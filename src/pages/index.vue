@@ -25,6 +25,8 @@ import {
 const baklava = useBaklava() as any
 const engine = new DependencyEngine(baklava.editor)
 
+baklava.displayedGraph.scaling = 0.7
+
 baklava.editor.registerNodeType(StartNode)
 baklava.editor.registerNodeType(ActionNode)
 baklava.editor.registerNodeType(IdleNode)
@@ -161,10 +163,3 @@ console.log('🦕 END (between)', e)
 		/>
 	</div>
 </template>
-
-
-<style>
-.ps-chat-bot-editor .baklava-node[data-node-type=TestNode] > .__title > .__menu {
-	display: none;
-}
-</style>
