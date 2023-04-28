@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import {
 	EditorComponent,
 	useBaklava,
@@ -96,6 +96,11 @@ const handleDisabledOutputPorts = () => {
 	outputEnabled.value = false
 }
 
+const ARROW_POINTS_WITH_SCALE = computed(() => {
+	const s = baklava.displayedGraph.scaling
+	return `${-6 * s},${-3 * s} 0,0 ${-6 * s},${3 * s} ${-6 * s},${-3 * s}`
+})
+
 const e = Date.now() - s
 console.log('🦕 END (between)', e)
 </script>
@@ -132,7 +137,7 @@ console.log('🦕 END (between)', e)
 							stroke-linejoin="round"
 							stroke-width="1"
 							fill="#b6c7d6"
-							points="-6,-3 0,0 -6,3 -6,-3"
+							:points="ARROW_POINTS_WITH_SCALE"
 						/>
 					</marker>
 				</defs>
