@@ -55,6 +55,9 @@ export const IfNode = defineNode({
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
 	},
+	inputs: {
+		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
+	},
 })
 
 export const MessageNode = defineNode({
@@ -79,6 +82,9 @@ export const InputNode = defineNode({
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
 	},
+	inputs: {
+		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
+	},
 })
 
 export const RedirectNode = defineNode({
@@ -87,6 +93,9 @@ export const RedirectNode = defineNode({
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
+	},
+	inputs: {
+		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
 })
 
