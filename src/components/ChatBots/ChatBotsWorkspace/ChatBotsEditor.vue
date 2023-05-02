@@ -83,12 +83,12 @@
 			</transition-group>
 		</div>
 
-		<ChatBotsHistoryAndZoomPicker v-model:scale="viewModelRef.displayedGraph.scaling" />
+		<ChatBotsHistoryAndZoomPicker v-model:scale="scaling" />
 	</div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, Ref, ref, toRef } from 'vue'
+import { computed, defineComponent, provide, Ref, ref, toRef, ComputedRef } from 'vue'
 
 import { AbstractNode } from '@baklavajs/core'
 import { IBaklavaViewModel } from 'baklavajs'
@@ -144,6 +144,18 @@ export default defineComponent({
 
 		const panZoom = usePanZoom()
 		const temporaryConnection = useTemporaryConnection()
+
+		const scaling = computed({
+			get() {
+				// @ts-ignore
+				return props.viewModel.displayedGraph.scaling
+			},
+			// setter
+			set(newValue) {
+				// @ts-ignore
+				return viewModelRef.value.displayedGraph.scaling = newValue
+			},
+		})
 
 		const nodeContainerStyle = computed(() => ({
 			...panZoom.styles.value,
@@ -237,6 +249,7 @@ export default defineComponent({
 			outputEnabled,
 			handleEnabledOutputPorts,
 			handleDisabledOutputPorts,
+			scaling,
 		}
 	},
 })
