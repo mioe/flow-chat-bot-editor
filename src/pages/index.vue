@@ -7,10 +7,10 @@ import {
 	applyResult,
 } from 'baklavajs'
 import '~/assets/styles/SenderTheme.css'
-import ChatBotsHistoryAndZoomPicker from '~/components/ChatBotsUI/ChatBotsHistoryAndZoomPicker.vue'
-import CustomConnectionWrapper from '~/components/ChatBotsConnections/ConnectionWrapper.vue'
-import CustomTemporaryConnection from '~/components/ChatBotsConnections/TemporaryConnection.vue'
-import CustomNodeRenderer from '~/components/CustomNodeRenderer'
+import ChatBotsHistoryAndZoomPicker from '~/components/ChatBots/ChatBotsUI/ChatBotsHistoryAndZoomPicker.vue'
+import CustomConnectionWrapper from '~/components/ChatBots/ChatBotsConnections/ConnectionWrapper.vue'
+import CustomTemporaryConnection from '~/components/ChatBots/ChatBotsConnections/TemporaryConnection.vue'
+import CustomNodeRenderer from '~/components/ChatBots/CustomNodeRenderer'
 import {
 	StartNode,
 	ActionNode,
@@ -20,7 +20,7 @@ import {
 	InputNode,
 	RedirectNode,
 	TemplateWabaNode,
-} from '~/components/ChatBotsNodes'
+} from '~/components/ChatBots/ChatBotsNodes'
 
 const baklava = useBaklava() as any
 const engine = new DependencyEngine(baklava.editor)
