@@ -109,12 +109,20 @@ console.log('🦕 END (between)', e)
 					/>
 				</template>
 			</EditorComponent>
+
+			<div class="absolute z-2 left-[50%] bottom-[32px] transform -translate-x-[50%]">
+				Default (old editor)
+			</div>
 		</div>
-		<div class="w-[50%]">
+		<div class="relative w-[50%]">
 			<CustomEditorComponent
 				:view-model="baklava"
 				class="ps-chat-bot-editor"
 			/>
+
+			<div class="absolute z-2 left-[50%] bottom-[32px] transform -translate-x-[50%]">
+				Custom (new editor)
+			</div>
 		</div>
 	</div>
 </template>
