@@ -8,7 +8,6 @@ import {
 } from 'baklavajs'
 import '~/assets/styles/SenderTheme.css'
 import CustomEditorComponent from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsEditor.vue'
-import ChatBotsHistoryAndZoomPicker from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsHistoryAndZoomPicker.vue'
 import CustomNodeRenderer from '~/components/ChatBots/CustomNodeRenderer'
 import {
 	StartNode,
@@ -110,10 +109,6 @@ console.log('🦕 END (between)', e)
 					/>
 				</template>
 			</EditorComponent>
-
-			<ChatBotsHistoryAndZoomPicker
-				v-model:scale="baklava.displayedGraph.scaling"
-			/>
 		</div>
 		<div class="w-[50%]">
 			<CustomEditorComponent
