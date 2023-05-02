@@ -27,9 +27,6 @@ export default defineComponent({
 			'--output': !props.intf.isInput,
 			'--connected': isConnected.value,
 		}))
-		const showComponent = computed<boolean>(
-			() => props.intf.component && props.intf.connectionCount === 0 && (props.intf.isInput || !props.intf.port),
-		)
 
 		const startHover = () => {
 			hoveredOver(props.intf)
@@ -47,7 +44,7 @@ export default defineComponent({
 		onMounted(onRender)
 		onUpdated(onRender)
 
-		return { el, isConnected, classes, showComponent, startHover, endHover }
+		return { el, isConnected, classes, startHover, endHover }
 	},
 })
 </script>

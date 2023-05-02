@@ -84,11 +84,13 @@
 		</div>
 
 		<ChatBotsHistoryAndZoomPicker v-model:scale="scaling" />
+		<ChatBotsPalette />
 	</div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, provide, Ref, ref, toRef, ComputedRef } from 'vue'
+import { onKeyUp, onKeyDown } from '@vueuse/core'
 
 import { AbstractNode } from '@baklavajs/core'
 import { IBaklavaViewModel } from 'baklavajs'
@@ -103,6 +105,7 @@ import CustomBackground from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsBa
 
 // Optional components
 import ChatBotsHistoryAndZoomPicker from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsHistoryAndZoomPicker.vue'
+import ChatBotsPalette from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsPalette.vue'
 
 // workaround: Currently, self-injecting is not possible.
 // so we use a singleton to provide this functionality.
@@ -121,6 +124,7 @@ export default defineComponent({
 		CustomConnectionWrapper,
 		CustomTemporaryConnection,
 		ChatBotsHistoryAndZoomPicker,
+		ChatBotsPalette,
 	},
 	props: {
 		viewModel: {
@@ -227,6 +231,14 @@ export default defineComponent({
 		const handleDisabledOutputPorts = () => {
 			outputEnabled.value = false
 		}
+
+		onKeyUp('Shift', (e) => {
+			outputEnabled.value = false
+		})
+
+		onKeyDown('Shift', (e) => {
+			outputEnabled.value = true
+		})
 
 		return {
 			el,
