@@ -9,8 +9,6 @@ import {
 import '~/assets/styles/SenderTheme.css'
 import CustomEditorComponent from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsEditor.vue'
 import ChatBotsHistoryAndZoomPicker from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsHistoryAndZoomPicker.vue'
-import CustomConnectionWrapper from '~/components/ChatBots/ChatBotsConnections/ConnectionWrapper.vue'
-import CustomTemporaryConnection from '~/components/ChatBots/ChatBotsConnections/TemporaryConnection.vue'
 import CustomNodeRenderer from '~/components/ChatBots/CustomNodeRenderer'
 import {
 	StartNode,
@@ -89,26 +87,13 @@ baklava.editor.graphEvents.beforeAddConnection.subscribe(token, (conn: any, prev
 	}
 })
 
-const outputEnabled = ref(false)
-const handleEnabledOutputPorts = () => {
-	outputEnabled.value = true
-}
-const handleDisabledOutputPorts = () => {
-	outputEnabled.value = false
-}
-
-const ARROW_POINTS_WITH_SCALE = computed(() => {
-	const s = baklava.displayedGraph.scaling
-	return `${-6 * s},${-3 * s} 0,0 ${-6 * s},${3 * s} ${-6 * s},${-3 * s}`
-})
-
 const e = Date.now() - s
 console.log('🦕 END (between)', e)
 </script>
 
 <template>
 	<div class="relative flex w-full h-full flex">
-		<div class="w-[50%]">
+		<div class="relative w-[50%]">
 			<EditorComponent
 				:view-model="baklava"
 				class="ps-chat-bot-editor"
@@ -117,52 +102,13 @@ console.log('🦕 END (between)', e)
 					<div />
 				</template>
 
-				<template #connection="connectionProps">
-					<CustomConnectionWrapper :connection="connectionProps.connection" />
-				</template>
-
-				<template #temporaryConnection="{ temporaryConnection }">
-					<defs>
-						<marker
-							id="ps-connection-arrow"
-							markerWidth="12.5"
-							markerHeight="12.5"
-							viewBox="-10 -10 20 20"
-							markerUnits="strokeWidth"
-							orient="auto-start-reverse"
-							refX="0"
-							refY="0"
-						>
-							<polyline
-								stroke="#b6c7d6"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="1"
-								fill="#b6c7d6"
-								:points="ARROW_POINTS_WITH_SCALE"
-							/>
-						</marker>
-					</defs>
-
-					<CustomTemporaryConnection
-						v-if="temporaryConnection"
-						:connection="temporaryConnection"
-						@enabled-output-ports="handleEnabledOutputPorts"
-						@disabled-output-ports="handleDisabledOutputPorts"
-					/>
-				</template>
-
 				<template #node="nodeProps">
 					<CustomNodeRenderer
 						:key="nodeProps.node.id"
 						v-bind="nodeProps"
-						:output-enabled="outputEnabled"
+						:output-enabled="true"
 					/>
 				</template>
-
-				<!-- <template #palette>
-			<div />
-		</template> -->
 			</EditorComponent>
 
 			<ChatBotsHistoryAndZoomPicker
