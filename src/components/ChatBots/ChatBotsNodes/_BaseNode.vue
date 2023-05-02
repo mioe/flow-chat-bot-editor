@@ -80,12 +80,11 @@ const onRender = () => {
 	}
 }
 
-// @ts-ignore
-// eslint-disable-next-line no-unsafe-optional-chaining
-const X = computed(() => (props.node.position?.x).toFixed())
-// @ts-ignore
-// eslint-disable-next-line no-unsafe-optional-chaining
-const Y = computed(() => (props.node.position?.y).toFixed())
+const SHOW_IDX_NODE = computed(() =>
+	props.idx < 10
+		? `0${props.idx}`
+		: props.idx,
+)
 
 onMounted(onRender)
 onUpdated(onRender)
@@ -107,7 +106,7 @@ onUpdated(onRender)
 		>
 			<div class="__title-label">
 				<div>
-					{{ X }}:{{ Y }}
+					{{ SHOW_IDX_NODE }}
 				</div>
 
 				<div class="w-[5px] h-[5px] bg-current rounded-full" />

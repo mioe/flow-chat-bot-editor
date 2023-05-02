@@ -7,7 +7,8 @@ import {
 	applyResult,
 } from 'baklavajs'
 import '~/assets/styles/SenderTheme.css'
-import ChatBotsHistoryAndZoomPicker from '~/components/ChatBots/ChatBotsUI/ChatBotsHistoryAndZoomPicker.vue'
+import CustomEditorComponent from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsEditor.vue'
+import ChatBotsHistoryAndZoomPicker from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsHistoryAndZoomPicker.vue'
 import CustomConnectionWrapper from '~/components/ChatBots/ChatBotsConnections/ConnectionWrapper.vue'
 import CustomTemporaryConnection from '~/components/ChatBots/ChatBotsConnections/TemporaryConnection.vue'
 import CustomNodeRenderer from '~/components/ChatBots/CustomNodeRenderer'
@@ -56,20 +57,20 @@ function addNodeWithCoordinates(nodeType: any, x: any, y: any) {
 const s = Date.now()
 console.log('🦕 START', s)
 
-const SHOW_ALL_NODES = [
-	StartNode,
-	ActionNode,
-	IdleNode,
-	IfNode,
-	MessageNode,
-	InputNode,
-	RedirectNode,
-	TemplateWabaNode,
-]
-SHOW_ALL_NODES.forEach((node, idx) => {
-	const y = idx * 100 + 16
-	addNodeWithCoordinates(node, -420, y)
-})
+// const SHOW_ALL_NODES = [
+// 	StartNode,
+// 	ActionNode,
+// 	IdleNode,
+// 	IfNode,
+// 	MessageNode,
+// 	InputNode,
+// 	RedirectNode,
+// 	TemplateWabaNode,
+// ]
+// SHOW_ALL_NODES.forEach((node, idx) => {
+// 	const y = idx * 100 + 16
+// 	addNodeWithCoordinates(node, -420, y)
+// })
 
 const DEMO_START = addNodeWithCoordinates(StartNode, 32, 32)
 const DEMO_MESSAGE1 = addNodeWithCoordinates(MessageNode, 466, 32)
@@ -106,65 +107,73 @@ console.log('🦕 END (between)', e)
 </script>
 
 <template>
-	<div class="relative flex w-full h-full">
-		<EditorComponent
-			:view-model="baklava"
-			class="ps-chat-bot-editor"
-		>
-			<template #toolbar>
-				<div />
-			</template>
+	<div class="relative flex w-full h-full flex">
+		<div class="w-[50%]">
+			<EditorComponent
+				:view-model="baklava"
+				class="ps-chat-bot-editor"
+			>
+				<template #toolbar>
+					<div />
+				</template>
 
-			<template #connection="connectionProps">
-				<CustomConnectionWrapper :connection="connectionProps.connection" />
-			</template>
+				<template #connection="connectionProps">
+					<CustomConnectionWrapper :connection="connectionProps.connection" />
+				</template>
 
-			<template #temporaryConnection="{ temporaryConnection }">
-				<defs>
-					<marker
-						id="ps-connection-arrow"
-						markerWidth="12.5"
-						markerHeight="12.5"
-						viewBox="-10 -10 20 20"
-						markerUnits="strokeWidth"
-						orient="auto-start-reverse"
-						refX="0"
-						refY="0"
-					>
-						<polyline
-							stroke="#b6c7d6"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="1"
-							fill="#b6c7d6"
-							:points="ARROW_POINTS_WITH_SCALE"
-						/>
-					</marker>
-				</defs>
+				<template #temporaryConnection="{ temporaryConnection }">
+					<defs>
+						<marker
+							id="ps-connection-arrow"
+							markerWidth="12.5"
+							markerHeight="12.5"
+							viewBox="-10 -10 20 20"
+							markerUnits="strokeWidth"
+							orient="auto-start-reverse"
+							refX="0"
+							refY="0"
+						>
+							<polyline
+								stroke="#b6c7d6"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="1"
+								fill="#b6c7d6"
+								:points="ARROW_POINTS_WITH_SCALE"
+							/>
+						</marker>
+					</defs>
 
-				<CustomTemporaryConnection
-					v-if="temporaryConnection"
-					:connection="temporaryConnection"
-					@enabled-output-ports="handleEnabledOutputPorts"
-					@disabled-output-ports="handleDisabledOutputPorts"
-				/>
-			</template>
+					<CustomTemporaryConnection
+						v-if="temporaryConnection"
+						:connection="temporaryConnection"
+						@enabled-output-ports="handleEnabledOutputPorts"
+						@disabled-output-ports="handleDisabledOutputPorts"
+					/>
+				</template>
 
-			<template #node="nodeProps">
-				<CustomNodeRenderer
-					:key="nodeProps.node.id"
-					v-bind="nodeProps"
-					:output-enabled="outputEnabled"
-				/>
-			</template>
+				<template #node="nodeProps">
+					<CustomNodeRenderer
+						:key="nodeProps.node.id"
+						v-bind="nodeProps"
+						:output-enabled="outputEnabled"
+					/>
+				</template>
 
-		<!-- <template #palette>
+				<!-- <template #palette>
 			<div />
 		</template> -->
-		</EditorComponent>
+			</EditorComponent>
 
-		<ChatBotsHistoryAndZoomPicker
-			v-model:scale="baklava.displayedGraph.scaling"
-		/>
+			<ChatBotsHistoryAndZoomPicker
+				v-model:scale="baklava.displayedGraph.scaling"
+			/>
+		</div>
+		<div class="w-[50%]">
+			<CustomEditorComponent
+				:view-model="baklava"
+				class="ps-chat-bot-editor"
+			/>
+		</div>
 	</div>
 </template>
