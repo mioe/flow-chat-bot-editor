@@ -132,14 +132,18 @@ onUpdated(onRender)
 		</div>
 
 		<div class="__content">
+			<slot />
+
 			<!-- Outputs -->
 			<div class="__outputs">
-				<OutputNodeInterface
-					v-for="output in displayedOutputs"
-					:key="output.id"
-					:node="node"
-					:intf="output"
-				/>
+				<slot name="outputs">
+					<OutputNodeInterface
+						v-for="output in displayedOutputs"
+						:key="output.id"
+						:node="node"
+						:intf="output"
+					/>
+				</slot>
 			</div>
 
 			<!-- Inputs -->

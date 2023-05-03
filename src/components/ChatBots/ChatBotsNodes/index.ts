@@ -71,7 +71,20 @@ export const MessageNode = defineNode({
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
 	outputs: {
-		output: () => new NodeInterface('Следующий шаг (output)', 0),
+		nextStep: () => new NodeInterface('Следующий шаг', null),
+		answerButton1: () => new NodeInterface('1', ''),
+		answerButton2: () => new NodeInterface('2', ''),
+		answerButton3: () => new NodeInterface('3', ''),
+		answerButton4: () => new NodeInterface('4', ''),
+		answerButton5: () => new NodeInterface('5', ''),
+		answerButton6: () => new NodeInterface('6', ''),
+		answerButton7: () => new NodeInterface('7', ''),
+		answerButton8: () => new NodeInterface('8', ''),
+		answerButton9: () => new NodeInterface('9', ''),
+		answerButton10: () => new NodeInterface('10', ''),
+		answerButton11: () => new NodeInterface('11', ''),
+		anotherAnswer: () => new NodeInterface('Другой ответ', null),
+		idle: () => new NodeInterface('Нет ответа', 0),
 	},
 })
 

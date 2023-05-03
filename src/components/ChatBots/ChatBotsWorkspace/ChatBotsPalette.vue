@@ -76,6 +76,8 @@ const onDragStart = (type: string, nodeInformation: INodeTypeInformation) => {
 		instance.position.x = x
 		// @ts-ignore
 		instance.position.y = y
+		// @ts-ignore
+		instance.entity = {}
 
 		draggedNode.value = null
 		document.removeEventListener('pointerup', onDragEnd)
