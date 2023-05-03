@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { useDragMove, useGraph } from 'baklavajs'
+import { useDragMove, useGraph } from '../utility'
 
 export function usePanZoom() {
 	const { graph } = useGraph()

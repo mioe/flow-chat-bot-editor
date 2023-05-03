@@ -1,7 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { TemporaryConnectionState } from './connection'
-import { useGraph } from 'baklavajs'
+import { useGraph } from '../utility'
 
 function getEdgeCenter({
 	sourceX,

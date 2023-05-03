@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import { useGraph, useViewModel } from 'baklavajs'
+import { useGraph, useViewModel } from '../utility'
 
 export default defineComponent({
 	setup() {

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
 import {
 	EditorComponent,
 	useBaklava,
@@ -8,7 +7,6 @@ import {
 } from 'baklavajs'
 import '~/assets/styles/SenderTheme.css'
 import CustomEditorComponent from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsEditor.vue'
-import CustomNodeRenderer from '~/components/ChatBots/CustomNodeRenderer'
 import {
 	StartNode,
 	ActionNode,
@@ -92,37 +90,9 @@ console.log('🦕 END (between)', e)
 
 <template>
 	<div class="relative flex w-full h-full flex">
-		<div class="relative w-[50%]">
-			<EditorComponent
-				:view-model="baklava"
-				class="ps-chat-bot-editor"
-			>
-				<template #toolbar>
-					<div />
-				</template>
-
-				<template #node="nodeProps">
-					<CustomNodeRenderer
-						:key="nodeProps.node.id"
-						v-bind="nodeProps"
-						:output-enabled="true"
-					/>
-				</template>
-			</EditorComponent>
-
-			<div class="absolute z-2 left-[50%] bottom-[32px] transform -translate-x-[50%]">
-				Default (old editor)
-			</div>
-		</div>
-		<div class="relative w-[50%]">
-			<CustomEditorComponent
-				:view-model="baklava"
-				class="ps-chat-bot-editor"
-			/>
-
-			<div class="absolute z-2 left-[50%] bottom-[32px] transform -translate-x-[50%]">
-				Custom (new editor)
-			</div>
-		</div>
+		<CustomEditorComponent
+			:view-model="baklava"
+			class="ps-chat-bot-editor"
+		/>
 	</div>
 </template>

@@ -107,15 +107,7 @@ import CustomBackground from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsBa
 import ChatBotsHistoryAndZoomPicker from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsHistoryAndZoomPicker.vue'
 import ChatBotsPalette from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsPalette.vue'
 
-// workaround: Currently, self-injecting is not possible.
-// so we use a singleton to provide this functionality.
-// RFC: https://github.com/vuejs/rfcs/pull/254
-let viewModelRef: Ref<IBaklavaViewModel> | null = null
-
-function providePlugin(viewModel: Ref<IBaklavaViewModel>) {
-	// provide(injectionKey, plugin);
-	viewModelRef = viewModel
-}
+import { providePlugin } from '../utility'
 
 export default defineComponent({
 	components: {

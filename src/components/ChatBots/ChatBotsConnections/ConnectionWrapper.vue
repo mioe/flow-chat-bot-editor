@@ -15,7 +15,7 @@ import { Connection } from '@baklavajs/core'
 import ConnectionView from './ConnectionView.vue'
 import resolveDom from './domResolver'
 import { TemporaryConnectionState } from './connection'
-import { useGraph } from 'baklavajs'
+import { useGraph } from '../utility'
 import { getOutputPortCoordinates, getInputPortCoordinates } from './portCoordinates'
 
 export default defineComponent({
