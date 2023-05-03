@@ -3,10 +3,8 @@ import {
 	useBaklava,
 	DependencyEngine,
 	applyResult,
-	NodeInterface,
 } from 'baklavajs'
 import '~/assets/styles/SenderTheme.css'
-import CustomEditorComponent from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsEditor.vue'
 import {
 	StartNode,
 	ActionNode,
@@ -17,6 +15,7 @@ import {
 	RedirectNode,
 	TemplateWabaNode,
 } from '~/components/ChatBots/ChatBotsNodes'
+import CustomEditorComponent from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsEditor.vue'
 
 const baklava = useBaklava() as any
 const engine = new DependencyEngine(baklava.editor)
@@ -42,17 +41,11 @@ engine.events.afterRun.subscribe(token, (result) => {
 engine.start()
 
 // Add some nodes for demo purposes
-function addNodeWithCoordinates({
-	nodeType,
-	x,
-	y,
-	entity,
-}: any) {
+function addNodeWithCoordinates(nodeType: any, x: number, y: number) {
 	const n = new nodeType()
 	baklava.displayedGraph.addNode(n)
 	n.position.x = x
 	n.position.y = y
-	n.entity = entity
 	return n
 }
 const s = Date.now()
@@ -73,22 +66,8 @@ console.log('🦕 START', s)
 // 	addNodeWithCoordinates(node, -420, y)
 // })
 
-const DEMO_START = addNodeWithCoordinates({
-	nodeType: StartNode,
-	x: 32,
-	y: 32,
-	entity: { text: '' },
-})
-
-const DEMO_MESSAGE1 = addNodeWithCoordinates({
-	nodeType: MessageNode,
-	x: 466,
-	y: 32,
-	entity: {
-		text: 'misha',
-		enabledAnswerButtons: true,
-	},
-})
+const DEMO_START = addNodeWithCoordinates(StartNode, 32, 32)
+const DEMO_MESSAGE1 = addNodeWithCoordinates(MessageNode, 466, 32)
 // const DEMO_MESSAGE2 = addNodeWithCoordinates(MessageNode, 520, 216)
 // const DEMO_ACTION1 = addNodeWithCoordinates(ActionNode, 480, 400)
 // const DEMO_ACTION2 = addNodeWithCoordinates(ActionNode, 400, 680)

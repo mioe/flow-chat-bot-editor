@@ -28,8 +28,6 @@ export interface IBaklavaViewModel extends IBaklavaTapable {
 	editor: Editor;
 	/** Currently displayed graph */
 	displayedGraph: Graph;
-	/** True if the currently displayed graph is a subgraph, false if it is the root graph */
-	isSubgraph: Readonly<boolean>;
 	settings: IViewSettings;
 	hooks: {
 			/** Called whenever a node is rendered */
@@ -37,7 +35,6 @@ export interface IBaklavaViewModel extends IBaklavaTapable {
 			/** Called whenever an interface is rendered */
 			renderInterface: SequentialHook<{ intf: NodeInterface<any>; el: HTMLElement }, null>;
 	};
-	switchGraph: (newGraph: Graph | GraphTemplate) => void;
 }
 
 export function useBaklava(existingEditor?: Editor): IBaklavaViewModel {
