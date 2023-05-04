@@ -1,5 +1,5 @@
 import { reactive, ref, Ref, shallowReadonly, watch } from 'vue'
-import { AbstractNode, Editor, Graph, GraphTemplate, NodeInterface } from '@baklavajs/core'
+import { AbstractNode, Editor, Graph, NodeInterface } from '@baklavajs/core'
 import { IBaklavaTapable, SequentialHook } from '@baklavajs/events'
 
 function setViewNodeProperties(node: any) {
