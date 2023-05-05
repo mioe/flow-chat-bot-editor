@@ -74,7 +74,7 @@
 							:key="node.id + counter.toString()"
 							:idx="idx + 1"
 							:node="node"
-							:output-enabled="outputEnabled"
+							:output-enabled="outputEnabled !== null && outputEnabled !== node.id"
 							:selected="selectedNodes.includes(node)"
 							@select="selectNode(node)"
 						/>
@@ -89,8 +89,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, Ref, ref, toRef, ComputedRef } from 'vue'
-import { onKeyUp, onKeyDown } from '@vueuse/core'
+import { computed, defineComponent, provide, Ref, ref, toRef } from 'vue'
 
 import { AbstractNode } from '@baklavajs/core'
 import { IBaklavaViewModel } from 'baklavajs'
@@ -216,21 +215,13 @@ export default defineComponent({
 			return `${-6 * s},${-3 * s} 0,0 ${-6 * s},${3 * s} ${-6 * s},${-3 * s}`
 		})
 
-		const outputEnabled = ref(false)
-		const handleEnabledOutputPorts = () => {
-			outputEnabled.value = true
+		const outputEnabled: Ref<any> = ref(null)
+		const handleEnabledOutputPorts = (val: string) => {
+			outputEnabled.value = val
 		}
 		const handleDisabledOutputPorts = () => {
-			outputEnabled.value = false
+			outputEnabled.value = null
 		}
-
-		onKeyUp('Shift', (e) => {
-			outputEnabled.value = false
-		})
-
-		onKeyDown('Shift', (e) => {
-			outputEnabled.value = true
-		})
 
 		return {
 			el,

@@ -51,7 +51,7 @@ const d = computed(() => {
 const emit = defineEmits(['enabled-output-ports', 'disabled-output-ports'])
 
 onMounted(() => {
-	emit('enabled-output-ports')
+	emit('enabled-output-ports', props.connection?.from?.nodeId)
 })
 
 onUnmounted(() => {
