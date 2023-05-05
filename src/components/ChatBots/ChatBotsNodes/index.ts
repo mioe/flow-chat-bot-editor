@@ -68,7 +68,7 @@ export const IfNode = defineNode({
 
 export const MessageNode = defineDynamicNode({
 	type: 'MessageNode',
-	title: 'Условие',
+	title: 'Сообщение',
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
