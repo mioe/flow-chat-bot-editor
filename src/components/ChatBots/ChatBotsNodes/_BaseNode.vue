@@ -57,6 +57,9 @@ const onCopyNode = () => {
 const displayedInputs = computed(() => Object.values(props.node.inputs).filter((ni) => !ni.hidden))
 const displayedOutputs = computed(() => Object.values(props.node.outputs).filter((ni) => !ni.hidden))
 
+const MAIN_INPUT = computed(() => displayedInputs.value.filter((ni) => ni.name === 'socket'))
+const OPTIONAL_INPUTS = computed(() => displayedInputs.value.filter((ni) => ni.name !== 'socket'))
+
 const select = () => {
 	emit('select')
 }
@@ -134,6 +137,13 @@ onUpdated(onRender)
 		<div class="__content">
 			<slot />
 
+			<OutputNodeInterface
+				v-for="input in OPTIONAL_INPUTS"
+				:key="input.id"
+				:node="node"
+				:intf="input"
+			/>
+
 			<!-- Outputs -->
 			<div class="__outputs">
 				<slot name="outputs">
@@ -152,7 +162,7 @@ onUpdated(onRender)
 				class="__inputs"
 			>
 				<InputNodeInterface
-					v-for="input in displayedInputs"
+					v-for="input in MAIN_INPUT"
 					:key="input.id"
 					:node="node"
 					:intf="input"

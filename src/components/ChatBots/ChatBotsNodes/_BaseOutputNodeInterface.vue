@@ -28,6 +28,10 @@ export default defineComponent({
 			'--connected': isConnected.value,
 		}))
 
+		const showComponent = computed<boolean>(
+			() => props.intf.component && props.intf.connectionCount === 0 && (props.intf.isInput || !props.intf.port),
+		)
+
 		const startHover = () => {
 			hoveredOver(props.intf)
 		}
@@ -44,7 +48,7 @@ export default defineComponent({
 		onMounted(onRender)
 		onUpdated(onRender)
 
-		return { el, isConnected, classes, startHover, endHover }
+		return { el, isConnected, showComponent, classes, startHover, endHover }
 	},
 })
 </script>
@@ -62,7 +66,19 @@ export default defineComponent({
 			@pointerover="startHover"
 			@pointerout="endHover"
 		/>
-		<span class="align-middle">
+		<!-- eslint-disable vue/no-mutating-props -->
+		<component
+			:is="intf.component"
+			v-if="showComponent"
+			v-model="intf.value"
+			:node="node"
+			:intf="intf"
+		/>
+		<!-- eslint-enable vue/no-mutating-props -->
+		<span
+			v-else
+			class="align-middle"
+		>
 			{{ intf.name }}
 		</span>
 	</div>

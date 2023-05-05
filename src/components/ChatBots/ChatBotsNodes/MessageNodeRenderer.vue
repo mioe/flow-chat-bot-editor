@@ -29,13 +29,6 @@ const emit = defineEmits<{
 	>
 		<div class="flex flex-col gap-[8px]">
 			<textarea />
-
-			<label class="flex items-center">
-				<input
-					type="checkbox"
-				>
-				<p>Кнопки-ответы</p>
-			</label>
 		</div>
 	</BaseNode>
 </template>

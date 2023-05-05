@@ -1,8 +1,14 @@
 import {
 	defineNode,
 	NodeInterface,
+	AbstractNode,
+	INodeState,
+	CalculateFunction,
+	defineDynamicNode,
+	DynamicNodeDefinition,
 } from 'baklavajs'
 import { allowMultipleConnections } from '@baklavajs/engine'
+import { ButtonInterface, CheckboxInterface } from '~/components/ChatBots/ChatBotsInterfaces'
 
 const DEFAULT_NODE_WIDTH = 369
 
@@ -60,32 +66,49 @@ export const IfNode = defineNode({
 	},
 })
 
-export const MessageNode = defineNode({
+export const MessageNode = defineDynamicNode({
 	type: 'MessageNode',
-	title: 'Сообщение',
+	title: 'Условие',
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
+		// @ts-ignore
+		this.counter = 0
 	},
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
 	outputs: {
-		nextStep: () => new NodeInterface('Следующий шаг', null),
-		answerButton1: () => new NodeInterface('1', ''),
-		answerButton2: () => new NodeInterface('2', ''),
-		answerButton3: () => new NodeInterface('3', ''),
-		answerButton4: () => new NodeInterface('4', ''),
-		answerButton5: () => new NodeInterface('5', ''),
-		answerButton6: () => new NodeInterface('6', ''),
-		answerButton7: () => new NodeInterface('7', ''),
-		answerButton8: () => new NodeInterface('8', ''),
-		answerButton9: () => new NodeInterface('9', ''),
-		answerButton10: () => new NodeInterface('10', ''),
-		answerButton11: () => new NodeInterface('11', ''),
-		anotherAnswer: () => new NodeInterface('Другой ответ', null),
-		idle: () => new NodeInterface('Нет ответа', 0),
+		enabled: () => new CheckboxInterface('Кнопки-ответы', false).setPort(false),
 	},
+	onUpdate(_, { enabled }) {
+		// @ts-ignore
+		console.log('🦕 onUpdate', enabled)
+		if (!enabled) {
+			return {
+				outputs: {
+					output: () => new NodeInterface('Следующий шаг', undefined),
+				} as DynamicNodeDefinition,
+			}
+		}
+		return {
+			outputs: {
+				add: () => new ButtonInterface('Добавить исход', () => {
+					// @ts-ignore
+					const name = 'Output ' + ++this.counter
+					// @ts-ignore
+					this.addOutput(name, new NodeInterface<any>(name, undefined))
+				}),
+				remove: () => new ButtonInterface('Удалить исход', () => {
+					// @ts-ignore
+					this.removeOutput('Output ' + this.counter--)
+				}),
+				anotherAnswer: () => new NodeInterface('Другой ответ', undefined),
+				idle: () => new NodeInterface('Нет ответа X минут', null),
+			} as DynamicNodeDefinition,
+		}
+	},
+	calculate: undefined,
 })
 
 export const InputNode = defineNode({
