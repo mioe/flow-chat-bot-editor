@@ -2,8 +2,8 @@
 import { ref, computed, toRef, onUpdated, onMounted } from 'vue'
 import { AbstractNode } from '@baklavajs/core'
 import { useDragMove, useGraph, useViewModel } from '~/components/ChatBots/utility'
-import OutputNodeInterface from './_BaseOutputNodeInterface.vue'
-import InputNodeInterface from './_BaseInputNodeInterface.vue'
+import OutputNodeInterface from '~/components/ChatBots/ChatBotsNodes/_BaseOutputNodeInterface.vue'
+import InputNodeInterface from '~/components/ChatBots/ChatBotsNodes/_BaseInputNodeInterface.vue'
 
 const props = withDefaults(
 	defineProps<{
@@ -56,9 +56,6 @@ const onCopyNode = () => {
 
 const displayedInputs = computed(() => Object.values(props.node.inputs).filter((ni) => !ni.hidden))
 const displayedOutputs = computed(() => Object.values(props.node.outputs).filter((ni) => !ni.hidden))
-
-const MAIN_INPUT = computed(() => displayedInputs.value.filter((ni) => ni.name === 'socket'))
-const OPTIONAL_INPUTS = computed(() => displayedInputs.value.filter((ni) => ni.name !== 'socket'))
 
 const select = () => {
 	emit('select')
@@ -137,13 +134,6 @@ onUpdated(onRender)
 		<div class="__content">
 			<slot />
 
-			<OutputNodeInterface
-				v-for="input in OPTIONAL_INPUTS"
-				:key="input.id"
-				:node="node"
-				:intf="input"
-			/>
-
 			<!-- Outputs -->
 			<div class="__outputs">
 				<slot name="outputs">
@@ -162,7 +152,7 @@ onUpdated(onRender)
 				class="__inputs"
 			>
 				<InputNodeInterface
-					v-for="input in MAIN_INPUT"
+					v-for="input in displayedInputs"
 					:key="input.id"
 					:node="node"
 					:intf="input"
