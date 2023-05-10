@@ -1,7 +1,7 @@
 import { provide, ref, Ref } from 'vue'
 import { NodeInterface } from '@baklavajs/core'
 import { ITemporaryConnection, TemporaryConnectionState } from '../ChatBotsConnections/connection'
-import { useGraph } from '../utility'
+import { useGraph } from '~/components/ChatBots/utility'
 
 export function useTemporaryConnection() {
 	const { graph } = useGraph()

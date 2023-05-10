@@ -25,7 +25,7 @@
 import { computed, CSSProperties, inject, Ref, ref, reactive } from 'vue'
 import { usePointer } from '@vueuse/core'
 import { AbstractNode, INodeTypeInformation } from '@baklavajs/core'
-import { useViewModel, useTransform } from '../utility'
+import { useViewModel, useTransform } from '~/components/ChatBots/utility'
 
 import ChatBotsPaletteItem from './ChatBotsPaletteItem.vue'
 

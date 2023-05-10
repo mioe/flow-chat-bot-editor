@@ -1,7 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { TemporaryConnectionState } from './connection'
-import { useGraph } from '../utility'
+import { useGraph } from '~/components/ChatBots/utility'
 
 function getEdgeCenter({
 	sourceX,
@@ -251,10 +251,10 @@ export default defineComponent({
 		function getSmoothStepPath({
 			sourceX,
 			sourceY,
-			sourcePosition = Position.Bottom,
+			sourcePosition = Position.Right,
 			targetX,
 			targetY,
-			targetPosition = Position.Top,
+			targetPosition = Position.Left,
 			borderRadius = 10,
 			centerX,
 			centerY,

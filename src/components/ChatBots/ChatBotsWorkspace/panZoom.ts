@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { useDragMove, useGraph } from '../utility'
+import { useDragMove, useGraph } from '~/components/ChatBots/utility'
 
 export function usePanZoom() {
 	const { graph } = useGraph()

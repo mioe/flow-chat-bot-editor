@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, toRef, onUpdated, onMounted } from 'vue'
 import { AbstractNode } from '@baklavajs/core'
-import { useDragMove, useGraph, useViewModel } from '../utility'
+import { useDragMove, useGraph, useViewModel } from '~/components/ChatBots/utility'
 import OutputNodeInterface from './_BaseOutputNodeInterface.vue'
 import InputNodeInterface from './_BaseInputNodeInterface.vue'
 

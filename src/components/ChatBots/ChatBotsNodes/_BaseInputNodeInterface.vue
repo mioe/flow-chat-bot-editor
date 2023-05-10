@@ -1,7 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent, inject, onMounted, onUpdated, Ref, ref } from 'vue'
 import { AbstractNode, NodeInterface } from '@baklavajs/core'
-import { useViewModel } from '../utility'
+import { useViewModel } from '~/components/ChatBots/utility'
 
 export default defineComponent({
 	props: {

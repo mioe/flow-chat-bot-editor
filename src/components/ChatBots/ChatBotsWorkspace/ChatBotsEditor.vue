@@ -106,7 +106,7 @@ import CustomBackground from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsBa
 import ChatBotsHistoryAndZoomPicker from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsHistoryAndZoomPicker.vue'
 import ChatBotsPalette from '~/components/ChatBots/ChatBotsWorkspace/ChatBotsPalette.vue'
 
-import { providePlugin } from '../utility'
+import { providePlugin } from '~/components/ChatBots/utility'
 
 export default defineComponent({
 	components: {

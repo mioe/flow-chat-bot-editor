@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import { useGraph, useViewModel } from '../utility'
+import { useGraph, useViewModel } from '~/components/ChatBots/utility'
 
 export default defineComponent({
 	setup() {
