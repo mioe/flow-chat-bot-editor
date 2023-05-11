@@ -11,6 +11,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@profeat/ui-kit": "^0.0.14",
 		"@vueuse/core": "^10.1.0",
 		"baklavajs": "2.0.2-beta.3",
 		"vue": "^3.2.47",

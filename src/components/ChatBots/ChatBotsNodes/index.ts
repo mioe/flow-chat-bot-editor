@@ -1,14 +1,11 @@
 import {
 	defineNode,
 	NodeInterface,
-	AbstractNode,
-	INodeState,
-	CalculateFunction,
 	defineDynamicNode,
 	DynamicNodeDefinition,
 } from 'baklavajs'
 import { allowMultipleConnections } from '@baklavajs/engine'
-import { ButtonInterface, CheckboxInterface } from '~/components/ChatBots/ChatBotsInterfaces'
+import { ButtonInterface, SwitchInterface } from '~/components/ChatBots/ChatBotsInterfaces'
 
 const DEFAULT_NODE_WIDTH = 369
 
@@ -79,7 +76,7 @@ export const MessageNode = defineDynamicNode({
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
 	outputs: {
-		enabled: () => new CheckboxInterface('Кнопки-ответы', false).setPort(false),
+		enabled: () => new SwitchInterface('Кнопки-ответы', false).setPort(false),
 	},
 	onUpdate(_, { enabled }) {
 		// @ts-ignore
@@ -93,16 +90,24 @@ export const MessageNode = defineDynamicNode({
 		}
 		return {
 			outputs: {
-				add: () => new ButtonInterface('Добавить исход', () => {
-					// @ts-ignore
-					const name = 'Output ' + ++this.counter
-					// @ts-ignore
-					this.addOutput(name, new NodeInterface<any>(name, undefined))
+				add: () => new ButtonInterface({
+					name: 'Добавить исход',
+					callback: () => {
+						// @ts-ignore
+						const name = 'Output ' + ++this.counter
+						// @ts-ignore
+						this.addOutput(name, new NodeInterface<any>(name, undefined))
+					},
+					icon: 'IconAddMd',
 				}),
-				remove: () => new ButtonInterface('Удалить исход', () => {
-					// @ts-ignore
-					this.removeOutput('Output ' + this.counter--)
+				remove: () => new ButtonInterface({
+					name: 'Удалить исход',
+					callback: () => {
+						// @ts-ignore
+						this.removeOutput('Output ' + this.counter--)
+					}
 				}),
+
 				anotherAnswer: () => new NodeInterface('Другой ответ', undefined),
 				idle: () => new NodeInterface('Нет ответа X минут', null),
 			} as DynamicNodeDefinition,

@@ -22,15 +22,20 @@ export default defineComponent({
 		const el = ref<HTMLElement | null>(null) as Ref<HTMLElement>
 
 		const isConnected = computed(() => props.intf.connectionCount > 0)
-		const classes = computed(() => ({
-			'--input': props.intf.isInput,
-			'--output': !props.intf.isInput,
-			'--connected': isConnected.value,
-		}))
 
 		const showComponent = computed<boolean>(
 			() => props.intf.component && props.intf.connectionCount === 0 && (props.intf.isInput || !props.intf.port),
 		)
+
+		const classes = computed(() => {
+			return showComponent.value
+				? {}
+				: {
+					'--input': props.intf.isInput,
+					'--output': !props.intf.isInput,
+					'--connected': isConnected.value,
+				}
+		})
 
 		const startHover = () => {
 			hoveredOver(props.intf)
@@ -72,21 +77,6 @@ export default defineComponent({
 			@pointerover="startHover"
 			@pointerout="endHover"
 		/>
-		<!-- <svg
-				width="100%"
-				height="100%"
-				class="absolute left-0 top-[50%] transform -translate-y-[50%] h-[100%] w-[26px] bg-transparent"
-			>
-				<line
-					x1="0"
-					y1="50%"
-					x2="100%"
-					y2="50%"
-					stroke="black"
-					:stroke-width="FAKE_LINE_WITH_SCALE"
-				/>
-			</svg>
-		</div> -->
 		<!-- eslint-disable vue/no-mutating-props -->
 		<component
 			:is="intf.component"

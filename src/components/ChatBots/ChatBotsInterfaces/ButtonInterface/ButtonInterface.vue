@@ -1,11 +1,22 @@
 <template>
-	<button
-		class="baklava-button --block"
-		:title="intf.name"
+	<PButton
+		:variant="intf.options?.variant"
+		:size="intf.options?.size"
+		:color="intf.options?.color"
+		:disabled="intf.options?.disabled"
+		:nuxt="intf.options?.nuxt"
+		:type="intf.options?.type"
+		class="w-full"
 		@click="onClick"
 	>
+		<template
+			v-if="intf.icon"
+			#left
+		>
+			<component :is="intf.icon" />
+		</template>
 		{{ intf.name }}
-	</button>
+	</PButton>
 </template>
 
 <script lang="ts">
