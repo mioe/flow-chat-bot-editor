@@ -24,11 +24,11 @@ export default defineComponent({
 		const isConnected = computed(() => props.intf.connectionCount > 0)
 
 		const showComponent = computed<boolean>(
-			() => props.intf.component && props.intf.connectionCount === 0 && (props.intf.isInput || !props.intf.port),
+			() => props.intf.component && props.intf.connectionCount === 0 && !props.intf.isInput,
 		)
 
 		const classes = computed(() => {
-			return showComponent.value
+			return showComponent.value && !props.intf.port
 				? {}
 				: {
 					'--input': props.intf.isInput,

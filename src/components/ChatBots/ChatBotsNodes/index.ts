@@ -5,7 +5,11 @@ import {
 	DynamicNodeDefinition,
 } from 'baklavajs'
 import { allowMultipleConnections } from '@baklavajs/engine'
-import { ButtonInterface, SwitchInterface } from '~/components/ChatBots/ChatBotsInterfaces'
+import {
+	ButtonInterface,
+	SwitchInterface,
+	IdleInterface,
+} from '~/components/ChatBots/ChatBotsInterfaces'
 
 const DEFAULT_NODE_WIDTH = 369
 
@@ -112,7 +116,10 @@ export const MessageNode = defineDynamicNode({
 				}),
 
 				anotherAnswer: () => new NodeInterface('Другой ответ', undefined),
-				idle: () => new NodeInterface('Нет ответа X минут', null),
+				idle: () => new IdleInterface({
+					name: 'Нет ответа ff',
+					value: null,
+				}),
 			} as DynamicNodeDefinition,
 		}
 	},
