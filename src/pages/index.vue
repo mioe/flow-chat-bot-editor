@@ -88,7 +88,7 @@ console.log('🦕 END (between)', e)
 </script>
 
 <template>
-	<div class="relative flex w-full h-full flex select-none">
+	<div class="relative flex w-full h-full flex select-none bg-$common-fog">
 		<CustomEditorComponent
 			:view-model="baklava"
 			class="ps-chat-bot-editor"

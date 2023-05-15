@@ -76,7 +76,10 @@ export const MessageNode = defineDynamicNode({
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
 	outputs: {
-		enabled: () => new SwitchInterface('Кнопки-ответы', false).setPort(false),
+		enabled: () => new SwitchInterface({
+			name: 'Кнопки-ответы',
+			value: false,
+		}),
 	},
 	onUpdate(_, { enabled }) {
 		// @ts-ignore

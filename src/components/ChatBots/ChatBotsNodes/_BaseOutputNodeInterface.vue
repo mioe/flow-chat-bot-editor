@@ -50,16 +50,10 @@ export default defineComponent({
 			}
 		}
 
-		const FAKE_LINE_WITH_SCALE = computed(() => {
-			// @ts-ignore
-			const s = viewModel.value.displayedGraph.scaling
-			return 2 / s
-		})
-
 		onMounted(onRender)
 		onUpdated(onRender)
 
-		return { el, isConnected, showComponent, classes, startHover, endHover, FAKE_LINE_WITH_SCALE }
+		return { el, isConnected, showComponent, classes, startHover, endHover }
 	},
 })
 </script>

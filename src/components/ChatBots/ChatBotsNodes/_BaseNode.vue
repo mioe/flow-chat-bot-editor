@@ -132,8 +132,6 @@ onUpdated(onRender)
 		</div>
 
 		<div class="__content">
-			<slot />
-
 			<!-- Outputs -->
 			<div class="__outputs">
 				<slot name="outputs">
