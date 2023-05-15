@@ -83,6 +83,7 @@ export const MessageNode = defineDynamicNode({
 		enabled: () => new SwitchInterface({
 			name: 'Кнопки-ответы',
 			value: false,
+			position: 'top',
 		}),
 	},
 	onUpdate(_, { enabled }) {
@@ -117,7 +118,7 @@ export const MessageNode = defineDynamicNode({
 
 				anotherAnswer: () => new NodeInterface('Другой ответ', undefined),
 				idle: () => new IdleInterface({
-					name: 'Нет ответа ff',
+					position: 'bottom',
 					value: null,
 				}),
 			} as DynamicNodeDefinition,

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import BaseNode from './_BaseNode.vue'
 import { AbstractNode } from '@baklavajs/core'
+import BaseNode from '~/components/ChatBots/ChatBotsNodes/_BaseNode.vue'
 import OutputNodeInterface from '~/components/ChatBots/ChatBotsNodes/_BaseOutputNodeInterface.vue'
 
 const props = withDefaults(
