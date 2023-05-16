@@ -1,3 +1,5 @@
 export * from './ButtonInterface/ButtonInterface'
-export * from './SwitchInterface/SwitchInterface'
+export * from './EditorInterface/EditorInterface'
 export * from './IdleInterface/IdleInterface'
+export * from './SimpleInterface/SimpleInterface'
+export * from './SwitchInterface/SwitchInterface'

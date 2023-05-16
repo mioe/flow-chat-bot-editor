@@ -7,8 +7,10 @@ import {
 import { allowMultipleConnections } from '@baklavajs/engine'
 import {
 	ButtonInterface,
+	EditorInterface,
 	SwitchInterface,
 	IdleInterface,
+	SimpleInterface,
 } from '~/components/ChatBots/ChatBotsInterfaces'
 
 const DEFAULT_NODE_WIDTH = 369
@@ -80,6 +82,12 @@ export const MessageNode = defineDynamicNode({
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
 	outputs: {
+		text: () => new EditorInterface({
+			name: 'Текст',
+			placeholder: 'Введите текст, или оставьте поле пустым если хотите отправить только кнопки',
+			value: '',
+			position: 'top',
+		}),
 		enabled: () => new SwitchInterface({
 			name: 'Кнопки-ответы',
 			value: false,
@@ -92,7 +100,11 @@ export const MessageNode = defineDynamicNode({
 		if (!enabled) {
 			return {
 				outputs: {
-					output: () => new NodeInterface('Следующий шаг', undefined),
+					output: () => new SimpleInterface({
+						name: 'Следующий шаг',
+						value: undefined,
+						position: 'bottom',
+					}),
 				} as DynamicNodeDefinition,
 			}
 		}
@@ -107,19 +119,24 @@ export const MessageNode = defineDynamicNode({
 						this.addOutput(name, new NodeInterface<any>(name, undefined))
 					},
 					icon: 'IconAddMd',
+					position: 'center',
 				}),
 				remove: () => new ButtonInterface({
 					name: 'Удалить исход',
 					callback: () => {
 						// @ts-ignore
 						this.removeOutput('Output ' + this.counter--)
-					}
+					},
 				}),
 
-				anotherAnswer: () => new NodeInterface('Другой ответ', undefined),
-				idle: () => new IdleInterface({
+				anotherAnswer: () => new SimpleInterface({
+					name: 'Другой ответ',
+					value: undefined,
 					position: 'bottom',
+				}),
+				idle: () => new IdleInterface({
 					value: null,
+					position: 'bottom',
 				}),
 			} as DynamicNodeDefinition,
 		}

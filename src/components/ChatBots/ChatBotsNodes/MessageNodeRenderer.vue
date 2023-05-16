@@ -15,6 +15,11 @@ const props = withDefaults(
 )
 
 const displayedOutputs = computed(() => Object.values(props.node.outputs).filter((ni) => !ni.hidden))
+const POSITIONS = ['top', 'center', 'bottom']
+const topOutputs = computed(() => displayedOutputs.value.filter((ni: any) => ni.position === POSITIONS[0]))
+const centerOutputs = computed(() => displayedOutputs.value.filter((ni: any) => ni.position === POSITIONS[1]))
+const bottomOutputs = computed(() => displayedOutputs.value.filter((ni: any) => ni.position === POSITIONS[2]))
+const otherOutputs =  computed(() => displayedOutputs.value.filter((ni: any) => !ni.position))
 
 const emit = defineEmits<{
 	(e: 'select'): void;
@@ -29,12 +34,41 @@ const emit = defineEmits<{
 	>
 		<template #outputs>
 			<div class="flex flex-col gap-[24px]">
-				<OutputNodeInterface
-					v-for="output in displayedOutputs"
-					:key="output.id"
-					:node="node"
-					:intf="output"
-				/>
+				<header class="flex flex-col gap-[24px]">
+					<OutputNodeInterface
+						v-for="output in topOutputs"
+						:key="output.id"
+						:node="node"
+						:intf="output"
+					/>
+				</header>
+				<div v-if="centerOutputs.length">
+					<div
+						v-if="otherOutputs.length"
+						class="mb-[12px]"
+					>
+						<OutputNodeInterface
+							v-for="output in otherOutputs"
+							:key="output.id"
+							:node="node"
+							:intf="output"
+						/>
+					</div>
+					<OutputNodeInterface
+						v-for="output in centerOutputs"
+						:key="output.id"
+						:node="node"
+						:intf="output"
+					/>
+				</div>
+				<footer class="flex flex-col gap-[16px]">
+					<OutputNodeInterface
+						v-for="output in bottomOutputs"
+						:key="output.id"
+						:node="node"
+						:intf="output"
+					/>
+				</footer>
 			</div>
 		</template>
 	</BaseNode>
