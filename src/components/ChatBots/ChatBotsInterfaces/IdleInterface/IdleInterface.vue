@@ -13,5 +13,13 @@ export default defineComponent({
 </script>
 
 <template>
-	<p>SSDD</p>
+	<span class="align-middle">
+		Нет ответа
+		<button
+			class="c-$additional-blue"
+			style="font: inherit;"
+		>
+			X минут
+		</button>
+	</span>
 </template>

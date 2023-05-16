@@ -4,11 +4,13 @@ import {
 	defineDynamicNode,
 	DynamicNodeDefinition,
 } from 'baklavajs'
+import { v4 as uuidv4 } from 'uuid'
 import { allowMultipleConnections } from '@baklavajs/engine'
 import {
 	ButtonInterface,
 	EditorInterface,
 	SwitchInterface,
+	InputInterface,
 	IdleInterface,
 	SimpleInterface,
 } from '~/components/ChatBots/ChatBotsInterfaces'
@@ -76,7 +78,7 @@ export const MessageNode = defineDynamicNode({
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
 		// @ts-ignore
-		this.counter = 0
+		this.fields = []
 	},
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
@@ -95,9 +97,9 @@ export const MessageNode = defineDynamicNode({
 		}),
 	},
 	onUpdate(_, { enabled }) {
-		// @ts-ignore
-		console.log('🦕 onUpdate', enabled)
 		if (!enabled) {
+			// @ts-ignore
+			this.fields = []
 			return {
 				outputs: {
 					output: () => new SimpleInterface({
@@ -108,25 +110,42 @@ export const MessageNode = defineDynamicNode({
 				} as DynamicNodeDefinition,
 			}
 		}
+		const savedOutputs = {}
+		// @ts-ignore
+		this.fields.forEach((field: any) => {
+			// @ts-ignore
+			savedOutputs[field.uuid] = field.node
+		})
 		return {
 			outputs: {
+				...savedOutputs,
+
 				add: () => new ButtonInterface({
 					name: 'Добавить исход',
 					callback: () => {
+						const currentFieldId = uuidv4()
+						const currentField = {
+							uuid: currentFieldId,
+							node: new InputInterface({
+								name: 'text',
+								placeholder: 'Введите вариант ответа',
+								value: '',
+								callback: () => {
+									// @ts-ignore
+									this.removeOutput(currentFieldId)
+								},
+							}),
+						}
 						// @ts-ignore
-						const name = 'Output ' + ++this.counter
+						this.fields.push(currentField)
 						// @ts-ignore
-						this.addOutput(name, new NodeInterface<any>(name, undefined))
+						this.addOutput(
+							currentField.uuid,
+							currentField.node,
+						)
 					},
 					icon: 'IconAddMd',
 					position: 'center',
-				}),
-				remove: () => new ButtonInterface({
-					name: 'Удалить исход',
-					callback: () => {
-						// @ts-ignore
-						this.removeOutput('Output ' + this.counter--)
-					},
 				}),
 
 				anotherAnswer: () => new SimpleInterface({

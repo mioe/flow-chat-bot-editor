@@ -20,7 +20,7 @@ import CustomEditorComponent from '~/components/ChatBots/ChatBotsWorkspace/ChatB
 const baklava = useBaklava() as any
 const engine = new DependencyEngine(baklava.editor)
 
-baklava.displayedGraph.scaling = 0.7
+baklava.displayedGraph.scaling = 1
 
 baklava.editor.registerNodeType(StartNode)
 baklava.editor.registerNodeType(ActionNode)

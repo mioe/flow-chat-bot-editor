@@ -14,6 +14,7 @@
 		"@profeat/ui-kit": "^0.0.14",
 		"@vueuse/core": "^10.1.0",
 		"baklavajs": "2.0.2-beta.3",
+		"uuid": "^9.0.0",
 		"vue": "^3.2.47",
 		"vue-router": "^4.1.6"
 	},
@@ -21,6 +22,7 @@
 		"@iconify/utils": "^2.1.5",
 		"@mioe/eslint-config": "^0.1.4",
 		"@types/node": "^18.15.11",
+		"@types/uuid": "^9.0.1",
 		"@vitejs/plugin-vue": "^4.1.0",
 		"eslint": "^8.38.0",
 		"typescript": "^4.9.5",

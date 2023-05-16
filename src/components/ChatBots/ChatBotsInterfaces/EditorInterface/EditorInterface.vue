@@ -25,21 +25,21 @@ export default defineComponent({
 		<footer class="flex justify-between w-full c-$common-asphalt">
 			<div class="flex gap-[8px] py-[5px]">
 				<button class="w-[24px] h-[24px] flex-shrink-0 flex items-center justify-center cursor-pointer">
-					<IconFilledTextStyleBoldMd />
+					<IconFilledTextStyleBoldMd class="w-[20px] h-[20px]" />
 				</button>
 				<button class="w-[24px] h-[24px] flex-shrink-0 flex items-center justify-center cursor-pointer">
-					<IconFilledTextStyleItalicMd />
+					<IconFilledTextStyleItalicMd class="w-[20px] h-[20px]" />
 				</button>
 				<button class="w-[24px] h-[24px] flex-shrink-0 flex items-center justify-center cursor-pointer">
-					<IconFilledTextStyleStrikethroughMd />
+					<IconFilledTextStyleStrikethroughMd class="w-[20px] h-[20px]" />
 				</button>
 			</div>
 			<div class="flex gap-[8px] py-[5px]">
 				<button class="w-[24px] h-[24px] flex-shrink-0 flex items-center justify-center cursor-pointer">
-					<IconParametrMd />
+					<IconParametrMd class="w-[20px] h-[20px]" />
 				</button>
 				<button class="w-[24px] h-[24px] flex-shrink-0 flex items-center justify-center cursor-pointer">
-					<IconSmileMd />
+					<IconSmileMd class="w-[20px] h-[20px]" />
 				</button>
 			</div>
 		</footer>

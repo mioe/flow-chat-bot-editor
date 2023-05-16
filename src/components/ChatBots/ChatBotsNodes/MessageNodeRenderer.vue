@@ -44,14 +44,31 @@ const emit = defineEmits<{
 				</header>
 				<div v-if="centerOutputs.length">
 					<div
+						v-if="otherOutputs.length >= 4"
+						class="text-[14px] mb-[16px]"
+					>
+						<PAlertContainer
+							:alerts="[
+								{
+									showAlert: true,
+									showCross: true,
+									color: 'warning',
+									text: 'Четыре и более кнопок свернутся в меню',
+									onCrossClick: () => {},
+								},
+							]"
+						/>
+					</div>
+					<div
 						v-if="otherOutputs.length"
-						class="mb-[12px]"
+						class="chat-bots-nodes--stack-field mb-[12px]"
 					>
 						<OutputNodeInterface
 							v-for="output in otherOutputs"
 							:key="output.id"
 							:node="node"
 							:intf="output"
+							class="chat-bots-nodes--stack-field--item"
 						/>
 					</div>
 					<OutputNodeInterface
@@ -73,3 +90,28 @@ const emit = defineEmits<{
 		</template>
 	</BaseNode>
 </template>
+
+<style>
+.chat-bots-nodes--stack-field .chat-bots-nodes--stack-field--item .control {
+	border-radius: 0 !important;
+}
+
+.chat-bots-nodes--stack-field .chat-bots-nodes--stack-field--item:first-of-type .control {
+	border-top-left-radius: 8px !important;
+	border-top-right-radius: 8px !important;
+}
+
+.chat-bots-nodes--stack-field .chat-bots-nodes--stack-field--item:last-of-type .control {
+	border-bottom-left-radius: 8px !important;
+	border-bottom-right-radius: 8px !important;
+}
+
+.chat-bots-nodes--stack-field .chat-bots-nodes--stack-field--item .active .control {
+	position: relative;
+	z-index: 1;
+}
+
+.chat-bots-nodes--stack-field--item + .chat-bots-nodes--stack-field--item {
+	margin-top: -1px;
+}
+</style>

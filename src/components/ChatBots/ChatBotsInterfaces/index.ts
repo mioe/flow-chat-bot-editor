@@ -1,5 +1,6 @@
 export * from './ButtonInterface/ButtonInterface'
 export * from './EditorInterface/EditorInterface'
 export * from './IdleInterface/IdleInterface'
+export * from './InputInterface/InputInterface'
 export * from './SimpleInterface/SimpleInterface'
 export * from './SwitchInterface/SwitchInterface'
