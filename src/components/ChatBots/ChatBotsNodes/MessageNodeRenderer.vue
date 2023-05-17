@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { AbstractNode } from '@baklavajs/core'
 import BaseNode from '~/components/ChatBots/ChatBotsNodes/_BaseNode.vue'
 import OutputNodeInterface from '~/components/ChatBots/ChatBotsNodes/_BaseOutputNodeInterface.vue'
@@ -20,6 +20,8 @@ const topOutputs = computed(() => displayedOutputs.value.filter((ni: any) => ni.
 const centerOutputs = computed(() => displayedOutputs.value.filter((ni: any) => ni.position === POSITIONS[1]))
 const bottomOutputs = computed(() => displayedOutputs.value.filter((ni: any) => ni.position === POSITIONS[2]))
 const otherOutputs =  computed(() => displayedOutputs.value.filter((ni: any) => !ni.position))
+
+const showLimitAnswers = ref(true)
 
 const emit = defineEmits<{
 	(e: 'select'): void;
@@ -44,20 +46,16 @@ const emit = defineEmits<{
 				</header>
 				<div v-if="centerOutputs.length">
 					<div
-						v-if="otherOutputs.length >= 4"
+						v-if="otherOutputs.length >= 4 && showLimitAnswers"
 						class="text-[14px] mb-[16px]"
 					>
-						<PAlertContainer
-							:alerts="[
-								{
-									showAlert: true,
-									showCross: true,
-									color: 'warning',
-									text: 'Четыре и более кнопок свернутся в меню',
-									onCrossClick: () => {},
-								},
-							]"
-						/>
+						<PAlert
+							v-model="showLimitAnswers"
+							show-cross
+							color="warning"
+						>
+							Четыре и более кнопок свернутся в меню
+						</PAlert>
 					</div>
 					<div
 						v-if="otherOutputs.length"
