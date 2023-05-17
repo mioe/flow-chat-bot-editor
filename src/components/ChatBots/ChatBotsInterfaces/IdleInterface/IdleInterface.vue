@@ -2,13 +2,50 @@
 import { ref } from 'vue'
 import type { IdleInterface } from './IdleInterface'
 
-defineProps<{
+const props = defineProps<{
 	intf: IdleInterface
 }>()
 
 const isOpenDropdown = ref(false)
 const hours = ref(0)
 const minutes = ref(0)
+
+const isNumber = (ev: KeyboardEvent) => {
+	const keysAllowed: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+	const keyPressed: string = ev.key
+
+	if (!keysAllowed.includes(keyPressed)) {
+		ev.preventDefault()
+	}
+}
+
+const getHoursAndMinutes = (minutes: number | null) => {
+	if (!minutes) return { h: 0, m: 0 }
+	const h = Math.floor(minutes / 60)
+	return {
+		h,
+		m: minutes % (h * 60),
+	}
+}
+
+const handleBlurMinutes = () => {
+	const { h, m } = getHoursAndMinutes(minutes.value)
+	hours.value = hours.value + h
+	minutes.value = m
+}
+
+const handleCancel = () => {
+	const { h, m } = getHoursAndMinutes(props.intf.value)
+	hours.value = h
+	minutes.value = m
+	isOpenDropdown.value = false
+}
+
+const handleSubmit = () => {
+	// eslint-disable-next-line vue/no-mutating-props
+	props.intf.value = hours.value * 60 + minutes.value
+	isOpenDropdown.value = false
+}
 </script>
 
 <template>
@@ -28,7 +65,7 @@ const minutes = ref(0)
 						style="font: inherit;"
 						@click="click"
 					>
-						X минут
+						{{ intf.value || 'X' }} минут
 					</button>
 				</template>
 				<template #default>
@@ -42,10 +79,11 @@ const minutes = ref(0)
 						<div class="grid grid-cols-2 gap-[16px]">
 							<div class="w-full flex items-center gap-[12px]">
 								<PInput
-									v-model="hours"
+									v-model.number="hours"
 									text-size="medium"
 									size="medium"
 									type="number"
+									@keypress="isNumber($event)"
 								/>
 								<span class="font-400 text-[16px]">
 									часов
@@ -53,10 +91,12 @@ const minutes = ref(0)
 							</div>
 							<div class="w-full flex items-center gap-[12px]">
 								<PInput
-									v-model="minutes"
+									v-model.number="minutes"
 									text-size="medium"
 									size="medium"
 									type="number"
+									@blur="handleBlurMinutes"
+									@keypress="isNumber($event)"
 								/>
 								<span class="font-400 text-[16px]">
 									минут
@@ -70,6 +110,7 @@ const minutes = ref(0)
 								size="small"
 								type="button"
 								class="w-full"
+								@click="handleCancel"
 							>
 								Отменить
 							</PButton>
@@ -79,6 +120,7 @@ const minutes = ref(0)
 								size="small"
 								type="button"
 								class="w-full"
+								@click="handleSubmit"
 							>
 								Сохранить
 							</PButton>
