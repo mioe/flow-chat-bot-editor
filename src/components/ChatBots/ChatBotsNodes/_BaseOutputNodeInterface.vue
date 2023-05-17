@@ -68,13 +68,12 @@ const addNodeWithCoordinates = (nodeType: any, x: number, y: number) => {
 }
 
 
-const handleConnectionMenuItem = (ev: Event, nodeKey: string) => {
-	console.log('🦕 handleConnectionMenuItem', ev)
+const handleConnectionMenuItem = (ev: MouseEvent, nodeKey: string) => {
 	isOpenConnectionMenu.value = false
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const rect = editorEl!.value!.getBoundingClientRect()
 	const [x, y] = transform(ev.clientX - rect.left, ev.clientY - rect.top)
 	const newNode = addNodeWithCoordinates(NODES_LIST.get(nodeKey), x, y)
-	console.log('🦕 msg', props.node.outputs, props.intf._type)
 	viewModel.value.displayedGraph.addConnection(
 		props.intf,
 		newNode.inputs.input,

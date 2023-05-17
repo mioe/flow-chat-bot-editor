@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import { defineComponent } from 'vue'
+import { ButtonInterface } from './ButtonInterface'
+
+const props = defineProps<{
+	intf: ButtonInterface
+}>()
+
+const onClick = () => {
+	if (props.intf.callback) {
+		props.intf.callback()
+	}
+}
+</script>
+
 <template>
 	<PButton
 		:variant="intf.options?.variant"
@@ -18,26 +33,3 @@
 		{{ intf.name }}
 	</PButton>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { ButtonInterface } from './ButtonInterface'
-
-export default defineComponent({
-	props: {
-		intf: {
-			type: Object as () => ButtonInterface,
-			required: true,
-		},
-	},
-	setup(props) {
-		const onClick = () => {
-			if (props.intf.callback) {
-				props.intf.callback()
-			}
-		}
-
-		return { onClick }
-	},
-})
-</script>
