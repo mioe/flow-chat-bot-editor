@@ -19,13 +19,13 @@ const isNumber = (ev: KeyboardEvent) => {
 	}
 }
 
-const getHoursAndMinutes = (minutes: number | null) => {
-	if (!minutes) return { h: 0, m: 0 }
-	const h = Math.floor(minutes / 60)
-	return {
-		h,
-		m: minutes % (h * 60),
-	}
+const getHoursAndMinutes = (min: number | null) => {
+	if (!min) return { h: 0, m: 0 }
+	const h = Math.floor(min / 60)
+	const m = h > 0
+		? min % (h * 60)
+		: min
+	return { h, m }
 }
 
 const handleBlurMinutes = () => {
