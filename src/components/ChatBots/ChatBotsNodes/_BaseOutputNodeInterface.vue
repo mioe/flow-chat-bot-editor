@@ -1,61 +1,101 @@
-<script lang="ts">
-import { computed, defineComponent, inject, onMounted, onUpdated, Ref, ref } from 'vue'
+
+<script setup lang="ts">
+import { computed, inject, onMounted, onUpdated, Ref, ref } from 'vue'
+import {
+	// StartNode,
+	ActionNode,
+	IdleNode,
+	IfNode,
+	MessageNode,
+	InputNode,
+	// RedirectNode,
+	TemplateWabaNode,
+} from '~/components/ChatBots/ChatBotsNodes'
 import { AbstractNode, NodeInterface } from '@baklavajs/core'
-import { useViewModel } from '~/components/ChatBots/utility'
+import { useViewModel, useTransform } from '~/components/ChatBots/utility'
+const { transform } = useTransform()
 
-export default defineComponent({
-	props: {
-		node: {
-			type: Object as () => AbstractNode,
-			required: true,
-		},
-		intf: {
-			type: Object as () => NodeInterface,
-			required: true,
-		},
-	},
-	setup(props) {
-		const { viewModel } = useViewModel()
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		const hoveredOver = inject<(intf: NodeInterface | undefined) => void>('hoveredOver')!
+const props = defineProps<{
+	node: AbstractNode
+	intf: NodeInterface
+}>()
 
-		const el = ref<HTMLElement | null>(null) as Ref<HTMLElement>
+const { viewModel } = useViewModel()
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const hoveredOver = inject<(intf: NodeInterface | undefined) => void>('hoveredOver')!
+const editorEl = inject<Ref<HTMLElement | null>>('editorEl')
 
-		const isConnected = computed(() => props.intf.connectionCount > 0)
+const el = ref<HTMLElement | null>(null) as Ref<HTMLElement>
 
-		const showComponent = computed<boolean>(
-			() => props.intf.component && !props.intf.isInput,
-		)
+const isConnected = computed(() => props.intf.connectionCount > 0)
+const showConnectionMenu = computed(() => !isConnected.value && props.intf.port)
+const isOpenConnectionMenu = ref(false)
 
-		const classes = computed(() => {
-			return showComponent.value && !props.intf.port
-				? {}
-				: {
-					'--input': props.intf.isInput,
-					'--output': !props.intf.isInput,
-					'--connected': isConnected.value,
-				}
-		})
+const showComponent = computed<boolean>(
+	() => props.intf.component && !props.intf.isInput,
+)
 
-		const startHover = () => {
-			hoveredOver(props.intf)
+const classes = computed(() => {
+	return showComponent.value && !props.intf.port
+		? {}
+		: {
+			'--input': props.intf.isInput,
+			'--output': !props.intf.isInput,
+			'--connected': isConnected.value,
 		}
-		const endHover = () => {
-			hoveredOver(undefined)
-		}
-
-		const onRender = () => {
-			if (el.value) {
-				viewModel.value.hooks.renderInterface.execute({ intf: props.intf, el: el.value })
-			}
-		}
-
-		onMounted(onRender)
-		onUpdated(onRender)
-
-		return { el, isConnected, showComponent, classes, startHover, endHover }
-	},
 })
+
+const FAKE_LINE_WITH_SCALE = computed(() => {
+	// @ts-ignore
+	const s = viewModel.value.displayedGraph.scaling
+	return 2 / s
+})
+
+const NODES_LIST = new Map()
+NODES_LIST.set('ActionNode', ActionNode)
+NODES_LIST.set('IdleNode', IdleNode)
+NODES_LIST.set('IfNode', IfNode)
+NODES_LIST.set('MessageNode', MessageNode)
+NODES_LIST.set('InputNode', InputNode)
+NODES_LIST.set('TemplateWabaNode', TemplateWabaNode)
+
+const addNodeWithCoordinates = (nodeType: any, x: number, y: number) => {
+	const n = new nodeType()
+	viewModel.value.displayedGraph.addNode(n)
+	n.position.x = x
+	n.position.y = y
+	return n
+}
+
+
+const handleConnectionMenuItem = (ev: Event, nodeKey: string) => {
+	console.log('🦕 handleConnectionMenuItem', ev)
+	isOpenConnectionMenu.value = false
+	const rect = editorEl!.value!.getBoundingClientRect()
+	const [x, y] = transform(ev.clientX - rect.left, ev.clientY - rect.top)
+	const newNode = addNodeWithCoordinates(NODES_LIST.get(nodeKey), x, y)
+	console.log('🦕 msg', props.node.outputs, props.intf._type)
+	viewModel.value.displayedGraph.addConnection(
+		props.intf,
+		newNode.inputs.input,
+	)
+}
+
+const startHover = () => {
+	hoveredOver(props.intf)
+}
+const endHover = () => {
+	hoveredOver(undefined)
+}
+
+const onRender = () => {
+	if (el.value) {
+		viewModel.value.hooks.renderInterface.execute({ intf: props.intf, el: el.value })
+	}
+}
+
+onMounted(onRender)
+onUpdated(onRender)
 </script>
 
 <template>
@@ -72,9 +112,97 @@ export default defineComponent({
 			@pointerout="endHover"
 		/>
 
-		<button class="chat-bots-nodes--toggle-connection-menu">
-			<IconAddMd class="w-[20px] h-[20px]" />
-		</button>
+		<template v-if="showConnectionMenu">
+			<div>
+				<svg
+					width="100%"
+					height="100%"
+					class="absolute top-[50%] transform right-[-50px] -translate-y-[50%] h-[100%] w-[26px] bg-transparent"
+				>
+					<line
+						x1="0"
+						y1="50%"
+						x2="100%"
+						y2="50%"
+						stroke="#b6c7d6"
+						:stroke-width="FAKE_LINE_WITH_SCALE"
+						marker-end="url(#ps-connection-arrow)"
+					/>
+				</svg>
+			</div>
+
+			<div class="chat-bots-nodes--toggle-connection-menu">
+				<PDropdown
+					v-model="isOpenConnectionMenu"
+					:close-on-self-click="false"
+					:width="182"
+					placement="right-start"
+				>
+					<template #activator="{ setReference, click }">
+						<button
+							:ref="setReference"
+							class="chat-bots-nodes--toggle-connection-btn"
+							:class="{'is-open': isOpenConnectionMenu}"
+							@click="click"
+						>
+							<IconAddMd class="w-[20px] h-[20px]" />
+						</button>
+					</template>
+
+					<div class="chat-bots-nodes--toggle-connection-drop">
+						<div class="chat-bots-nodes--toggle-connection-drop--nodes">
+							<button
+								class="chat-bots-nodes--toggle-connection-drop--nodes--item"
+								@click="handleConnectionMenuItem($event, 'MessageNode')"
+							>
+								<div class="c-$additional-blue w-[20px] h-[20px] inline-block i-mi:chat-m" />
+								<span>Сообщение</span>
+							</button>
+
+							<button
+								class="chat-bots-nodes--toggle-connection-drop--nodes--item"
+								@click="handleConnectionMenuItem($event, 'InputNode')"
+							>
+								<div class="c-$additional-blue w-[20px] h-[20px] inline-block i-mi:attachment-m" />
+								<span>Вложение</span>
+							</button>
+
+							<button
+								class="chat-bots-nodes--toggle-connection-drop--nodes--item"
+								@click="handleConnectionMenuItem($event, 'TemplateWabaNode')"
+							>
+								<div class="c-$additional-green w-[20px] h-[20px] inline-block i-mi:notes-l" />
+								<span>Шаблон WABA</span>
+							</button>
+
+							<button
+								class="chat-bots-nodes--toggle-connection-drop--nodes--item"
+								@click="handleConnectionMenuItem($event, 'IdleNode')"
+							>
+								<div class="c-$additional-pink w-[20px] h-[20px] inline-block i-mi:time-m" />
+								<span>Задержка</span>
+							</button>
+
+							<button
+								class="chat-bots-nodes--toggle-connection-drop--nodes--item"
+								@click="handleConnectionMenuItem($event, 'IfNode')"
+							>
+								<div class="c-$additional-orange w-[20px] h-[20px] inline-block i-mi:condition" />
+								<span>Условие</span>
+							</button>
+
+							<button
+								class="chat-bots-nodes--toggle-connection-drop--nodes--item"
+								@click="handleConnectionMenuItem($event, 'ActionNode')"
+							>
+								<div class="c-$additional-purple w-[20px] h-[20px] inline-block i-mi:zap" />
+								<span>Действие</span>
+							</button>
+						</div>
+					</div>
+				</PDropdown>
+			</div>
+		</template>
 		<!-- eslint-disable vue/no-mutating-props -->
 		<component
 			:is="intf.component"
@@ -98,8 +226,12 @@ export default defineComponent({
 	position: absolute;
 	z-index: 1;
 	top: 50%;
-	right: -72px;
+	right: -86px;
 	transform: translateY(-50%);
+}
+
+.chat-bots-nodes--toggle-connection-btn {
+	position: relative;
 	width: 36px;
 	height: 36px;
 	border-radius: 50%;
@@ -111,10 +243,31 @@ export default defineComponent({
 	cursor: pointer;
 	color: var(--common-dullSky);
 	transition: transform .3s, opacity .3s;
+	transform: rotate(0deg);
 }
 
-.chat-bots-nodes--toggle-connection-menu:focus,
-.chat-bots-nodes--toggle-connection-menu:focus-visible {
-	transform: translateY(-50%) rotate(45deg);
+.chat-bots-nodes--toggle-connection-btn.is-open {
+	transform: rotate(-45deg);
+}
+
+.chat-bots-nodes--toggle-connection-drop--nodes {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	text-align: left;
+	color: var(--common-black);
+}
+
+.chat-bots-nodes--toggle-connection-drop--nodes--item {
+	display: flex;
+	gap: 12px;
+	width: 100%;
+	font: inherit;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.chat-bots-nodes--toggle-connection-drop--nodes .chat-bots-nodes--toggle-connection-drop--nodes--item:first-of-type {
+	padding-top: 0;
 }
 </style>

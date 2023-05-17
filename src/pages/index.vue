@@ -67,12 +67,17 @@ console.log('🦕 START', s)
 // })
 
 const DEMO_START = addNodeWithCoordinates(StartNode, 32, 32)
-const DEMO_MESSAGE1 = addNodeWithCoordinates(MessageNode, 466, 32)
+const DEMO_MESSAGE1 = addNodeWithCoordinates(MessageNode, 480, 32)
 // const DEMO_MESSAGE2 = addNodeWithCoordinates(MessageNode, 520, 216)
 // const DEMO_ACTION1 = addNodeWithCoordinates(ActionNode, 480, 400)
 // const DEMO_ACTION2 = addNodeWithCoordinates(ActionNode, 400, 680)
 // const DEMO_IDLE = addNodeWithCoordinates(IdleNode, 866, 74)
 // const DEMO_TEMPLATE_WABA = addNodeWithCoordinates(TemplateWabaNode, 1010, 407)
+
+baklava.displayedGraph.addConnection(
+	DEMO_START.outputs.output1,
+	DEMO_MESSAGE1.inputs.input,
+)
 
 baklava.editor.graphEvents.beforeAddConnection.subscribe(token, (conn: any, prevent: any) => {
 	// может быть только один исход для одного варианта ответа #TODO
