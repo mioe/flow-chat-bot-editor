@@ -71,6 +71,10 @@ export default defineComponent({
 			@pointerover="startHover"
 			@pointerout="endHover"
 		/>
+
+		<button class="chat-bots-nodes--toggle-connection-menu">
+			<IconAddMd class="w-[20px] h-[20px]" />
+		</button>
 		<!-- eslint-disable vue/no-mutating-props -->
 		<component
 			:is="intf.component"
@@ -88,3 +92,29 @@ export default defineComponent({
 		</span>
 	</div>
 </template>
+
+<style>
+.chat-bots-nodes--toggle-connection-menu {
+	position: absolute;
+	z-index: 1;
+	top: 50%;
+	right: -72px;
+	transform: translateY(-50%);
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	overflow: hidden;
+	border: 2px solid var(--common-dullSky);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	color: var(--common-dullSky);
+	transition: transform .3s, opacity .3s;
+}
+
+.chat-bots-nodes--toggle-connection-menu:focus,
+.chat-bots-nodes--toggle-connection-menu:focus-visible {
+	transform: translateY(-50%) rotate(45deg);
+}
+</style>

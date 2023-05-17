@@ -59,7 +59,10 @@ const emit = defineEmits<{
 					</div>
 					<div
 						v-if="otherOutputs.length"
-						class="chat-bots-nodes--stack-field mb-[12px]"
+						class="chat-bots-nodes--stack-field"
+						:class="{
+							'mb-[12px]': otherOutputs.length < 11
+						}"
 					>
 						<OutputNodeInterface
 							v-for="output in otherOutputs"
@@ -69,12 +72,14 @@ const emit = defineEmits<{
 							class="chat-bots-nodes--stack-field--item"
 						/>
 					</div>
-					<OutputNodeInterface
-						v-for="output in centerOutputs"
-						:key="output.id"
-						:node="node"
-						:intf="output"
-					/>
+					<template v-if="otherOutputs.length < 11">
+						<OutputNodeInterface
+							v-for="output in centerOutputs"
+							:key="output.id"
+							:node="node"
+							:intf="output"
+						/>
+					</template>
 				</div>
 				<footer class="flex flex-col gap-[16px]">
 					<OutputNodeInterface
