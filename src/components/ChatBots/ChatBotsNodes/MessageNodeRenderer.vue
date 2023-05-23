@@ -54,7 +54,7 @@ const emit = defineEmits<{
 							show-cross
 							color="warning"
 						>
-							<span class="text-[14px]">Четыре и более кнопок свернутся в меню</span>
+							<span class="text-size-[14px]">Четыре и более кнопок свернутся в меню</span>
 						</PAlert>
 					</div>
 					<div

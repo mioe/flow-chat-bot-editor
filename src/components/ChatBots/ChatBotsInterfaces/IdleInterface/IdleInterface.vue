@@ -85,7 +85,7 @@ const handleSubmit = () => {
 									type="number"
 									@keypress="isNumber($event)"
 								/>
-								<span class="font-400 text-[16px]">
+								<span class="font-400 text-size-[16px]">
 									часов
 								</span>
 							</div>
@@ -98,7 +98,7 @@ const handleSubmit = () => {
 									@blur="handleBlurMinutes"
 									@keypress="isNumber($event)"
 								/>
-								<span class="font-400 text-[16px]">
+								<span class="font-400 text-size-[16px]">
 									минут
 								</span>
 							</div>

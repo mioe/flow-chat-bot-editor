@@ -71,7 +71,7 @@ const zoomPercent = computed(() => (zoom.value * 100).toFixed(0))
 			>
 				<MinusIcon class="w-[16px] h-[16px]" />
 			</button>
-			<span class="text-[16px]">{{ zoomPercent }}%</span>
+			<span class="text-size-[16px]">{{ zoomPercent }}%</span>
 			<button
 				class="w-[32px] h-[32px] flex items-center justify-center cursor-pointer border-0 bg-transparent"
 				@click="handleZoomUp"

@@ -46,7 +46,7 @@ defineProps<{
 		/>
 		<div
 			v-if="title"
-			class="text-[16px]"
+			class="text-size-[16px]"
 		>
 			{{ title }}
 		</div>
