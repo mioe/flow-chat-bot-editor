@@ -4,7 +4,7 @@ import {
 	DependencyEngine,
 	applyResult,
 } from 'baklavajs'
-import '~/assets/styles/SenderTheme.css'
+import '~/styles/SenderTheme.css'
 import {
 	StartNode,
 	ActionNode,
