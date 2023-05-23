@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Unocss from 'unocss/vite'
 import Pages from 'vite-plugin-pages'
+import svgLoader from 'vite-svg-loader'
 
 import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
@@ -29,6 +30,8 @@ export default defineConfig(({ command, mode }) => {
 
 			// https://github.com/hannoeru/vite-plugin-pages
 			Pages(),
+
+			svgLoader(),
 		],
 	}
 })

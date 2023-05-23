@@ -5,6 +5,11 @@ import { useDragMove, useGraph, useViewModel } from '~/components/ChatBots/utili
 import OutputNodeInterface from '~/components/ChatBots/ChatBotsNodes/_BaseOutputNodeInterface.vue'
 import InputNodeInterface from '~/components/ChatBots/ChatBotsNodes/_BaseInputNodeInterface.vue'
 
+// @ts-ignore
+import TrashSIcon from '~/assets/icons/trash-s.svg?component'
+// @ts-ignore
+import CopySIcon from '~/assets/icons/copy-s.svg?component'
+
 const props = withDefaults(
 	defineProps<{
 		node: AbstractNode
@@ -120,14 +125,14 @@ onUpdated(onRender)
 				class="border-none bg-transparent p-0 m-0 w-[20px] h-[20px] shrink-0 flex items-center justify-center cursor-pointer"
 				@click="onRemoveNode"
 			>
-				<div class="i-mi:trash-s" />
+				<TrashSIcon class="w-[16px] h-[16px]" />
 			</button>
 			<button
 				v-if="!hideActionButtons"
 				class="border-none bg-transparent p-0 m-0 w-[20px] h-[20px] shrink-0 flex items-center justify-center cursor-pointer"
 				@click="onCopyNode"
 			>
-				<div class="i-mi:copy-s" />
+				<CopySIcon class="w-[16px] h-[16px]" />
 			</button>
 		</div>
 
