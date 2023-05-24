@@ -14,8 +14,17 @@ import {
 	IdleInterface,
 	SimpleInterface,
 } from '~/components/ChatBots/ChatBotsInterfaces'
+import { SelectInterface } from '~/components/ChatBots/ChatBotsInterfaces/SelectInterface/SelectInterface'
 
 const DEFAULT_NODE_WIDTH = 369
+
+export enum Actions {
+	operatorCall = 'Позвать оператора',
+	stopBot = 'Остановить бота',
+	editDB = 'Изменить в базе',
+	addTag = 'Добавить тег',
+	removeTag = 'Удалить тег',
+}
 
 export const StartNode = defineNode({
 	type: 'StartNode',
@@ -32,15 +41,150 @@ export const StartNode = defineNode({
 	},
 })
 
-export const ActionNode = defineNode({
+export const ActionNode = defineDynamicNode<any, { select: Actions }>({
 	type: 'ActionNode',
 	title: 'Действие',
 	onCreate() {
 		// @ts-ignore
 		this.width = DEFAULT_NODE_WIDTH
+		// @ts-ignore
+		this.currentAction = ''
 	},
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
+	},
+	outputs: {
+		select: () => new SelectInterface({
+			name: 'Селектор действия',
+			value: '',
+			position: 'top',
+			options: {
+				options: [
+					{
+						text: Actions.operatorCall,
+						value: Actions.operatorCall,
+					},
+					{
+						text: Actions.stopBot,
+						value: Actions.stopBot,
+					},
+					{
+						text: Actions.editDB,
+						value: Actions.editDB,
+					},
+					{
+						text: Actions.addTag,
+						value: Actions.addTag,
+					},
+					{
+						text: Actions.removeTag,
+						value: Actions.removeTag,
+					},
+				],
+				placeholder: 'Выберите действие',
+				hideEmptyMenu: true,
+			},
+		}),
+	},
+	onUpdate(_, { select }) {
+		const nextStepOutput = () => new SimpleInterface({
+			name: 'Следующий шаг',
+			value: undefined,
+			position: 'bottom',
+		})
+
+		switch (select) {
+		case Actions.removeTag: {
+			return {
+				outputs: {
+					output: nextStepOutput,
+					removeTagSelect: () => new SelectInterface({
+						name: 'Селектор',
+						value: '',
+						position: 'center',
+						options: {
+							options: [
+								{
+									text: 'Тег 1',
+									value: 'Тег 1',
+								},
+								{
+									text: 'Тег 2',
+									value: 'Тег 2',
+								},
+								{
+									text: 'Тег 3',
+									value: 'Тег 3',
+								},
+							],
+							placeholder: 'Выберите или введите тег',
+							allowCustomValue: true,
+							hintEmptySearch: true,
+						},
+					}),
+				} as DynamicNodeDefinition,
+			}
+		}
+		case Actions.editDB:{
+			return {
+				outputs: {
+					output: nextStepOutput,
+					editDBSelect: () => new SelectInterface({
+						name: 'Селектор',
+						value: '',
+						position: 'center',
+						options: {
+							options: [
+								{
+									text: 'Существующая колонка строка',
+									value: 'Существующая колонка строка',
+								},
+								{
+									text: 'Существующая колонка 2',
+									value: 'Существующая колонка 2',
+								},
+							],
+							placeholder: 'Колонка для записи',
+						},
+					}),
+				} as DynamicNodeDefinition,
+			}
+		}
+		case Actions.addTag:{
+			return {
+				outputs: {
+					output: nextStepOutput,
+					addTagSelect: () => new SelectInterface({
+						name: 'Селектор',
+						value: '',
+						position: 'center',
+						options: {
+							options: [
+								{
+									text: 'Тег 1',
+									value: 'Тег 1',
+								},
+								{
+									text: 'Тег 2',
+									value: 'Тег 2',
+								},
+								{
+									text: 'Тег 3',
+									value: 'Тег 3',
+								},
+							],
+							placeholder: 'Выберите или введите тег',
+							allowCustomValue: true,
+							addEmptySearch: true,
+						},
+					}),
+				} as DynamicNodeDefinition,
+			}
+		}
+		default:{
+			return {}
+		}
+		}
 	},
 })
 
