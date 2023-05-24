@@ -63,7 +63,7 @@ const hasDBEditAlert = computed(
 						show-cross
 						color="warning"
 					>
-						<span class="text-[14px]">Внимание! Вы можете потерять существующие данные. </span>
+						<span class="text-size-[14px]">Внимание! Вы можете потерять существующие данные.</span>
 					</PAlert>
 				</template>
 
