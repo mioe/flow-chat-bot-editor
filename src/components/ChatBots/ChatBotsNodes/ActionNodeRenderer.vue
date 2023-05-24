@@ -49,45 +49,38 @@ const hasDBEditAlert = computed(
 		@select="emit('select')"
 	>
 		<template #outputs>
-			<header>
+			<div class="flex flex-col gap-[16px]">
 				<OutputNodeInterface
 					v-for="output in topOutputs"
 					:key="output.id"
 					:node="node"
 					:intf="output"
 				/>
-			</header>
 
-			<div
-				v-if="hasDBEditAlert"
-				class="my-4"
-			>
-				<PAlert
-					v-model="showDBEditAlert"
-					show-cross
-					color="warning"
-				>
-					<span class="text-[14px]">Внимание! Вы можете потерять существующие данные. </span>
-				</PAlert>
-			</div>
+				<template v-if="hasDBEditAlert">
+					<PAlert
+						v-model="showDBEditAlert"
+						show-cross
+						color="warning"
+					>
+						<span class="text-[14px]">Внимание! Вы можете потерять существующие данные. </span>
+					</PAlert>
+				</template>
 
-			<div class="my-4">
 				<OutputNodeInterface
 					v-for="output in centerOutputs"
 					:key="output.id"
 					:node="node"
 					:intf="output"
 				/>
-			</div>
 
-			<footer class="mb-4">
 				<OutputNodeInterface
 					v-for="output in bottomOutputs"
 					:key="output.id"
 					:node="node"
 					:intf="output"
 				/>
-			</footer>
+			</div>
 		</template>
 	</BaseNode>
 </template>
