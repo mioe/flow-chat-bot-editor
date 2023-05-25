@@ -9,14 +9,13 @@ import { allowMultipleConnections } from '@baklavajs/engine'
 import {
 	ButtonInterface,
 	EditorInterface,
-	SwitchInterface,
-	InputInterface,
 	IdleInterface,
+	InputInterface,
 	SimpleInterface,
+	SwitchInterface,
+	TabsInterface,
 } from '~/components/ChatBots/ChatBotsInterfaces'
 import { SelectInterface } from '~/components/ChatBots/ChatBotsInterfaces/SelectInterface/SelectInterface'
-
-const DEFAULT_NODE_WIDTH = 369
 
 export enum Actions {
 	operatorCall = 'Позвать оператора',
@@ -26,18 +25,43 @@ export enum Actions {
 	removeTag = 'Удалить тег',
 }
 
-export const StartNode = defineNode({
+export const StartNode = defineDynamicNode({
 	type: 'StartNode',
 	title: 'Старт',
-	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
-	},
 	outputs: {
-		output1: () => new NodeInterface('Да (output1)', 0),
-		output2: () => new NodeInterface('Кабачок (output2)', 0),
-		output3: () => new NodeInterface('Другой ответ (output3)', 0),
-		output4: () => new NodeInterface('Нет ответа 3 часа (output4)', 0),
+		tabs: () => new TabsInterface({
+			name: 'tabs',
+			value: 'first',
+			tabs: [
+				{
+					title: 'Входящее сообщение',
+					value: 'first',
+				},
+				{
+					title: 'Исходящее (шаблон)',
+					value: 'second',
+				},
+			],
+			position: 'top',
+		}),
+	},
+	onUpdate(_, { tabs }) {
+		if (tabs === 'second') {
+			return {
+				outputs: {
+					output: () => new SimpleInterface({
+						name: 'Следующий шаг',
+						value: undefined,
+						position: 'bottom',
+					}),
+				} as DynamicNodeDefinition,
+			}
+		}
+		return {
+			outputs: {
+
+			} as DynamicNodeDefinition,
+		}
 	},
 })
 
@@ -45,8 +69,6 @@ export const ActionNode = defineDynamicNode<any, { select: Actions }>({
 	type: 'ActionNode',
 	title: 'Действие',
 	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
 		// @ts-ignore
 		this.currentAction = ''
 	},
@@ -191,10 +213,6 @@ export const ActionNode = defineDynamicNode<any, { select: Actions }>({
 export const IdleNode = defineNode({
 	type: 'IdleNode',
 	title: 'Задержка',
-	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
-	},
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
@@ -206,10 +224,6 @@ export const IdleNode = defineNode({
 export const IfNode = defineNode({
 	type: 'IfNode',
 	title: 'Условие',
-	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
-	},
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
@@ -219,8 +233,6 @@ export const MessageNode = defineDynamicNode({
 	type: 'MessageNode',
 	title: 'Сообщение',
 	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
 		// @ts-ignore
 		this.fields = []
 	},
@@ -310,10 +322,6 @@ export const MessageNode = defineDynamicNode({
 export const InputNode = defineNode({
 	type: 'InputNode',
 	title: 'Вложение',
-	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
-	},
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
@@ -322,10 +330,6 @@ export const InputNode = defineNode({
 export const RedirectNode = defineNode({
 	type: 'RedirectNode',
 	title: 'Другой бот',
-	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
-	},
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
@@ -334,10 +338,6 @@ export const RedirectNode = defineNode({
 export const TemplateWabaNode = defineNode({
 	type: 'TemplateWabaNode',
 	title: 'Шаблон WABA',
-	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
-	},
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},

@@ -6,7 +6,7 @@ function setViewNodeProperties(node: any) {
 	node.position = node.position ?? { x: 0, y: 0 }
 	node.disablePointerEvents = false
 	node.twoColumn = node.twoColumn ?? false
-	node.width = node.width ?? 200
+	node.width = node.width ?? 369
 }
 
 type IViewNodeState = any
@@ -78,7 +78,7 @@ export function useBaklava(existingEditor?: Editor): IBaklavaViewModel {
 			if (newValue) {
 				newValue.nodeHooks.beforeLoad.subscribe(token, (state, node: any) => {
 					node.position = (state as IViewNodeState).position ?? { x: 0, y: 0 }
-					node.width = (state as IViewNodeState).width ?? 200
+					node.width = (state as IViewNodeState).width ?? 369
 					node.twoColumn = (state as IViewNodeState).twoColumn ?? false
 					return state
 				})
