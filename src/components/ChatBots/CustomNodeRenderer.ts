@@ -1,7 +1,7 @@
 import { ComponentOptions, defineComponent, h } from 'vue'
 import { Components } from '@baklavajs/renderer-vue'
 import { AbstractNode } from '@baklavajs/core'
-import StartNodeRenderer from '~/components/ChatBots/ChatBotsNodes/StartNodeRenderer.vue'
+import StartNodeRenderer from '~/components/ChatBots/ChatBotsNodes/StartNode/StartNodeRenderer.vue'
 import ActionNodeRenderer from '~/components/ChatBots/ChatBotsNodes/ActionNodeRenderer.vue'
 import IdleNodeRenderer from '~/components/ChatBots/ChatBotsNodes/IdleNodeRenderer.vue'
 import IfNodeRenderer from '~/components/ChatBots/ChatBotsNodes/IfNodeRenderer.vue'

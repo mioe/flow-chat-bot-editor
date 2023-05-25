@@ -25,46 +25,6 @@ export enum Actions {
 	removeTag = 'Удалить тег',
 }
 
-export const StartNode = defineDynamicNode({
-	type: 'StartNode',
-	title: 'Старт',
-	outputs: {
-		tabs: () => new TabsInterface({
-			name: 'tabs',
-			value: 'first',
-			tabs: [
-				{
-					title: 'Входящее сообщение',
-					value: 'first',
-				},
-				{
-					title: 'Исходящее (шаблон)',
-					value: 'second',
-				},
-			],
-			position: 'top',
-		}),
-	},
-	onUpdate(_, { tabs }) {
-		if (tabs === 'second') {
-			return {
-				outputs: {
-
-				} as DynamicNodeDefinition,
-			}
-		}
-		return {
-			outputs: {
-				output: () => new SimpleInterface({
-					name: 'Следующий шаг',
-					value: undefined,
-					position: 'bottom',
-				}),
-			} as DynamicNodeDefinition,
-		}
-	},
-})
-
 export const ActionNode = defineDynamicNode<any, { select: Actions }>({
 	type: 'ActionNode',
 	title: 'Действие',
@@ -345,3 +305,5 @@ export const TemplateWabaNode = defineNode({
 		output: () => new NodeInterface('Следующий шаг (output)', 0),
 	},
 })
+
+export { node as StartNode } from '~/components/ChatBots/ChatBotsNodes/StartNode'
