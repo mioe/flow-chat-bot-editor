@@ -16,6 +16,7 @@ export class TabsInterface extends NodeInterface<string> {
 		super(name, value)
 		this.position = position
 		this.tabs = tabs
+		this.setPort(false)
 	}
 }
 

@@ -49,17 +49,17 @@ export const StartNode = defineDynamicNode({
 		if (tabs === 'second') {
 			return {
 				outputs: {
-					output: () => new SimpleInterface({
-						name: 'Следующий шаг',
-						value: undefined,
-						position: 'bottom',
-					}),
+
 				} as DynamicNodeDefinition,
 			}
 		}
 		return {
 			outputs: {
-
+				output: () => new SimpleInterface({
+					name: 'Следующий шаг',
+					value: undefined,
+					position: 'bottom',
+				}),
 			} as DynamicNodeDefinition,
 		}
 	},
