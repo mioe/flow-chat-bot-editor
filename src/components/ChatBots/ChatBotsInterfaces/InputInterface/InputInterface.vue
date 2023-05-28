@@ -29,7 +29,7 @@ export default defineComponent({
 		text-size="medium"
 		size="medium"
 	>
-		<template #right>
+		<template v-if="intf.icon" #right>
 			<button
 				class="w-[20px] h-[20px] cursor-pointer relative z-1 c-$common-asphalt"
 				@click="onClick"

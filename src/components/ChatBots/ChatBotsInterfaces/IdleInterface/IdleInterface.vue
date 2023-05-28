@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { IdleInterface } from './IdleInterface'
+import { getHoursAndMinutes, isNumber } from '../helpers/delayHelpers'
 
 const props = defineProps<{
 	intf: IdleInterface
@@ -9,24 +10,6 @@ const props = defineProps<{
 const isOpenDropdown = ref(false)
 const hours = ref(0)
 const minutes = ref(0)
-
-const isNumber = (ev: KeyboardEvent) => {
-	const keysAllowed: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-	const keyPressed: string = ev.key
-
-	if (!keysAllowed.includes(keyPressed)) {
-		ev.preventDefault()
-	}
-}
-
-const getHoursAndMinutes = (min: number | null) => {
-	if (!min) return { h: 0, m: 0 }
-	const h = Math.floor(min / 60)
-	const m = h > 0
-		? min % (h * 60)
-		: min
-	return { h, m }
-}
 
 const handleBlurMinutes = () => {
 	const { h, m } = getHoursAndMinutes(minutes.value)

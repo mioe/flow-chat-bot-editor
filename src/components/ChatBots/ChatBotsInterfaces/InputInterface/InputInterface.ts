@@ -7,18 +7,16 @@ export class InputInterface extends NodeInterface<string | null> {
 	public position = undefined
 	public callback?: () => void
 	public placeholder = undefined
+	public icon: boolean
 
-	public constructor({
-		name,
-		position,
-		callback,
-		value,
-		placeholder,
-	}: any) {
+	public constructor({ name, position, callback, value, placeholder, hidden = false, icon = true, port = true }: any) {
 		super(name, value)
 		this.callback = callback
 		this.position = position
 		this.placeholder = placeholder
+		this.icon = icon
+		this.hidden = hidden
+		this.setPort(port)
 	}
 }
 
