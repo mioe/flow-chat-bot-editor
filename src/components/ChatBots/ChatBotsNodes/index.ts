@@ -22,7 +22,6 @@ import {
 	CalendarInterface,
 	SwitchInterface,
 } from '~/components/ChatBots/ChatBotsInterfaces'
-// import { gtmTimeZones } from '../DelayInterface/helpers'
 import { DelayType, defaultTime, defaultPeriod, gtmTimeZones, typeOptions } from '../ChatBotsInterfaces/helpers/delayHelpers'
 import { conditionOptions, defaultWorkingDays, defaultTarget, subconditions, daysChips, matchers, fieldsMapper, RecordSubcondtions, AnswerSubcondtions, ConditionType, FieldsType } from '../ChatBotsInterfaces/helpers/conditionHelpers'
 import { SelectInterface } from '~/components/ChatBots/ChatBotsInterfaces/SelectInterface/SelectInterface'
