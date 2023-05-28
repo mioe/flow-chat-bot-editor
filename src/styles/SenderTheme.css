@@ -553,7 +553,6 @@
 }
 
 .baklava-node {
-	max-width: 20rem;
 	color: var(--baklava-node-color-foreground);
 	border-radius: var(--baklava-node-border-radius);
 	position: absolute;

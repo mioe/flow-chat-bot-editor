@@ -7,7 +7,7 @@ import router from './router'
  */
 import 'uno.css'
 import '@profeat/ui-kit/style.css'
-import './assets/styles/root.css'
+import './styles/_root.css'
 import './style.css'
 
 /**

@@ -47,14 +47,14 @@ const emit = defineEmits<{
 				<div v-if="centerOutputs.length">
 					<div
 						v-if="otherOutputs.length >= 4 && showLimitAnswers"
-						class="text-[14px] mb-[16px]"
+						class="mb-[16px]"
 					>
 						<PAlert
 							v-model="showLimitAnswers"
 							show-cross
 							color="warning"
 						>
-							Четыре и более кнопок свернутся в меню
+							<span class="text-size-[14px]">Четыре и более кнопок свернутся в меню</span>
 						</PAlert>
 					</div>
 					<div

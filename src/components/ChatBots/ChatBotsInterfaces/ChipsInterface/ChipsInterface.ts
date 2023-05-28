@@ -2,7 +2,7 @@ import { type ComponentOptions, markRaw } from 'vue'
 import { NodeInterface } from '@baklavajs/core'
 import ChipsInterfaceComponent from './ChipsInterface.vue'
 
-export class ChipsInterface extends NodeInterface<string | null> {
+export class ChipsInterface extends NodeInterface<string[]> {
 	component = markRaw(ChipsInterfaceComponent) as ComponentOptions
 	public position = undefined
 	public chips = undefined

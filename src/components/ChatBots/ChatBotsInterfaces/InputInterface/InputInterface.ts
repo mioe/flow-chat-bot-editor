@@ -2,7 +2,7 @@ import { type ComponentOptions, markRaw } from 'vue'
 import { NodeInterface } from '@baklavajs/core'
 import InputInterfaceComponent from './InputInterface.vue'
 
-export class InputInterface extends NodeInterface<string | null> {
+export class InputInterface extends NodeInterface<string> {
 	component = markRaw(InputInterfaceComponent) as ComponentOptions
 	public position = undefined
 	public callback?: () => void

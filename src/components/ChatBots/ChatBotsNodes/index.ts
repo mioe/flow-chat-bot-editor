@@ -9,156 +9,292 @@ import { allowMultipleConnections } from '@baklavajs/engine'
 import {
 	ButtonInterface,
 	EditorInterface,
-	SwitchInterface,
-	InputInterface,
 	IdleInterface,
+	InputInterface,
 	SimpleInterface,
 	AcceptOutputInterface,
 	CancelOutputInterface,
-	TabInterface,
+	TabsInterface,
 	TimeInputInterface,
 	DurationInterface,
-	SelectInputInterface,
 	ChipsInterface,
 	FromToInterface,
 	CalendarInterface,
+	SwitchInterface,
 } from '~/components/ChatBots/ChatBotsInterfaces'
 // import { gtmTimeZones } from '../DelayInterface/helpers'
-import { DelayType, defaultTime, defaultPeriod, gtmTimeZones } from '../ChatBotsInterfaces/helpers/delayHelpers'
-import { conditionOptions, defaultWorkingDays, defaultTarget, subconditions, daysChips, matchers, fieldsMapper, RecordSubcondtions, AnswerSubcondtions, ConditionType } from '../ChatBotsInterfaces/helpers/conditionHelpers'
+import { DelayType, defaultTime, defaultPeriod, gtmTimeZones, typeOptions } from '../ChatBotsInterfaces/helpers/delayHelpers'
+import { conditionOptions, defaultWorkingDays, defaultTarget, subconditions, daysChips, matchers, fieldsMapper, RecordSubcondtions, AnswerSubcondtions, ConditionType, FieldsType } from '../ChatBotsInterfaces/helpers/conditionHelpers'
+import { SelectInterface } from '~/components/ChatBots/ChatBotsInterfaces/SelectInterface/SelectInterface'
 
-const DEFAULT_NODE_WIDTH = 369
+export enum Actions {
+	operatorCall = 'Позвать оператора',
+	stopBot = 'Остановить бота',
+	editDB = 'Изменить в базе',
+	addTag = 'Добавить тег',
+	removeTag = 'Удалить тег',
+}
 
-export const StartNode = defineNode({
-	type: 'StartNode',
-	title: 'Старт',
-	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
-	},
-	outputs: {
-		output1: () => new NodeInterface('Да (output1)', 0),
-		output2: () => new NodeInterface('Кабачок (output2)', 0),
-		output3: () => new NodeInterface('Другой ответ (output3)', 0),
-		output4: () => new NodeInterface('Нет ответа 3 часа (output4)', 0),
-	},
-})
-
-export const ActionNode = defineNode({
+export const ActionNode = defineDynamicNode<any, { select: Actions }>({
 	type: 'ActionNode',
 	title: 'Действие',
 	onCreate() {
 		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
+		this.currentAction = ''
 	},
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
+	},
+	outputs: {
+		select: () => new SelectInterface({
+			name: 'Селектор действия',
+			value: '',
+			position: 'top',
+			options: {
+				options: [
+					{
+						text: Actions.operatorCall,
+						value: Actions.operatorCall,
+					},
+					{
+						text: Actions.stopBot,
+						value: Actions.stopBot,
+					},
+					{
+						text: Actions.editDB,
+						value: Actions.editDB,
+					},
+					{
+						text: Actions.addTag,
+						value: Actions.addTag,
+					},
+					{
+						text: Actions.removeTag,
+						value: Actions.removeTag,
+					},
+				],
+				placeholder: 'Выберите действие',
+				hideEmptyMenu: true,
+			},
+		}),
+	},
+	onUpdate(_, { select }) {
+		const nextStepOutput = () => new SimpleInterface({
+			name: 'Следующий шаг',
+			value: undefined,
+			position: 'bottom',
+		})
+
+		switch (select) {
+		case Actions.removeTag: {
+			return {
+				outputs: {
+					output: nextStepOutput,
+					removeTagSelect: () => new SelectInterface({
+						name: 'Селектор',
+						value: '',
+						position: 'center',
+						options: {
+							options: [
+								{
+									text: 'Тег 1',
+									value: 'Тег 1',
+								},
+								{
+									text: 'Тег 2',
+									value: 'Тег 2',
+								},
+								{
+									text: 'Тег 3',
+									value: 'Тег 3',
+								},
+							],
+							placeholder: 'Выберите или введите тег',
+							allowCustomValue: true,
+							hintEmptySearch: true,
+						},
+					}),
+				} as DynamicNodeDefinition,
+			}
+		}
+		case Actions.editDB:{
+			return {
+				outputs: {
+					output: nextStepOutput,
+					editDBSelect: () => new SelectInterface({
+						name: 'Селектор',
+						value: '',
+						position: 'center',
+						options: {
+							options: [
+								{
+									text: 'Существующая колонка строка',
+									value: 'Существующая колонка строка',
+								},
+								{
+									text: 'Существующая колонка 2',
+									value: 'Существующая колонка 2',
+								},
+							],
+							placeholder: 'Колонка для записи',
+						},
+					}),
+				} as DynamicNodeDefinition,
+			}
+		}
+		case Actions.addTag:{
+			return {
+				outputs: {
+					output: nextStepOutput,
+					addTagSelect: () => new SelectInterface({
+						name: 'Селектор',
+						value: '',
+						position: 'center',
+						options: {
+							options: [
+								{
+									text: 'Тег 1',
+									value: 'Тег 1',
+								},
+								{
+									text: 'Тег 2',
+									value: 'Тег 2',
+								},
+								{
+									text: 'Тег 3',
+									value: 'Тег 3',
+								},
+							],
+							placeholder: 'Выберите или введите тег',
+							allowCustomValue: true,
+							addEmptySearch: true,
+						},
+					}),
+				} as DynamicNodeDefinition,
+			}
+		}
+		default:{
+			return {}
+		}
+		}
 	},
 })
 
 export const IfNode = defineDynamicNode({
 	type: 'IfNode',
 	title: 'Условие',
-	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
-	},
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
 	outputs: {
-		conditionType: () => new SelectInputInterface({
+		[FieldsType.conditionType]: () => new SelectInterface({
 			name: 'Тип условия',
 			value: ConditionType.record,
-			options: conditionOptions,
+			options: {
+				options: conditionOptions,
+			},
 			position: 'top',
 		}),
-		conditionTarget: () => new SelectInputInterface({
+		[FieldsType.conditionTarget]: () => new SelectInterface({
 			name: 'Цель условия',
 			value: defaultTarget,
-			options: subconditions.record,
+			options: {
+				options: subconditions.record,
+			},
 			position: 'center',
 		}),
-		timeZone: () => new SelectInputInterface({
+		[FieldsType.timeZone]: () => new SelectInterface({
 			name: 'Зона',
 			value: gtmTimeZones[3].value,
-			options: gtmTimeZones,
+			options: {
+				options: gtmTimeZones,
+			},
 			position: 'center',
 			hidden: true,
 		}),
-		formatCheck: () => new SelectInputInterface({
+		[FieldsType.formatCheck]: () => new SelectInterface({
 			name: 'Формат',
 			value: subconditions.answer[0].value,
-			options: subconditions.answer,
+			options: {
+				options: subconditions.answer,
+			},
 			position: 'center',
 			hidden: true,
 		}),
-		workingDays: () => new ChipsInterface({
+		[FieldsType.workingDays]: () => new ChipsInterface({
 			name: 'Рабочие дни',
 			value: defaultWorkingDays,
 			chips: daysChips,
 			position: 'bottom',
 			hidden: true,
 		}),
-		workingDaysTimeAccept: () => new FromToInterface({
+		[FieldsType.workingDaysTimeAccept]: () => new FromToInterface({
 			name: 'Рабочие дни время (положительно)',
 			value: '00:00-00:00',
 			position: 'special',
 			hidden: true,
 		}),
-		workingDaysTimeCancel: () => new FromToInterface({
+		[FieldsType.workingDaysTimeCancel]: () => new FromToInterface({
 			name: 'Рабочие дни время (отрицательно)',
 			value: '00:00-00:00',
 			position: 'special',
 			hidden: true,
 		}),
-		weekendDaysTimeAccept: () => new FromToInterface({
+		[FieldsType.weekendDaysTimeAccept]: () => new FromToInterface({
 			name: 'Выходные дни время (положительно)',
 			value: '00:00-00:00',
 			position: 'special',
 			hidden: true,
 			active: false,
 		}),
-		weekendDaysTimeCancel: () => new FromToInterface({
+		[FieldsType.weekendDaysTimeCancel]: () => new FromToInterface({
 			name: 'Выходные дни время (отрицательно)',
 			value: '00:00-00:00',
 			position: 'special',
 			hidden: true,
 			active: false,
 		}),
-		conditionMatcher: () => new SelectInputInterface({
+		[FieldsType.conditionMatcher]: () => new SelectInterface({
 			name: 'Условие',
 			value: '',
-			options: [],
-			placeholder: 'Тип соответствия',
-			disabled: true,
+			options: {
+				options: [],
+				placeholder: 'Тип соответствия',
+				disabled: true,
+			},
 			position: 'center',
 		}),
-		numberMatcher: () => new SelectInputInterface({
+		[FieldsType.numberMatcher]: () => new SelectInterface({
 			name: 'Условия для числа',
 			value: '',
-			options: matchers.number,
-			placeholder: 'Тип соответствия',
+			options: {
+				options: matchers.number,
+				placeholder: 'Тип соответствия',
+			},
 			position: 'center',
 			hidden: true,
 		}),
-		stringMatcher: () => new SelectInputInterface({
+		[FieldsType.stringMatcher]: () => new SelectInterface({
 			name: 'Условие для строки',
 			value: '',
-			options: matchers.string,
-			placeholder: 'Тип соответствия',
+			options: {
+				options: matchers.string,
+				placeholder: 'Тип соответствия',
+			},
 			position: 'center',
 			hidden: true,
 		}),
-		dateMatcher: () => new SelectInputInterface({
+		[FieldsType.dateMatcher]: () => new SelectInterface({
 			name: 'Условие для даты',
 			value: '',
-			options: matchers.date,
-			placeholder: 'Тип соответствия',
+			options: {
+				options: matchers.date,
+				placeholder: 'Тип соответствия',
+			},
 			position: 'center',
 			hidden: true,
 		}),
-		conditionValue: () => new InputInterface({
+		[FieldsType.conditionValue]: () => new InputInterface({
 			name: 'Значение условия',
 			value: '',
 			placeholder: 'Значение',
@@ -166,7 +302,7 @@ export const IfNode = defineDynamicNode({
 			position: 'center',
 			port: false,
 		}),
-		numberValue: () => new InputInterface({
+		[FieldsType.numberValue]: () => new InputInterface({
 			name: 'Число',
 			value: '',
 			placeholder: 'Введите число',
@@ -175,7 +311,7 @@ export const IfNode = defineDynamicNode({
 			port: false,
 			hidden: true,
 		}),
-		stringValue: () => new InputInterface({
+		[FieldsType.stringValue]: () => new InputInterface({
 			name: 'Строка',
 			value: '',
 			placeholder: 'Введите значение',
@@ -184,15 +320,15 @@ export const IfNode = defineDynamicNode({
 			port: false,
 			hidden: true,
 		}),
-		dateValue: () => new CalendarInterface({
+		[FieldsType.dateValue]: () => new CalendarInterface({
 			name: 'Дата',
 			value: '',
 			min: new Date().toISOString(),
 			position: 'center',
 			hidden: true,
 		}),
-		accept: () => new AcceptOutputInterface({ name: 'Соответствует', position: 'bottom' }),
-		cancel: () => new CancelOutputInterface({ name: 'Не соответствует', position: 'bottom' }),
+		[FieldsType.accept]: () => new AcceptOutputInterface({ name: 'Соответствует', position: 'bottom' }),
+		[FieldsType.cancel]: () => new CancelOutputInterface({ name: 'Не соответствует', position: 'bottom' }),
 	},
 	onUpdate(_, data) {
 		let requiredFields: any = []
@@ -227,9 +363,6 @@ export const IfNode = defineDynamicNode({
 
 		const fieldsToHide = Object.keys(this.outputs as any).filter(item => !requiredFields.includes(item))
 
-		// const allConnectionsFromNode = this.graphInstance.connections
-		// console.log(allConnectionsFromNode)
-		// console.log(this.graphInstance.removeConnection())
 		// @ts-ignore
 		fieldsToHide.forEach(item => this.outputs[item].setHidden(true))
 		// @ts-ignore
@@ -242,17 +375,14 @@ export const IfNode = defineDynamicNode({
 export const IdleNode = defineDynamicNode({
 	type: 'IdleNode',
 	title: 'Задержка',
-	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
-	},
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
 	outputs: {
-		delayType: () => new TabInterface({
+		delayType: () => new TabsInterface({
 			name: 'Тип задержки',
 			value: DelayType.period,
+			tabs: typeOptions,
 			position: 'top',
 		}),
 	},
@@ -280,11 +410,13 @@ export const IdleNode = defineDynamicNode({
 						value: defaultTime,
 						position: 'center',
 					}),
-					timeZone: () => new SelectInputInterface({
+					timeZone: () => new SelectInterface({
 						name: 'Зона',
 						value: gtmTimeZones[3].value,
-						options: gtmTimeZones,
-						placeholder: '+3 GTM',
+						options: {
+							options: gtmTimeZones,
+							placeholder: '+3 GTM',
+						},
 						position: 'center',
 					}),
 					output: () => new SimpleInterface({
@@ -296,15 +428,12 @@ export const IdleNode = defineDynamicNode({
 			} 
 		}
 	},
-	calculate: undefined,
 })
 
 export const MessageNode = defineDynamicNode({
 	type: 'MessageNode',
 	title: 'Сообщение',
 	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
 		// @ts-ignore
 		this.fields = []
 	},
@@ -394,10 +523,6 @@ export const MessageNode = defineDynamicNode({
 export const InputNode = defineNode({
 	type: 'InputNode',
 	title: 'Вложение',
-	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
-	},
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
@@ -406,10 +531,6 @@ export const InputNode = defineNode({
 export const RedirectNode = defineNode({
 	type: 'RedirectNode',
 	title: 'Другой бот',
-	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
-	},
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
@@ -418,10 +539,6 @@ export const RedirectNode = defineNode({
 export const TemplateWabaNode = defineNode({
 	type: 'TemplateWabaNode',
 	title: 'Шаблон WABA',
-	onCreate() {
-		// @ts-ignore
-		this.width = DEFAULT_NODE_WIDTH
-	},
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
@@ -429,3 +546,5 @@ export const TemplateWabaNode = defineNode({
 		output: () => new NodeInterface('Следующий шаг (output)', 0),
 	},
 })
+
+export { node as StartNode } from '~/components/ChatBots/ChatBotsNodes/StartNode'

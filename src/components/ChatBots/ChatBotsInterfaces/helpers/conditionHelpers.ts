@@ -122,7 +122,7 @@ export const daysChips = days.map(item => ({
 	value: item,
 }))
 
-enum FieldsType {
+export enum FieldsType {
     conditionType = 'conditionType',
     conditionTarget = 'conditionTarget',
 
@@ -153,9 +153,9 @@ enum FieldsType {
 export const fieldsMapper = {
 	record: [FieldsType.conditionType, FieldsType.conditionTarget, FieldsType.conditionMatcher, FieldsType.conditionValue, FieldsType.accept, FieldsType.cancel],
 	recordAndDate: [FieldsType.conditionType, FieldsType.conditionTarget, FieldsType.dateMatcher, FieldsType.conditionValue, FieldsType.accept, FieldsType.cancel],
-	time: ['conditionType', 'timeZone', 'workingDays', 'workingDaysTimeAccept', 'workingDaysTimeCancel', 'weekendDaysTimeAccept', 'weekendDaysTimeCancel'],
-	answerEmail: ['conditionType', 'formatCheck', 'accept', 'cancel'],
-	answerNumber: ['conditionType', 'formatCheck', 'numberMatcher', 'numberValue', 'accept', 'cancel'],
-	answerString: ['conditionType', 'formatCheck', 'stringMatcher', 'stringValue', 'accept', 'cancel'],
-	answerDate: ['conditionType', 'formatCheck', 'dateMatcher', 'dateValue', 'accept', 'cancel'],
+	time: [FieldsType.conditionType, FieldsType.timeZone, FieldsType.workingDays, FieldsType.workingDaysTimeAccept, FieldsType.workingDaysTimeCancel, FieldsType.weekendDaysTimeAccept, FieldsType.weekendDaysTimeCancel],
+	answerEmail: [FieldsType.conditionType, FieldsType.formatCheck, FieldsType.accept, FieldsType.cancel],
+	answerNumber: [FieldsType.conditionType, FieldsType.formatCheck, FieldsType.numberMatcher, FieldsType.numberValue, FieldsType.accept, FieldsType.cancel],
+	answerString: [FieldsType.conditionType, FieldsType.formatCheck, FieldsType.stringMatcher, FieldsType.stringValue, FieldsType.accept, FieldsType.cancel],
+	answerDate: [FieldsType.conditionType, FieldsType.formatCheck, FieldsType.dateMatcher, FieldsType.dateValue, FieldsType.accept, FieldsType.cancel],
 }

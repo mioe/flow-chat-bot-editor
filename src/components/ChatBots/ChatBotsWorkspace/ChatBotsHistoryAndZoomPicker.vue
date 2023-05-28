@@ -2,6 +2,15 @@
 import { computed } from 'vue'
 import { useVModel } from '@vueuse/core'
 
+// @ts-ignore
+import CircleArrowUndoIcon from '~/assets/icons/circle-arrow-undo.svg?component'
+// @ts-ignore
+import CircleArrowRedoIcon from '~/assets/icons/circle-arrow-redo.svg?component'
+// @ts-ignore
+import MinusIcon from '~/assets/icons/minus.svg?component'
+// @ts-ignore
+import PlusIcon from '~/assets/icons/plus.svg?component'
+
 const props = defineProps({
 	scale: {
 		type: Number,
@@ -45,29 +54,29 @@ const zoomPercent = computed(() => (zoom.value * 100).toFixed(0))
 
 <template>
 	<footer class="absolute flex gap-[8px] right-[32px] bottom-[32px]">
-		<button
+		<!-- <button
 			class="w-[32px] h-[32px] bg-white flex items-center justify-center cursor-pointer rounded-[8px] border border-solid border-$common-rain"
 		>
-			<div class="i-mi:circle-arrow-undo" />
+			<CircleArrowUndoIcon class="w-[16px] h-[16px]" />
 		</button>
 		<button
 			class="w-[32px] h-[32px] bg-white flex items-center justify-center cursor-pointer rounded-[8px] border border-solid border-$common-rain"
 		>
-			<div class="i-mi:circle-arrow-redo" />
-		</button>
+			<CircleArrowRedoIcon class="w-[16px] h-[16px]" />
+		</button> -->
 		<div class="flex gap-[4px] items-center bg-white rounded-[8px] border border-solid border-$common-rain">
 			<button
 				class="w-[32px] h-[32px] flex items-center justify-center cursor-pointer border-0 bg-transparent"
 				@click="handleZoomDown"
 			>
-				<div class="i-mi:minus" />
+				<MinusIcon class="w-[16px] h-[16px]" />
 			</button>
-			<span class="text-[16px]">{{ zoomPercent }}%</span>
+			<span class="text-size-[16px]">{{ zoomPercent }}%</span>
 			<button
 				class="w-[32px] h-[32px] flex items-center justify-center cursor-pointer border-0 bg-transparent"
 				@click="handleZoomUp"
 			>
-				<div class="i-mi:plus" />
+				<PlusIcon class="w-[16px] h-[16px]" />
 			</button>
 		</div>
 	</footer>

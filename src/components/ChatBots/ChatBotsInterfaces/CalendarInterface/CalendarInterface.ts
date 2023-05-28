@@ -2,7 +2,7 @@ import { type ComponentOptions, markRaw } from 'vue'
 import { NodeInterface } from '@baklavajs/core'
 import CalendarInterfaceComponent from './CalendarInterface.vue'
 
-export class CalendarInterface extends NodeInterface<string | null> {
+export class CalendarInterface extends NodeInterface<string> {
 	component = markRaw(CalendarInterfaceComponent) as ComponentOptions
 	public position = undefined
 	public min = undefined

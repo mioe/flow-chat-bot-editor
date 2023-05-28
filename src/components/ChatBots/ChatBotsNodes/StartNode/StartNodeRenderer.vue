@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import BaseNode from './_BaseNode.vue'
-import { AbstractNode } from '@baklavajs/core'
+import BaseNode from '~/components/ChatBots/ChatBotsNodes/_BaseNode.vue'
+import type { AbstractNode } from '@baklavajs/core'
 
 withDefaults(
 	defineProps<{

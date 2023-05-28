@@ -13,6 +13,21 @@ import {
 } from '~/components/ChatBots/ChatBotsNodes'
 import { AbstractNode, NodeInterface } from '@baklavajs/core'
 import { useViewModel, useTransform } from '~/components/ChatBots/utility'
+
+// @ts-ignore
+import ChatMIcon from '~/assets/icons/chat-m.svg?component'
+// @ts-ignore
+import AttachmentMIcon from '~/assets/icons/attachment-m.svg?component'
+// @ts-ignore
+import NotesLIcon from '~/assets/icons/notes-l.svg?component'
+// @ts-ignore
+import TimeMIcon from '~/assets/icons/time-m.svg?component'
+// @ts-ignore
+import ConditionIcon from '~/assets/icons/condition.svg?component'
+// @ts-ignore
+import ZapIcon from '~/assets/icons/zap.svg?component'
+
+
 const { transform } = useTransform()
 
 const props = defineProps<{
@@ -154,7 +169,7 @@ onUpdated(onRender)
 								class="chat-bots-nodes--toggle-connection-drop--nodes--item"
 								@click="handleConnectionMenuItem($event, 'MessageNode')"
 							>
-								<div class="c-$additional-blue w-[20px] h-[20px] inline-block i-mi:chat-m" />
+								<ChatMIcon class="c-$additional-blue w-[20px] h-[20px] inline-block" />
 								<span>Сообщение</span>
 							</button>
 
@@ -162,7 +177,7 @@ onUpdated(onRender)
 								class="chat-bots-nodes--toggle-connection-drop--nodes--item"
 								@click="handleConnectionMenuItem($event, 'InputNode')"
 							>
-								<div class="c-$additional-blue w-[20px] h-[20px] inline-block i-mi:attachment-m" />
+								<AttachmentMIcon class="c-$additional-blue w-[20px] h-[20px] inline-block" />
 								<span>Вложение</span>
 							</button>
 
@@ -170,7 +185,7 @@ onUpdated(onRender)
 								class="chat-bots-nodes--toggle-connection-drop--nodes--item"
 								@click="handleConnectionMenuItem($event, 'TemplateWabaNode')"
 							>
-								<div class="c-$additional-green w-[20px] h-[20px] inline-block i-mi:notes-l" />
+								<NotesLIcon class="c-$additional-green w-[20px] h-[20px] inline-block" />
 								<span>Шаблон WABA</span>
 							</button>
 
@@ -178,7 +193,7 @@ onUpdated(onRender)
 								class="chat-bots-nodes--toggle-connection-drop--nodes--item"
 								@click="handleConnectionMenuItem($event, 'IdleNode')"
 							>
-								<div class="c-$additional-pink w-[20px] h-[20px] inline-block i-mi:time-m" />
+								<TimeMIcon class="c-$additional-pink w-[20px] h-[20px] inline-block" />
 								<span>Задержка</span>
 							</button>
 
@@ -186,7 +201,7 @@ onUpdated(onRender)
 								class="chat-bots-nodes--toggle-connection-drop--nodes--item"
 								@click="handleConnectionMenuItem($event, 'IfNode')"
 							>
-								<div class="c-$additional-orange w-[20px] h-[20px] inline-block i-mi:condition" />
+								<ConditionIcon class="c-$additional-orange w-[20px] h-[20px] inline-block" />
 								<span>Условие</span>
 							</button>
 
@@ -194,7 +209,7 @@ onUpdated(onRender)
 								class="chat-bots-nodes--toggle-connection-drop--nodes--item"
 								@click="handleConnectionMenuItem($event, 'ActionNode')"
 							>
-								<div class="c-$additional-purple w-[20px] h-[20px] inline-block i-mi:zap" />
+								<ZapIcon class="c-$additional-purple w-[20px] h-[20px] inline-block" />
 								<span>Действие</span>
 							</button>
 						</div>
@@ -243,6 +258,12 @@ onUpdated(onRender)
 	color: var(--common-dullSky);
 	transition: transform .3s, opacity .3s;
 	transform: rotate(0deg);
+}
+
+.chat-bots-nodes--toggle-connection-btn:hover,
+.chat-bots-nodes--toggle-connection-btn:focus,
+.chat-bots-nodes--toggle-connection-btn:focus-visible {
+	opacity: 1 !important;
 }
 
 .chat-bots-nodes--toggle-connection-btn.is-open {
