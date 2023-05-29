@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { IdleInterface } from './IdleInterface'
-import { getHoursAndMinutes, isNumber } from '../helpers/delayHelpers'
+import { getHoursAndMinutes, isNumber } from '../_helpers/delayHelpers'
 
 const props = defineProps<{
 	intf: IdleInterface
