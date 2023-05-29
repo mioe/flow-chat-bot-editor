@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { RunAtInterface } from './RunAtInterface'
-import { gtmTimeZones } from '../helpers/delayHelpers'
+import { gtmTimeZones } from '~/components/ChatBots/ChatBotsInterfaces/_helpers/delayHelpers'
 
 const props = defineProps<{
 	intf: RunAtInterface

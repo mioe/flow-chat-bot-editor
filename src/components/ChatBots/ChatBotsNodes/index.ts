@@ -22,8 +22,8 @@ import {
 	CalendarInterface,
 	SwitchInterface,
 } from '~/components/ChatBots/ChatBotsInterfaces'
-import { DelayType, defaultTime, defaultPeriod, gtmTimeZones, typeOptions } from '../ChatBotsInterfaces/helpers/delayHelpers'
-import { conditionOptions, defaultWorkingDays, defaultTarget, subconditions, daysChips, matchers, fieldsMapper, RecordSubcondtions, AnswerSubcondtions, ConditionType, FieldsType } from '../ChatBotsInterfaces/helpers/conditionHelpers'
+import { DelayType, defaultTime, defaultPeriod, gtmTimeZones, typeOptions } from '../ChatBotsInterfaces/_helpers/delayHelpers'
+import { conditionOptions, defaultWorkingDays, defaultTarget, subconditions, daysChips, matchers, fieldsMapper, RecordSubcondtions, AnswerSubcondtions, ConditionType, FieldsType } from '../ChatBotsInterfaces/_helpers/conditionHelpers'
 import { SelectInterface } from '~/components/ChatBots/ChatBotsInterfaces/SelectInterface/SelectInterface'
 
 export enum Actions {
@@ -424,7 +424,7 @@ export const IdleNode = defineDynamicNode({
 						position: 'bottom',
 					}),
 				} as DynamicNodeDefinition,
-			} 
+			}
 		}
 	},
 })

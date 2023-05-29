@@ -6,12 +6,12 @@ const props = defineProps<{
 	intf: CalendarInterface
 }>()
 
-const getStringDate = (value) => {
+const getStringDate = (value: any) => {
 	if (!value) {
 		return ''
 	}
 
-	const obj = new Date(value)
+	const obj = new Date(value) as any
 	let yy = obj.getYear()
 	let mm = obj.getMonth() + 1
 
@@ -52,6 +52,7 @@ const isOpenDropdown = ref(false)
 				</PInput>
 			</template>
 			<template #default>
+				<!-- eslint-disable vue/no-mutating-props -->
 				<PCalendar
 					v-model="intf.value"
 					:min="intf.min"

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed  } from 'vue'
 import type { ChipsInterface } from './ChipsInterface'
-import { days } from '../helpers/conditionHelpers'
+import { days } from '~/components/ChatBots/ChatBotsInterfaces/_helpers/conditionHelpers'
 
 const props = defineProps<{
 	intf: ChipsInterface
@@ -28,7 +28,7 @@ const weekendDays = computed(() => days.filter((item: any) => !props.intf.value.
 		</div>
 
 		<div class="h-[128px]" />
-		
+
 		<div class="font-semibold text-[15px] mb-[16px]">
 			Выходные дни: <span class="font-normal text-[#5D7285]">{{ weekendDays }}</span>
 		</div>

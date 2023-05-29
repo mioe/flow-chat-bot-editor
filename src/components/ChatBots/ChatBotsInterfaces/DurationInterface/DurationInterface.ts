@@ -4,15 +4,15 @@ import DurationInterfaceComponent from './DurationInterface.vue'
 
 export class DurationInterface extends NodeInterface<number> {
 	component = markRaw(DurationInterfaceComponent) as ComponentOptions
-	public position: string
+	public hide: boolean
 
 	public constructor({
 		name,
 		value,
-		position,
+		hide,
 	}: any) {
 		super(name, value)
-		this.position = position
+		this.hide = hide
 		this.setPort(false)
 	}
 }
