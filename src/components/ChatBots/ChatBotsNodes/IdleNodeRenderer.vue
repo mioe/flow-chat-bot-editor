@@ -42,7 +42,7 @@ const emit = defineEmits<{
 
 				<div>
 					<div class="mb-12px font-semibold">
-						{{ centerOutputs[0].name }}
+						{{ centerOutputs[0]?.name || '' }}
 					</div>
 
 					<template v-if="centerOutputs.length === 1">
