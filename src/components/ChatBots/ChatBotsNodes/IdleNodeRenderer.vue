@@ -41,10 +41,6 @@ const emit = defineEmits<{
 				/>
 
 				<div>
-					<div class="mb-12px font-semibold">
-						{{ centerOutputs[0].name }}
-					</div>
-
 					<template v-if="centerOutputs.length === 1">
 						<OutputNodeInterface
 							v-for="output in centerOutputs"
@@ -54,6 +50,11 @@ const emit = defineEmits<{
 						/>
 					</template>
 					<template v-else>
+						<div
+							class="mb-12px font-semibold"
+						>
+							{{ centerOutputs[0].name }}
+						</div>
 						<div class="flex justify-between">
 							<div
 								v-for="output in centerOutputs"
