@@ -11,6 +11,7 @@ defineProps<{
 	<div class="chat-bots--tab-interface">
 		<PTabs
 			v-model="intf.value"
+			class="h-[36px]"
 			:tabs="intf.tabs"
 		/>
 	</div>

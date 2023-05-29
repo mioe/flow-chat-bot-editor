@@ -31,7 +31,7 @@ export default defineComponent({
 		const getComponent = (): ComponentOptions => {
 			const node = this.node
 			// @ts-ignore
-			node.width = 369
+			node.width = 328
 			return NODE_TYPES.has(node.type)
 				? NODE_TYPES.get(node.type)
 				: (Components.Node as ComponentOptions)

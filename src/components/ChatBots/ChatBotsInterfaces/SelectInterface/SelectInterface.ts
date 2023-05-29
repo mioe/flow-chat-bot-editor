@@ -55,10 +55,11 @@ export class SelectInterface extends NodeInterface {
 	public position = undefined
 	public options = DEFAULT_OPTIONS
 
-	public constructor({ name, value, position, options = DEFAULT_OPTIONS }: any) {
+	public constructor({ name, value, position, options = DEFAULT_OPTIONS, hidden = false }: any) {
 		super(name, value)
 		this.position = position
 		this.options = options
 		this.setPort(false)
+		this.setHidden(hidden)
 	}
 }

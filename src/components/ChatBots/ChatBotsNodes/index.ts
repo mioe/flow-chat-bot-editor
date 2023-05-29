@@ -12,9 +12,18 @@ import {
 	IdleInterface,
 	InputInterface,
 	SimpleInterface,
-	SwitchInterface,
+	AcceptOutputInterface,
+	CancelOutputInterface,
 	TabsInterface,
+	TimeInputInterface,
+	DurationInterface,
+	ChipsInterface,
+	FromToInterface,
+	CalendarInterface,
+	SwitchInterface,
 } from '~/components/ChatBots/ChatBotsInterfaces'
+import { DelayType, defaultTime, defaultPeriod, gtmTimeZones, typeOptions } from '../ChatBotsInterfaces/helpers/delayHelpers'
+import { conditionOptions, defaultWorkingDays, defaultTarget, subconditions, daysChips, matchers, fieldsMapper, RecordSubcondtions, AnswerSubcondtions, ConditionType, FieldsType } from '../ChatBotsInterfaces/helpers/conditionHelpers'
 import { SelectInterface } from '~/components/ChatBots/ChatBotsInterfaces/SelectInterface/SelectInterface'
 
 export enum Actions {
@@ -170,22 +179,253 @@ export const ActionNode = defineDynamicNode<any, { select: Actions }>({
 	},
 })
 
-export const IdleNode = defineNode({
+export const IfNode = defineDynamicNode({
+	type: 'IfNode',
+	title: 'Условие',
+	inputs: {
+		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
+	},
+	outputs: {
+		[FieldsType.conditionType]: () => new SelectInterface({
+			name: 'Тип условия',
+			value: ConditionType.record,
+			options: {
+				options: conditionOptions,
+			},
+			position: 'top',
+		}),
+		[FieldsType.conditionTarget]: () => new SelectInterface({
+			name: 'Цель условия',
+			value: defaultTarget,
+			options: {
+				options: subconditions.record,
+			},
+			position: 'center',
+		}),
+		[FieldsType.timeZone]: () => new SelectInterface({
+			name: 'Зона',
+			value: gtmTimeZones[3].value,
+			options: {
+				options: gtmTimeZones,
+			},
+			position: 'center',
+			hidden: true,
+		}),
+		[FieldsType.formatCheck]: () => new SelectInterface({
+			name: 'Формат',
+			value: subconditions.answer[0].value,
+			options: {
+				options: subconditions.answer,
+			},
+			position: 'center',
+			hidden: true,
+		}),
+		[FieldsType.workingDays]: () => new ChipsInterface({
+			name: 'Рабочие дни',
+			value: defaultWorkingDays,
+			chips: daysChips,
+			position: 'bottom',
+			hidden: true,
+		}),
+		[FieldsType.workingDaysTimeAccept]: () => new FromToInterface({
+			name: 'Рабочие дни время (положительно)',
+			value: '00:00-00:00',
+			position: 'special',
+			hidden: true,
+		}),
+		[FieldsType.workingDaysTimeCancel]: () => new FromToInterface({
+			name: 'Рабочие дни время (отрицательно)',
+			value: '00:00-00:00',
+			position: 'special',
+			hidden: true,
+		}),
+		[FieldsType.weekendDaysTimeAccept]: () => new FromToInterface({
+			name: 'Выходные дни время (положительно)',
+			value: '00:00-00:00',
+			position: 'special',
+			hidden: true,
+			active: false,
+		}),
+		[FieldsType.weekendDaysTimeCancel]: () => new FromToInterface({
+			name: 'Выходные дни время (отрицательно)',
+			value: '00:00-00:00',
+			position: 'special',
+			hidden: true,
+			active: false,
+		}),
+		[FieldsType.conditionMatcher]: () => new SelectInterface({
+			name: 'Условие',
+			value: '',
+			options: {
+				options: [],
+				placeholder: 'Тип соответствия',
+				disabled: true,
+			},
+			position: 'center',
+		}),
+		[FieldsType.numberMatcher]: () => new SelectInterface({
+			name: 'Условия для числа',
+			value: '',
+			options: {
+				options: matchers.number,
+				placeholder: 'Тип соответствия',
+			},
+			position: 'center',
+			hidden: true,
+		}),
+		[FieldsType.stringMatcher]: () => new SelectInterface({
+			name: 'Условие для строки',
+			value: '',
+			options: {
+				options: matchers.string,
+				placeholder: 'Тип соответствия',
+			},
+			position: 'center',
+			hidden: true,
+		}),
+		[FieldsType.dateMatcher]: () => new SelectInterface({
+			name: 'Условие для даты',
+			value: '',
+			options: {
+				options: matchers.date,
+				placeholder: 'Тип соответствия',
+			},
+			position: 'center',
+			hidden: true,
+		}),
+		[FieldsType.conditionValue]: () => new InputInterface({
+			name: 'Значение условия',
+			value: '',
+			placeholder: 'Значение',
+			icon: false,
+			position: 'center',
+			port: false,
+		}),
+		[FieldsType.numberValue]: () => new InputInterface({
+			name: 'Число',
+			value: '',
+			placeholder: 'Введите число',
+			icon: false,
+			position: 'center',
+			port: false,
+			hidden: true,
+		}),
+		[FieldsType.stringValue]: () => new InputInterface({
+			name: 'Строка',
+			value: '',
+			placeholder: 'Введите значение',
+			icon: false,
+			position: 'center',
+			port: false,
+			hidden: true,
+		}),
+		[FieldsType.dateValue]: () => new CalendarInterface({
+			name: 'Дата',
+			value: '',
+			min: new Date().toISOString(),
+			position: 'center',
+			hidden: true,
+		}),
+		[FieldsType.accept]: () => new AcceptOutputInterface({ name: 'Соответствует', position: 'bottom' }),
+		[FieldsType.cancel]: () => new CancelOutputInterface({ name: 'Не соответствует', position: 'bottom' }),
+	},
+	onUpdate(_, data) {
+		let requiredFields: any = []
+
+		if (data.conditionType === ConditionType.record) {
+			if (data.conditionTarget === RecordSubcondtions.date) {
+				requiredFields = fieldsMapper.recordAndDate
+			} else {
+				requiredFields = fieldsMapper.record
+			}
+		}
+
+		if (data.conditionType === ConditionType.time) {
+			requiredFields = fieldsMapper.time
+		}
+
+		if (data.conditionType === ConditionType.answer) {
+			switch (data.formatCheck) {
+			case AnswerSubcondtions.date:
+				requiredFields = fieldsMapper.answerDate
+				break
+			case AnswerSubcondtions.number:
+				requiredFields = fieldsMapper.answerNumber
+				break
+			case AnswerSubcondtions.string:
+				requiredFields = fieldsMapper.answerString
+				break
+			default:
+				requiredFields = fieldsMapper.answerEmail
+			}
+		}
+
+		const fieldsToHide = Object.keys(this.outputs as any).filter(item => !requiredFields.includes(item))
+
+		// @ts-ignore
+		fieldsToHide.forEach(item => this.outputs[item].setHidden(true))
+		// @ts-ignore
+		requiredFields.forEach(item => this.outputs[item].setHidden(false))
+
+		return {}
+	},
+})
+
+export const IdleNode = defineDynamicNode({
 	type: 'IdleNode',
 	title: 'Задержка',
 	inputs: {
 		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
 	},
 	outputs: {
-		output: () => new NodeInterface('Следующий шаг (output)', 0),
+		delayType: () => new TabsInterface({
+			name: 'Тип задержки',
+			value: DelayType.period,
+			tabs: typeOptions,
+			position: 'top',
+		}),
 	},
-})
-
-export const IfNode = defineNode({
-	type: 'IfNode',
-	title: 'Условие',
-	inputs: {
-		input: () => new NodeInterface('socket', []).use(allowMultipleConnections),
+	onUpdate(_, data) {
+		if (data.delayType === DelayType.period) {
+			return {
+				outputs: {
+					duration: () => new DurationInterface({
+						name: 'Длительность',
+						value: defaultPeriod,
+						position: 'center',
+					}),
+					output: () => new SimpleInterface({
+						name: 'Следующий шаг',
+						value: undefined,
+						position: 'bottom',
+					}),
+				} as DynamicNodeDefinition,
+			}
+		} else {
+			return {
+				outputs: {
+					time: () => new TimeInputInterface({
+						name: 'По наступлению',
+						value: defaultTime,
+						position: 'center',
+					}),
+					timeZone: () => new SelectInterface({
+						name: 'Зона',
+						value: gtmTimeZones[3].value,
+						options: {
+							options: gtmTimeZones,
+							placeholder: '+3 GTM',
+						},
+						position: 'center',
+					}),
+					output: () => new SimpleInterface({
+						name: 'Следующий шаг',
+						value: undefined,
+						position: 'bottom',
+					}),
+				} as DynamicNodeDefinition,
+			} 
+		}
 	},
 })
 
